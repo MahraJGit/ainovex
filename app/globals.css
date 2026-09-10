@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #38BDF8;
+  --color-white: #FFFFFF;
+  --color-black-v0: #000000;
+  --color-black-v1: #242424;
+  --color-text-desc: #FFFFFF;
+  --color-text-black-v1: #242424DE;
+  --color-text-black-v2: #38BDF8;
+  --font-montserrat: "Montserrat", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply font-montserrat;
+  }
+
+  h1{
+    @apply text-[64px] font-medium leading-[100%] tracking-[-3%] text-white;
+  }
+  h2{
+    @apply text-[48px] font-bold leading-[100%] tracking-[-2.25%];
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+.cursor {
+  display: inline-block;
+  margin-left: 4px;
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.hero-desc{
+  @apply text-[18px] font-medium leading-[100%] text-white my-8 max-w-[600px] text-center;
+}
+
+.section-container{
+  @apply max-w-7xl mx-auto px-4 lg:px-8 py-8 lg:py-16;
+}
+.section-container-fluid{
+  @apply w-full mx-auto px-4 lg:px-8 py-8 lg:py-16;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+@property --fill {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
 }
