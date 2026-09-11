@@ -110,8 +110,9 @@ export default function Footer() {
                                         </svg>
                                     </span>
                                     <Link
-                                        href="/"
-                                        className="leading-relaxed max-w-[290px]">
+                                        href="https://maps.app.goo.gl/JpSJs6K2RxSjU5Jd8"
+                                        target="_blank"
+                                        className="leading-relaxed max-w-[290px] hover:text-[#1C8AD0]">
                                         World Trade Center - Office <br /> Number - 4087 - Islamabad Pakistan
                                     </Link>
                                 </div>

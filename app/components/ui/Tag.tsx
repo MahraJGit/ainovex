@@ -18,7 +18,7 @@ export default function Tag({
     <div
       className={cn(
         "inline-flex items-center gap-2 rounded-full px-4 py-2",
-        variant === "solid" && "bg-black-v1",
+        variant === "solid" && "bg-[#02081D] border border-primary",
         variant === "outline" && "border border-primary/80 bg-transparent",
         className
       )}
