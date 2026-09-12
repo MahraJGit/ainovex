@@ -39,7 +39,7 @@ const placementConfig = {
   "left-light": {
     lineColor: "rgba(203,213,225,0.5)",
     fadeTo: "#FFFFFF",
-    mask: "linear-gradient(to bottom, #000 0%, #000 90%, transparent 100%), linear-gradient(to right, #000 0%, #000 30%, transparent 75%)",
+    mask: "linear-gradient(to bottom, #000 0%, #000 61%, transparent 64%), linear-gradient(to right, #000 0%, #000 30%, transparent 75%)",
     maskComposite: "intersect" as const,
     position: "left-0 w-[70%]",
   },

@@ -13,7 +13,7 @@ export default function HiringStepCard({
   return (
     <article className="relative flex min-h-[271px] w-full items-center rounded-xl bg-white">
       {/* Floating gradient capsule — inset inside the card, not flush to the edge */}
-      <div className="absolute bottom-5 left-5 top-4 flex w-[50px] items-center justify-center rounded-full bg-gradient-to-b from-[#38BDF8] to-[#0B2149]">
+      <div className="absolute bottom-5 left-5 top-4 flex w-[50px] items-center justify-center rounded-full bg-linear-to-b from-[#38BDF8] to-[#0B2149]">
         <span className="rotate-180 whitespace-nowrap text-2xl font-semibold tracking-wide text-white [writing-mode:vertical-rl]">
           {step}
         </span>
