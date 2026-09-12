@@ -5,28 +5,28 @@ import Button from "../../ui/Button";
 
 const reasons = [
     {
-        icon: "/icons/why-us/careers/growth.svg",
+        icon: "/icons/careers/growth.svg",
         title: "Growth Opportunities",
         description:
             "From day one, you'll work on problems that stretch you, backed by mentorship, real training, and genuine opportunities to lead, not just learn.",
         col: 1,
     },
     {
-        icon: "/icons/why-us/careers/environment.svg",
+        icon: "/icons/careers/environment.svg",
         title: "Supportive Work Environment",
         description:
             "A culture built on respect, not hierarchy. Teammates who collaborate instead of compete, because the best work happens when people actually have each other's backs.",
         col: 2,
     },
     {
-        icon: "/icons/why-us/careers/projects.svg",
+        icon: "/icons/careers/projects.svg",
         title: "Meaningful Projects",
         description:
             "Your work won't sit in a drawer. You'll help real businesses solve real problems, and see the impact of what you build.",
         col: 1,
     },
     {
-        icon: "/icons/why-us/careers/recognition.svg",
+        icon: "/icons/careers/recognition.svg",
         title: "Recognition and Appreciation",
         description:
             "Effort doesn't go unnoticed here. We celebrate the big wins and the quiet, consistent work that keeps everything moving forward.",
