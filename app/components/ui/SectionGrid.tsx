@@ -16,7 +16,7 @@ export type SectionGridProps = {
 
 const placementConfig = {
   center: {
-    lineColor: "#F8E9FE",
+    lineColor: "rgba(56,189,248,0.25)",
     fadeTo: "#FFFFFF",
     mask: "radial-gradient(ellipse 65% 85% at 50% 0%, #000 18%, transparent 70%)",
     maskComposite: undefined as undefined,
@@ -37,7 +37,7 @@ const placementConfig = {
     position: "left-0 w-[70%]",
   },
   "left-light": {
-    lineColor: "rgba(203,213,225,0.5)",
+    lineColor: "rgba(56,189,248,0.2)",
     fadeTo: "#FFFFFF",
     mask: "linear-gradient(to bottom, #000 0%, #000 61%, transparent 64%), linear-gradient(to right, #000 0%, #000 30%, transparent 75%)",
     maskComposite: "intersect" as const,

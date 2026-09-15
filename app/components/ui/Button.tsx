@@ -12,7 +12,7 @@ export const buttonVariants = {
   outline:
     "border border-white bg-transparent text-white hover:bg-white/10 active:bg-white/15",
   "outline-dark":
-    "border border-primary bg-black-v1 text-white hover:bg-black-v1/80 active:bg-black-v1/70",
+    "border border-primary bg-[#38BDF8]/30 text-white hover:bg-black-v1/80 active:bg-black-v1/70",
   primary:
     "bg-primary text-white hover:bg-primary/90 active:bg-primary/80",
 } as const;

@@ -61,7 +61,7 @@ export default function ServiceCard({
       <Button
         href={href}
         variant="outline-dark"
-        className="absolute bottom-[-2%] left-[-1%] z-20 !px-6 !py-2 text-sm"
+        className="absolute bottom-[0%] left-[0%] z-20 !px-6 !py-2 text-sm"
       >
         Explore more
       </Button>

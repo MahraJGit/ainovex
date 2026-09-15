@@ -6,6 +6,8 @@ import HiringProcess from "@/app/components/sections/Careers/HiringProcess";
 import WhatWeLookFor from "@/app/components/sections/Careers/WhatWeLook";
 import WhyUs from "@/app/components/sections/Careers/WhyUs";
 import TurnSkills from "@/app/components/sections/Careers/TurnSkills";
+import CurrentOpenings from "@/app/components/sections/Careers/CurrentOpenings";
+import LookingForMore from "@/app/components/sections/Careers/LookingForMore";
 
 export default function Career() {
     return (
@@ -16,6 +18,8 @@ export default function Career() {
         <HiringProcess />
         <WhatWeLookFor />
         <TurnSkills />
+        <CurrentOpenings />
+        <LookingForMore />
         </>
     );  
 }

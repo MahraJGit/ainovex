@@ -17,7 +17,7 @@ export default function TurnSkillsCard({
       <div className="mb-4 flex items-center rounded-full">
         <img src={icon} alt="" className="h-14 w-14" aria-hidden />
       </div>
-      <h3 className="text-xl font-bold text-ink max-w-[252px] whitespace-nowrap">{title}</h3>
+      <h3 className="text-lg font-bold text-ink max-w-[252px] whitespace-nowrap">{title}</h3>
       <p className="mt-2 text-sm tracking-[-0.5px] font-normal leading-snug text-black-v1/87">
         {description}
       </p>
