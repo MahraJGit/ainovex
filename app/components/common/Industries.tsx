@@ -1,7 +1,7 @@
-import Button from "../../ui/Button";
-import IndustriesCard from "../../ui/IndustriesCard";
-import SectionGrid from "../../ui/SectionGrid";
-import Tag from "../../ui/Tag";
+import Button from "../ui/Button";
+import IndustriesCard from "../ui/IndustriesCard";
+import SectionGrid from "../ui/SectionGrid";
+import Tag from "../ui/Tag";
 
 export default function Industries() {
     return (

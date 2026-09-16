@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SectionGrid from "../../ui/SectionGrid";
+import SectionGrid from "../ui/SectionGrid";
 
 export default function HowWeWork() {
   return (

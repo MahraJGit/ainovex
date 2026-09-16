@@ -1,11 +1,11 @@
 "use client"
 
-import Industries from "@/app/components/sections/Home/Industries";
+import Industries from "@/app/components/common/Industries";
 import SuccessStories from "@/app/components/sections/Services/SuccessStories";
 import Hero from "@/app/components/sections/Services/Hero";
-import HowWeWork from "@/app/components/sections/Services/HowweWork";
+import HowWeWork from "@/app/components/common/HowweWork";
 import OurServices from "@/app/components/sections/Services/OurServices";
-import MeetOurTeam from "@/app/components/sections/Services/OurTeam";
+import MeetOurTeam from "@/app/components/common/OurTeam";
 import TrustedPartners from "@/app/components/sections/Services/Partners";
 import CTABanner from "@/app/components/common/CTAbanner";
 

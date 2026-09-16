@@ -3,39 +3,19 @@
 import Image from "next/image";
 import { useState } from "react";
 import { IoAdd, IoClose } from "react-icons/io5";
-import SectionGrid from "../../ui/SectionGrid";
-import Tag from "../../ui/Tag";
+import SectionGrid from "../ui/SectionGrid";
+import Tag from "../ui/Tag";
 
-const faqs = [
-  {
-    question: "Do you work with startups, small businesses, and enterprises?",
-    answer:
-      "Yes! Whether you are validating your first MVP or scaling an enterprise platform, we adapt our process, team size, and technology to match exactly where your business stands today.",
-  },
-  {
-    question: "Can you upgrade or modernize an existing website or application?",
-    answer:
-      "Absolutely. We audit your current stack, identify bottlenecks, and modernize your product with improved performance, security, and a scalable architecture — without disrupting your live users.",
-  },
-  {
-    question: "Can you work with clients from different countries and time zones?",
-    answer:
-      "Yes. We collaborate across time zones with clear communication, overlapping work hours when needed, and reliable project updates so distance never slows progress.",
-  },
-  {
-    question:
-      "What makes Ainovex Technologies different from other development companies?",
-    answer:
-      "We combine technical depth with business clarity — transparent processes, dedicated specialists, and solutions built for measurable outcomes rather than just deliverables.",
-  },
-  {
-    question: "What is the first step to getting started with Ainovex Technologies?",
-    answer:
-      "Reach out through our contact form or book a discovery call. We’ll discuss your goals, recommend the right engagement model, and outline a clear path forward.",
-  },
-];
+interface FaqItem {
+  question: string;
+  answer: string;
+}
 
-export default function Faq() {
+interface FaqProps {
+  faqs: FaqItem[];
+}
+
+export default function Faq({ faqs }: FaqProps) {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
@@ -49,11 +29,7 @@ export default function Faq() {
 
       <div className="section-container relative z-10 !pt-[104px] lg:!pt-[120px]">
         <div className="mx-auto flex flex-col items-center text-center">
-          <Tag
-            label="FAQs"
-            variant="outline"
-            className="[&_span]:text-primary"
-          />
+          <Tag label="FAQs" variant="outline" className="[&_span]:text-primary" />
           <h2 className="mt-6 max-w-3xl text-white">
             <span className="text-primary">Frequently</span> Asked Questions
           </h2>

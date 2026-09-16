@@ -1,6 +1,6 @@
 "use client";
 import Hero from "../components/sections/Home/Hero";
-import Industries from "../components/sections/Home/Industries";
+import Industries from "../components/common/Industries";
 import Services from "../components/sections/Home/Services";
 import SuccessStories from "../components/sections/Home/SuccessStories";
 import Testimonials from "../components/sections/Home/Testimonials";
@@ -8,7 +8,8 @@ import WhyUs from "../components/sections/Home/WhyUs";
 import WorkedWith from "../components/sections/Home/WorkedWith";
 import Build from "../components/sections/Home/Build";
 import LatestNews from "../components/sections/Home/LatestNews";
-import Faq from "../components/sections/Home/Faq";
+import Faq from "../components/common/Faq";
+import { homefaqs } from "../lib/homeFAQS"
 
 export default function Home() {
   return (
@@ -22,7 +23,7 @@ export default function Home() {
       <WorkedWith />
       <Build />
       <LatestNews />
-      <Faq />
+      <Faq faqs={homefaqs} />
     </>
   );
 }
