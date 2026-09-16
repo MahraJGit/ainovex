@@ -1,5 +1,5 @@
-import SectionGrid from "../ui/SectionGrid";
-import Button from "../ui/Button";
+import SectionGrid from "../../ui/SectionGrid";
+import Button from "../../ui/Button";
 
 type CTABannerProps = {
   heading: React.ReactNode;

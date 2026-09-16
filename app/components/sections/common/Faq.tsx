@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { IoAdd, IoClose } from "react-icons/io5";
-import SectionGrid from "../ui/SectionGrid";
-import Tag from "../ui/Tag";
+import SectionGrid from "../../ui/SectionGrid";
+import Tag from "../../ui/Tag";
 
 interface FaqItem {
   question: string;

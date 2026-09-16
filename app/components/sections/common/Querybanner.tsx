@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SectionGrid from "../ui/SectionGrid";
+import SectionGrid from "../../ui/SectionGrid";
 import { cn } from "@/app/lib/utils";
 
 const icons = [
@@ -19,7 +19,7 @@ export default function QueryBanner({ heading, description }: QueryBannerProps) 
     <section className="relative overflow-hidden bg-white">
       <SectionGrid placement="center" height={560} />
 
-      <div className="section-container relative z-10">
+      <div className="py-[40px] relative">
         <div className="relative mx-auto flex min-h-80 max-w-5xl items-center justify-center md:min-h-105">
           {icons.map((icon) => (
             <Image
@@ -36,7 +36,7 @@ export default function QueryBanner({ heading, description }: QueryBannerProps) 
             />
           ))}
 
-          <div className="mx-auto flex max-w-3xl flex-col items-center px-4 text-center md:px-24">
+          <div className="mx-auto flex max-w-[852px] flex-col items-center px-4 text-center md:px-24">
             <h2 className="text-black-v1/87">{heading}</h2>
             <p className="mt-6 text-base font-medium leading-[160%] text-black-v1/70">
               {description}

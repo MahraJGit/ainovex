@@ -1,6 +1,7 @@
 import Image from "next/image";
 import SectionGrid from "../../ui/SectionGrid";
 import Tag from "../../ui/Tag";
+import FeatureItem from "../../ui/FeatureItem";
 
 const features = [
   {
@@ -41,49 +42,18 @@ const features = [
   },
 ];
 
-function FeatureItem({
-  icon,
-  title,
-  description,
-}: {
-  icon: string;
-  title: string;
-  description: string;
-}) {
-  return (
-    <article className="flex w-full max-w-[420px] gap-5">
-      <div className="size-[80px] shrink-0">
-        <Image
-          src={icon}
-          alt=""
-          width={80}
-          height={80}
-          className="size-[80px]"
-          aria-hidden
-        />
-      </div>
-      <div className="flex flex-col">
-        <h3 className="text-[21px] font-medium text-[#161C2D]">{title}</h3>
-        <p className="mt-2 text-sm font-normal leading-[100%] text-text-black-v1/87 max-w-[280px]">
-          {description}
-        </p>
-      </div>
-    </article>
-  );
-}
-
 export default function WhyUs() {
   return (
     <section id="why-us" className="relative overflow-hidden bg-white">
       <SectionGrid placement="center" />
 
-      <div className="section-container relative z-10 !pt-[104px] lg:!pt-[120px]">
+      <div className="section-container relative z-10 py-[104px]! lg:py-[120px]!">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
           <Tag label="Why Choose Ainovex Technologies?" />
 
           <h2 className="mt-6 text-black-v1/87">
-            Your{" "}
-            <span className="text-primary">Trusted Partner</span> in Digital
+            Your
+            <span className="text-primary"> Trusted Partner</span> in Digital
             Transformation
           </h2>
 
@@ -94,7 +64,7 @@ export default function WhyUs() {
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 justify-items-center gap-y-8 md:grid-cols-[max-content_max-content] md:justify-center md:gap-x-8 md:gap-y-12">
+        <div className="mt-14 grid grid-cols-1 justify-items-center gap-y-4 gap-x-8 md:grid-cols-[max-content_max-content] md:justify-center">
           {features.map((feature) => (
             <FeatureItem key={feature.title} {...feature} />
           ))}

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import SectionGrid from "../ui/SectionGrid";
-import Tag from "../ui/Tag";
+import SectionGrid from "../../ui/SectionGrid";
+import Tag from "../../ui/Tag";
 
 // Figma layout: 4 columns, all top aligned, no offsets.
 // Tall and short pills alternate, so columns 1 and 3 start tall

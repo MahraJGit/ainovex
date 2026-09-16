@@ -1,12 +1,12 @@
 import Image from "next/image";
 
 const logos = [
-  "/icons/logos/partner-1.svg",
-  "/icons/logos/partner-2.svg",
-  "/icons/logos/partner-3.svg",
-  "/icons/logos/partner-4.svg",
-  "/icons/logos/partner-5.svg",
-  "/icons/logos/partner-6.svg",
+  "/icons/partnerLogos/partner-1.svg",
+  "/icons/partnerLogos/partner-2.svg",
+  "/icons/partnerLogos/partner-3.svg",
+  "/icons/partnerLogos/partner-4.svg",
+  "/icons/partnerLogos/partner-5.svg",
+  "/icons/partnerLogos/partner-6.svg",
 ];
 
 function LogoItem({ src }: { src: string }) {

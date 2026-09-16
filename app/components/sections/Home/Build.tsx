@@ -1,4 +1,4 @@
-import QueryBanner from "../../common/Querybanner";
+import QueryBanner from "../common/Querybanner";
 
 export default function Build() {
   return (
