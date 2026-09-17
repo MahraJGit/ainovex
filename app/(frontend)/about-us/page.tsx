@@ -9,6 +9,8 @@ import HowWeWork from "@/app/components/sections/common/HowweWork";
 import MeetOurTeam from "@/app/components/sections/common/OurTeam";
 import ReadyToBuild from "@/app/components/sections/About-Us/ReadyToBuild";
 import WhyChooseUs from "@/app/components/sections/About-Us/WhyUs";
+import ExpertServices from "@/app/components/sections/About-Us/ExpertServices";
+import Locations from "@/app/components/sections/About-Us/Locations";
 
 export default function AboutUs(){
     return(
@@ -19,9 +21,11 @@ export default function AboutUs(){
         <DigitalGrowth />
         <WhyChooseUs />
         <CoreServices />
+        <ExpertServices />
         <HowWeWork />
         <MeetOurTeam />
         <ReadyToBuild />
+        <Locations />
         </>
     );
 }

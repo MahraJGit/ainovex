@@ -65,7 +65,7 @@ export default function Industries() {
   }, []);
 
   return (
-    <section id="industries" className="relative overflow-hidden bg-[#0A0F1C]">
+    <section id="industries" className="relative overflow-hidden bg-[#05080F]">
       <SectionGrid placement="left" width="60%" />
       <div className="section-container relative z-10 py-[104px]! lg:py-[120px]!">
         <div className="mx-auto flex flex-col items-center text-center">

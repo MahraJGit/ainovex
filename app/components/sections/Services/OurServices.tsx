@@ -5,10 +5,10 @@ import { services } from "../../../lib/services";
 
 export default function OurServices() {
   return (
-    <section id="our-services" className="relative overflow-hidden bg-[#0A0F1C]">
+    <section id="our-services" className="relative overflow-hidden bg-[#05080F]">
       <SectionGrid placement="left" />
 
-      <div className="section-container relative z-10 !pt-[104px] lg:!pt-[120px] pb-20">
+      <div className="section-container relative z-10 pt-[104px]! lg:py-[120px]!">
         <div className="mb-12 flex flex-col items-center text-center">
           <h2 className="text-white tracking-[-2.25px]">
             Our <span className="text-primary">Services</span>

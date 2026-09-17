@@ -58,7 +58,7 @@ const OVERLAP = "lg:-mt-[60px]";
 
 export default function HiringProcess() {
     return (
-        <section id="hiring-process" className="relative overflow-hidden bg-[#0A0F1C]">
+        <section id="hiring-process" className="relative overflow-hidden bg-[#05080F]">
             <SectionGrid placement="left" />
 
             <div className="section-container relative z-10 py-[104px]! pb-20 lg:py-[120px]!">

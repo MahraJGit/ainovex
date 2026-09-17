@@ -51,7 +51,7 @@ function TeamPhoto({ src, size }: { src: string; size: "sm" | "lg" }) {
 
 export default function MeetOurTeam() {
     return (
-        <section id="meet-our-team" className="relative overflow-hidden bg-[#0A0F1C]">
+        <section id="meet-our-team" className="relative overflow-hidden bg-[#05080F]">
             <SectionGrid placement="left" />
 
             <div className="section-container relative z-10 py-[104px]! lg:py-[120px]! flex flex-col gap-4">

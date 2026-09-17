@@ -49,7 +49,7 @@ function ReasonCard({ icon, title, description }: { icon: string; title: string;
 
 export default function WhyAinovex() {
   return (
-    <section className="relative overflow-hidden bg-[#0A0F1C]">
+    <section className="relative overflow-hidden bg-[#05080F]">
         <SectionGrid placement="left" />
       <div className="section-container relative z-10 py-[104px]! lg:py-[120px]!">
 

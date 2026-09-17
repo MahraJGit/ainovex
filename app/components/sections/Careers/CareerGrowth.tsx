@@ -44,7 +44,7 @@ export default function CareerGrowth() {
     const row2 = cards.slice(3);
 
     return (
-        <section id="career-growth" className="relative overflow-hidden bg-[#0A0F1C]">
+        <section id="career-growth" className="relative overflow-hidden bg-[#05080F]">
             <SectionGrid placement="left" />
 
             <div className="section-container relative z-10 !pt-[104px] lg:!pt-[120px] py-26!">

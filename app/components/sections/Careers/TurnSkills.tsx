@@ -42,7 +42,7 @@ const cards = [
 
 export default function TurnSkills() {
   return (
-    <section id="turn-skills-into-impact" className="relative overflow-hidden bg-[#0A0F1C]">
+    <section id="turn-skills-into-impact" className="relative overflow-hidden bg-[#05080F]">
       <SectionGrid placement="left" />
 
       <div className="section-container relative z-10 py-[104px]! lg:py-[120px]!">

@@ -1,16 +1,17 @@
-import Button from "../../ui/Button";
 import SectionGrid from "../../ui/SectionGrid";
+import Button from "../../ui/Button";
 import ServiceCard from "../../ui/ServiceCard";
-import Tag from "../../ui/Tag";
 import { services } from "../../../lib/services";
+import Tag from "../../ui/Tag";
 
-export default function CoreServices() {
+
+export default function OurServices() {
   return (
-    <section id="services" className="relative overflow-hidden bg-[#0A0F1C]">
+    <section id="our-services" className="relative overflow-hidden bg-[#05080F]">
       <SectionGrid placement="left" />
 
-      <div className="section-container-fluid relative z-10 py-[104px]! lg:py-[120px]!">
-        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+      <div className="section-container relative z-10 !pt-[104px] lg:!pt-[120px] pb-20">
+        <div className="mb-12 flex flex-col items-center text-center">
           <Tag label="Our Core Services" variant="outline" />
 
           <h2 className="mt-6 max-w-[770px] text-white">
@@ -18,16 +19,14 @@ export default function CoreServices() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-14 grid w-full max-w-[70%] grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
             <ServiceCard key={service.title} {...service} />
           ))}
         </div>
 
-        <div className="mt-14 flex justify-center">
-          <Button href="/services" variant="solid">
-            View All Services
-          </Button>
+        <div className="mt-12 flex justify-center">
+          <Button variant="solid">View All Services</Button>
         </div>
       </div>
     </section>
