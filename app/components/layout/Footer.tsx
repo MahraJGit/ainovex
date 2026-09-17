@@ -109,12 +109,12 @@ export default function Footer() {
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
                                     </span>
-                                    <Link
+                                    <a
                                         href="https://maps.app.goo.gl/JpSJs6K2RxSjU5Jd8"
                                         target="_blank"
                                         className="leading-relaxed max-w-[290px] hover:text-[#1C8AD0]">
                                         World Trade Center - Office <br /> Number - 4087 - Islamabad Pakistan
-                                    </Link>
+                                    </a>
                                 </div>
 
                                 <div className="flex items-start gap-3">

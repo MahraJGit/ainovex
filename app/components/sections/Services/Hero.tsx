@@ -49,7 +49,7 @@ export default function ServicesHero() {
       </div>
 
       {/* Grid on top of the glow: neutral lines that pick up the blue where the light is */}
-      <HeroGrid cell={130} />
+      <HeroGrid cell={130}/>
 
       {/* Text block, vertically centered in the space between navbar and network graphic */}
       <div className="relative z-10 flex w-full flex-col items-center justify-center px-4 pb-8 pt-70 text-center">
