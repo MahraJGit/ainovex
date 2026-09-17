@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Ainovex Technologies",
   description: "Ainovex Technologies is a company that provides AI-powered solutions to businesses.",
   icons: {
-    icon: "/Ainovex favicon.svg",
+    icon: "/favicon.svg",
   },
 };
 
