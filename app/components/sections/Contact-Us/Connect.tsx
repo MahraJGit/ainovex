@@ -15,7 +15,7 @@ const cards = [
     action: { label: "INFO@AINOVEX.COM", href: "mailto:info@ainovex.com" },
   },
   {
-    icon: "/icons/contact/hours.svg",
+    icon: "/icons/contact/email.svg",
     title: "Business Hours",
     description: "We're online and ready to help during these hours.",
     hours: ["Monday to Friday: 9:00 AM – 6:00 PM", "Saturday: 9:00 AM – 4:00 PM"],
