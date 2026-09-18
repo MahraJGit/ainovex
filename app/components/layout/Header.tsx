@@ -1,110 +1,139 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import Button from "@/app/components/ui/Button";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Careers", href: "/careers" },
-  { label: "Services", href: "/services" },
-  { label: "About Us", href: "/about-us" },
-  { label: "Contact Us", href: "/contact-us" },
-  { label: "Blog", href: "/blog" },
+    { label: "Home", href: "/" },
+    { label: "Careers", href: "/careers" },
+    { label: "Services", href: "/services" },
+    { label: "About Us", href: "/about-us" },
+    { label: "Contact Us", href: "/contact-us" },
+    { label: "Blog", href: "/blog" },
 ];
 
 export default function Header() {
-  const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
+    const pathname = usePathname();
+    const [open, setOpen] = useState(false);
 
-  return (
-    <>
-      <header className="absolute top-10 left-0 z-50 w-full px-4">
-        <div className="mx-auto flex h-[82px] max-w-[1280px] items-center justify-between rounded-[41px] border border-white/20 bg-gradient-to-l from-white/10 to-white/30 px-8 lg:px-16 backdrop-blur-md shadow-[0_8px_51.7px_0_rgba(0,0,0,0.10)]">
+    // Close the menu on route change
+    useEffect(() => {
+        setOpen(false);
+    }, [pathname]);
 
-          {/* Logo */}
-          <Link href="/" className="flex shrink-0 items-center gap-2">
-            <Image
-              src="/logo.svg"
-              alt="Ainovex Logo"
-              width={140}
-              height={32}
-              priority
-              className="h-auto w-auto"
-            />
-          </Link>
+    // Close it again if the screen grows past the breakpoint
+    useEffect(() => {
+        const mq = window.matchMedia("(min-width: 990px)");
+        const onChange = (e: MediaQueryListEvent) => e.matches && setOpen(false);
+        mq.addEventListener("change", onChange);
+        return () => mq.removeEventListener("change", onChange);
+    }, []);
 
-          {/* Desktop nav — visible above 990px */}
-          <nav className="hidden items-center gap-6 xl:flex px-8">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className={`relative text-sm font-medium text-white transition-colors hover:font-bold
-                    after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:w-full
-                    after:scale-x-0 after:bg-white after:transition-transform after:duration-200
-                    hover:after:scale-x-100
-                    ${isActive ? "font-bold" : ""}
-                  `}
-                  style={{ minWidth: "max-content" }}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
+    return (
+        <header className="absolute top-10 left-0 z-50 w-full px-4">
+            <div className="relative mx-auto max-w-[1280px]">
+                {/* Bar */}
+                <div className="flex h-[82px] items-center justify-between rounded-[41px] border border-white/20 bg-gradient-to-l from-white/10 to-white/30 px-5 shadow-[0_8px_51.7px_0_rgba(0,0,0,0.10)] backdrop-blur-md min-[990px]:px-8 min-[1180px]:px-12 min-[1280px]:px-16">
+                    {/* Logo */}
+                    <Link href="/" className="flex shrink-0 items-center gap-2">
+                        <Image
+                            src="/logo.svg"
+                            alt="Ainovex Logo"
+                            width={140}
+                            height={32}
+                            priority
+                            className="h-auto w-[112px] min-[1180px]:w-[140px]"
+                        />
+                    </Link>
 
-          {/* CTA — desktop */}
-          <div className="hidden xl:block shrink-0">
-            <Button variant="solid">Schedule a meeting</Button>
-          </div>
+                    {/* Desktop navigation, scales down between 990 and 1280 */}
+                    <nav className="hidden flex-1 items-center justify-end gap-4 px-4 min-[990px]:flex min-[1180px]:gap-6 min-[1180px]:px-8 min-[1280px]:gap-8 min-[1280px]:px-12">
+                        {navLinks.map((link) => {
+                            const isActive = pathname === link.href;
 
-          {/* Hamburger — visible below 990px */}
-          <button
-            className="flex xl:hidden items-center justify-center text-white"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen
-              ? <IoCloseOutline size={32} />
-              : <IoMenuOutline size={32} />
-            }
-          </button>
+                            return (
+                                <Link
+                                    key={link.label}
+                                    href={link.href}
+                                    data-text={link.label}
+                                    className={`nav-link whitespace-nowrap text-[13px] text-white min-[1180px]:text-sm ${
+                                        isActive ? "font-bold" : "font-normal"
+                                    }`}
+                                >
+                                    {link.label}
+                                </Link>
+                            );
+                        })}
+                    </nav>
 
-        </div>
+                    {/* CTA stays in place at every size */}
+                    <div className="flex shrink-0 items-center gap-3">
+                        <div className="[&_*]:whitespace-nowrap">
+                            <Button variant="solid">Schedule a meeting</Button>
+                        </div>
 
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div className="mx-auto mt-3 max-w-[1280px] rounded-[24px] border border-white/20 bg-gradient-to-b from-white/20 to-white/10 backdrop-blur-md px-8 py-6 xl:hidden">
-            <nav className="flex flex-col gap-4">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className={`text-base font-medium text-white transition-colors hover:font-bold ${
-                      isActive ? "font-bold" : ""
+                        {/* Hamburger, only below 990px */}
+                        <button
+                            type="button"
+                            onClick={() => setOpen((v) => !v)}
+                            aria-label={open ? "Close menu" : "Open menu"}
+                            aria-expanded={open}
+                            aria-controls="mobile-nav"
+                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white min-[990px]:hidden"
+                        >
+                            <span className="relative block h-4 w-5">
+                                <span
+                                    className={`absolute left-0 block h-[2px] w-5 rounded bg-white transition-transform duration-300 ${
+                                        open ? "top-[7px] rotate-45" : "top-0"
+                                    }`}
+                                />
+                                <span
+                                    className={`absolute left-0 top-[7px] block h-[2px] w-5 rounded bg-white transition-opacity duration-200 ${
+                                        open ? "opacity-0" : "opacity-100"
+                                    }`}
+                                />
+                                <span
+                                    className={`absolute left-0 block h-[2px] w-5 rounded bg-white transition-transform duration-300 ${
+                                        open ? "top-[7px] -rotate-45" : "top-[14px]"
+                                    }`}
+                                />
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mobile menu: sibling of the bar, NOT inside it, so its own blur works */}
+                <nav
+                    id="mobile-nav"
+                    className={`absolute left-0 right-0 top-[94px] origin-top rounded-[24px] border border-white/20 bg-gradient-to-l from-white/10 to-white/30 p-3 shadow-[0_8px_51.7px_0_rgba(0,0,0,0.10)] backdrop-blur-md transition-all duration-200 min-[990px]:hidden ${
+                        open
+                            ? "pointer-events-auto translate-y-0 opacity-100"
+                            : "pointer-events-none -translate-y-2 opacity-0"
                     }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </nav>
-            <div className="mt-6">
-              <Button variant="solid">Schedule a meeting</Button>
-            </div>
-          </div>
-        )}
+                >
+                    <ul className="flex flex-col">
+                        {navLinks.map((link) => {
+                            const isActive = pathname === link.href;
 
-      </header>
-    </>
-  );
+                            return (
+                                <li key={link.label}>
+                                    <Link
+                                        href={link.href}
+                                        className={`block rounded-2xl px-4 py-3 text-base text-white transition-colors hover:bg-white/15 ${
+                                            isActive ? "font-bold" : "font-normal"
+                                        }`}
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </nav>
+            </div>
+        </header>
+    );
 }

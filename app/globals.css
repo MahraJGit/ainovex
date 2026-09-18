@@ -77,3 +77,23 @@
   inherits: false;
   initial-value: 0%;
 }
+
+/* Reserves the bold width up front, so hovering never shifts the other links */
+.nav-link {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-link::after {
+  content: attr(data-text);
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.nav-link:hover {
+  font-weight: 700;
+}
