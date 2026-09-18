@@ -61,7 +61,7 @@ export default function Hero() {
           className="h-full w-full object-cover"
         />
       </div>
-      <div className="lg:pt-32"></div>
+      <div className="header-padding"></div>
         <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-7xl flex-col justify-between px-4 py-16 lg:px-8">
           <div className="flex flex-1 flex-col items-center justify-center">
             <h1 className="text-center">

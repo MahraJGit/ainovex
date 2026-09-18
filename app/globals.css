@@ -18,12 +18,14 @@
   }
 
   h1{
-    @apply text-[64px] font-medium leading-[100%] tracking-[-3%] text-white;
+    @apply text-[48px] md:text-[58px] lg:text-[64px] font-medium leading-[100%] tracking-[-3%] text-white;
   }
   h2{
     @apply text-[48px] font-bold leading-[100%] tracking-[-2.25%];
   }
 }
+
+
 
 
 .cursor {
@@ -47,6 +49,10 @@
 }
 .section-container-fluid{
   @apply w-full mx-auto px-4 lg:px-8 py-8 lg:py-16;
+}
+
+.header-padding {
+  @apply pt-24 md:pt-28 lg:pt-32;
 }
 
 @keyframes marquee {

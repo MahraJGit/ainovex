@@ -58,7 +58,7 @@ export default function Header() {
                                 <Link
                                     key={link.label}
                                     href={link.href}
-                                    className={`group/nav relative flex h-[82px] items-center whitespace-nowrap text-[13px] text-white min-[1180px]:text-sm ${
+                                    className={`group/nav relative flex h-[82px] items-center whitespace-nowrap text-[14px] text-white ${
                                         isActive ? "font-bold" : "font-normal"
                                     }`}
                                 >
