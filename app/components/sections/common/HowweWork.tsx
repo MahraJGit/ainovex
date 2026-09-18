@@ -26,7 +26,7 @@ export default function HowWeWork() {
         {/* Full-width process image */}
         <div className="w-full overflow-hidden rounded-2xl">
           <Image
-            src="/images/services/how-we-work.png"
+            src="/images/services/how-we-work.jpg"
             alt="How We Work — 8 step process from Initiation to Project Deliver"
             width={1287}
             height={396}
