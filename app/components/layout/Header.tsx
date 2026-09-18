@@ -49,8 +49,8 @@ export default function Header() {
                         />
                     </Link>
 
-                    {/* Desktop navigation, scales down between 990 and 1280 */}
-                    <nav className="hidden flex-1 items-center justify-end gap-4 px-4 min-[990px]:flex min-[1180px]:gap-6 min-[1180px]:px-8 min-[1280px]:gap-8 min-[1280px]:px-12">
+                    {/* Desktop navigation: centered from 990 to 1024, right aligned above that */}
+                    <nav className="hidden flex-1 items-center justify-center gap-4 px-4 min-[990px]:flex min-[1025px]:justify-end min-[1180px]:gap-6 min-[1180px]:px-8 min-[1280px]:gap-8 min-[1280px]:px-12">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
 
@@ -58,12 +58,24 @@ export default function Header() {
                                 <Link
                                     key={link.label}
                                     href={link.href}
-                                    data-text={link.label}
-                                    className={`nav-link whitespace-nowrap text-[13px] text-white min-[1180px]:text-sm ${
+                                    className={`group/nav relative flex h-[82px] items-center whitespace-nowrap text-[13px] text-white min-[1180px]:text-sm ${
                                         isActive ? "font-bold" : "font-normal"
                                     }`}
                                 >
-                                    {link.label}
+                                    {/* Normal label, fades out under the bubble */}
+                                    <span className="transition-opacity duration-200 group-hover/nav:opacity-0">
+                                        {link.label}
+                                    </span>
+
+                                    {/* Magnifier bubble: absolute, so neighbours never move */}
+                                    <span
+                                        aria-hidden
+                                        className="pointer-events-none absolute left-1/2 top-1/2 flex h-[58px] -translate-x-1/2 -translate-y-1/2 scale-75 items-center justify-center rounded-full border border-white/40 bg-white/15 px-5 opacity-0 shadow-[0_6px_20px_rgba(0,0,0,0.18)] backdrop-blur-[6px] transition-all duration-300 ease-out group-hover/nav:scale-100 group-hover/nav:opacity-100"
+                                    >
+                                        <span className="block scale-[1.35] whitespace-nowrap font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]">
+                                            {link.label}
+                                        </span>
+                                    </span>
                                 </Link>
                             );
                         })}
