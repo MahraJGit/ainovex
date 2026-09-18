@@ -50,11 +50,11 @@ interface PageHeroProps {
 
 export default function PageHero({ heading, description }: PageHeroProps) {
   return (
-    <section className="relative flex min-h-[55dvh] flex-col overflow-hidden bg-[#05080F]">
+    <section className="relative flex min-h-[60dvh] flex-col overflow-hidden bg-[#05080F]">
       <HeroGlow />
       <SectionGrid placement="center-dark" className="mt-25"/>
 
-      <div className="relative z-10 flex w-full flex-col items-center justify-center mt-60 text-center">
+      <div className="relative z-10 flex w-full flex-col items-center justify-center mt-50 text-center">
         <h1 className="mx-auto max-w-[820px] text-[48px]! font-bold text-white">
           {heading}
         </h1>

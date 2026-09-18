@@ -1,6 +1,9 @@
+import Faq from "@/app/components/sections/common/Faq";
 import PageHero from "@/app/components/sections/common/PageHero";
 import ConnectWithUs from "@/app/components/sections/Contact-Us/Connect";
 import ContactForm from "@/app/components/sections/Contact-Us/ContactForm";
+import ReadyToBuild from "@/app/components/sections/Contact-Us/ReadyTobuild";
+import { contactfaqs } from "@/app/lib/contactFAQS";
 
 export default function ContactUs() {
     return (
@@ -11,6 +14,8 @@ export default function ContactUs() {
             />
             <ConnectWithUs />
             <ContactForm />
+            <ReadyToBuild />
+            <Faq faqs={contactfaqs} />
         </>
     );
 }
