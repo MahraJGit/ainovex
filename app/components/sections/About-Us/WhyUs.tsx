@@ -1,41 +1,40 @@
-import Image from "next/image";
 import SectionGrid from "../../ui/SectionGrid";
 import Tag from "../../ui/Tag";
 import FeatureItem from "../../ui/FeatureItem";
 
 const features = [
   {
-    icon: "/icons/about/ownership.svg",
+    icon: "/icons/about/project-ownership.svg",
     title: "Project Ownership",
     description:
       "You receive complete ownership of all code, assets, and files once your project is successfully delivered.",
   },
   {
-    icon: "/icons/about/no-costs.svg",
+    icon: "/icons/about/zero-costs.svg",
     title: "Zero Hidden Costs",
     description:
       "Your quoted price is your final price. No surprise charges, no mid-project additions, no vague estimates.",
   },
   {
-    icon: "/icons/about/support.svg",
+    icon: "/icons/about/lifetime-support.svg",
     title: "Lifetime Support",
     description:
       "Our support continues after launch, ensuring timely fixes, updates, and improvements whenever required.",
   },
   {
-    icon: "/icons/about/collaboration.svg",
+    icon: "/icons/about/direct-collab.svg",
     title: "Direct Collaboration",
     description:
       "You get a dedicated point of contact, ensuring clear communication and timely updates throughout the project.",
   },
   {
-    icon: "/icons/about/growth.svg",
+    icon: "/icons/about/long-growth.svg",
     title: "Long Term Growth",
     description:
       "Every solution is built to scale with your business, eliminating costly rebuilds and growth limitations.",
   },
   {
-    icon: "/icons/about/delivery.svg",
+    icon: "/icons/about/time-delivery.svg",
     title: "On-Time Delivery",
     description:
       "We stick to agreed timelines, so your project launches when promised, means no unnecessary delays or missed deadlines.",

@@ -14,7 +14,7 @@ export default function FeatureItem({ icon, title, description }: FeatureItemPro
       </div>
       <div className="flex flex-col">
         <h3 className="text-[21px] font-medium text-[#161C2D]">{title}</h3>
-        <p className="mt-2 text-sm font-normal leading-[100%] text-text-black-v1/87 max-w-[280px]">
+        <p className="mt-2 text-md font-normal leading-snug text-text-black-v1/87 max-w-[280px]">
           {description}
         </p>
       </div>
