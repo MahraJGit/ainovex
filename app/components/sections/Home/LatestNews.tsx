@@ -1,16 +1,12 @@
 import Button from "../../ui/Button";
 import BlogCard from "../../ui/BlogCard";
-
-const posts = Array.from({ length: 6 }, (_, index) => ({
-  id: index + 1,
-  image: "/images/news/ai-trends.jpg",
-  title: "Top 10 Ai Trends to Watch in 2026",
-  readTime: "9 min read",
-  date: "May 14, 2026",
-  href: "/blog",
-}));
+import { posts } from "@/app/lib/post";
 
 export default function LatestNews() {
+  const latest = [...posts]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+
   return (
     <section id="latest-news" className="relative overflow-hidden bg-[#05080F]">
       <div className="section-container relative z-10 !pt-[104px] lg:!pt-[120px]">
@@ -19,14 +15,15 @@ export default function LatestNews() {
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
+          {latest.map((post) => (
             <BlogCard
-              key={post.id}
+              key={post.slug}
+              slug={post.slug}
               image={post.image}
               title={post.title}
-              readTime={post.readTime}
+              excerpt={post.excerpt}
               date={post.date}
-              href={post.href}
+              category={post.category}
             />
           ))}
         </div>

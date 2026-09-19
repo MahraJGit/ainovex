@@ -7,7 +7,6 @@ export type BlogCardProps = {
   image: string;
   title: string;
   excerpt: string;
-  readTime: number;
   date: string;
   category: string;
 };
@@ -17,12 +16,11 @@ export default function BlogCard({
   image,
   title,
   excerpt,
-  readTime,
   date,
   category,
 }: BlogCardProps) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border-4 border-white bg-[#05080F] transition-colors duration-300 hover:border-primary">
+    <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border-2 border-white bg-[#05080F] transition-colors duration-300 hover:border-primary">
 
       {/* Image */}
       <Link

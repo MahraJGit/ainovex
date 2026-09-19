@@ -19,7 +19,6 @@ export default function BlogGrid({ posts }: { posts: Post[] }) {
           image={post.image}
           title={post.title}
           excerpt={post.excerpt}
-          readTime={post.readTime}
           date={post.date}
           category={post.category}
         />
