@@ -78,4 +78,24 @@ export const posts: Post[] = [
     image: "/images/blog/blog-1.jpg",
     author: { name: "Ainovex Team", role: "Automation", avatar: "/images/blog/authors/team.png" },
   },
+  {
+    slug: "back-office-workflows",
+    category: "AI & Automation",
+    title: "Automating Back Office Work Nobody Wants To Do",
+    excerpt:
+      "Invoices, onboarding, reconciliation. The unglamorous workflows where automation pays for itself in weeks.",
+    date: "2026-08-19",
+    image: "/images/blog/blog-1.jpg",
+    author: { name: "Ainovex Team", role: "Automation", avatar: "/images/blog/authors/team.png" },
+  },
+  {
+    slug: "automating",
+    category: "AI & Automation",
+    title: "Automating Back Office Work Nobody Wants To Do",
+    excerpt:
+      "Invoices, onboarding, reconciliation. The unglamorous workflows where automation pays for itself in weeks.",
+    date: "2026-08-19",
+    image: "/images/blog/blog-1.jpg",
+    author: { name: "Ainovex Team", role: "Automation", avatar: "/images/blog/authors/team.png" },
+  },
 ];

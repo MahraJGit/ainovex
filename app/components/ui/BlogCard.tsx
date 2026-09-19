@@ -9,6 +9,7 @@ export type BlogCardProps = {
   excerpt: string;
   date: string;
   category: string;
+  variant?: "dark" | "light";
 };
 
 export default function BlogCard({
@@ -18,10 +19,18 @@ export default function BlogCard({
   excerpt,
   date,
   category,
+  variant = "dark",
 }: BlogCardProps) {
-  return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border-2 border-white bg-[#05080F] transition-colors duration-300 hover:border-primary">
+  const shadowStyle =
+    variant === "light"
+      ? "0 4px 18px rgba(0, 0, 0, 0.7)"
+      : "0 4px 18px rgba(120, 120, 120, 0.2)";
 
+  return (
+    <article
+      className="group flex h-full flex-col overflow-hidden rounded-[24px] bg-[#05080F] transition-all duration-300"
+      style={{ boxShadow: shadowStyle }}
+    >
       {/* Image */}
       <Link
         href={`/blog/${slug}`}
@@ -53,7 +62,7 @@ export default function BlogCard({
         <p className="flex-1 text-[15px] leading-[1.6] text-white/80">{excerpt}</p>
 
         {/* Footer */}
-        <div className="flex items-center justify-between gap-4 border-t border-primary pt-5">
+        <div className="flex items-center justify-between gap-4 border-t border-white/10 pt-5">
           <Link
             href={`/blog/${slug}`}
             className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition-colors duration-300 group-hover:text-primary"

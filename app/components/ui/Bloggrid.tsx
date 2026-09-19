@@ -1,5 +1,5 @@
-import type { Post } from "../../../lib/post";
-import BlogCard from "../../ui/BlogCard";
+import type { Post } from "../../lib/post";
+import BlogCard from "./BlogCard";
 
 export default function BlogGrid({ posts }: { posts: Post[] }) {
   if (posts.length === 0) {
@@ -21,6 +21,7 @@ export default function BlogGrid({ posts }: { posts: Post[] }) {
           excerpt={post.excerpt}
           date={post.date}
           category={post.category}
+          variant="light"
         />
       ))}
     </div>

@@ -27,7 +27,7 @@ export default function Faq({ faqs }: FaqProps) {
         height={480}
       />
 
-      <div className="section-container relative z-10 !pt-[104px] lg:!pt-[120px]">
+      <div className="section-container relative z-10 !pt-[104px] !pb-[104px] lg:!pt-[120px] lg:!pb-[120px]">
         <div className="mx-auto flex flex-col items-center text-center">
           <Tag label="FAQs" variant="outline" className="[&_span]:text-primary" />
           <h2 className="mt-6 max-w-3xl text-white">
@@ -35,7 +35,7 @@ export default function Faq({ faqs }: FaqProps) {
           </h2>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="mt-14 grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
           <div className="relative mx-auto w-full max-w-[480px] lg:mx-0">
             <Image
               src="/images/faq.png"
@@ -47,36 +47,42 @@ export default function Faq({ faqs }: FaqProps) {
             />
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
 
               return (
                 <div
                   key={faq.question}
-                  className="rounded-2xl border border-white/8 bg-[#0C1222]"
+                  className={`rounded-xl border transition-colors duration-300 ${isOpen
+                      ? "border-[#142023] bg-[#242424]/70"
+                      : "border-[#142023] bg-[#242424]/70 hover:border-white/15"
+                    }`}
                 >
                   <button
                     type="button"
                     aria-expanded={isOpen}
                     onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                    className="flex w-full items-start justify-between gap-4 px-5 py-5 text-left"
+                    className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left"
                   >
-                    <span className="text-base font-medium leading-[140%] text-white">
+                    <span className="text-base leading-[140%] text-white">
                       {faq.question}
                     </span>
-                    <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center text-primary">
+                    <span className="flex shrink-0 items-center justify-center text-primary">
                       {isOpen ? <IoClose size={20} /> : <IoAdd size={22} />}
                     </span>
                   </button>
 
-                  {isOpen && (
-                    <div className="px-5 pb-5">
-                      <p className="max-w-xl text-sm font-medium leading-[160%] text-white/65">
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                      }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="px-4 pb-4 max-w-xl text-sm font-medium leading-[160%] text-[#C1C1C1]">
                         {faq.answer}
                       </p>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}

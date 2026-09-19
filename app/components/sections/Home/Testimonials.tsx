@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import SectionGrid from "../../ui/SectionGrid";
 import Tag from "../../ui/Tag";
 import TestimonialCard from "../../ui/TestimonialCard";
@@ -104,19 +105,17 @@ export default function Testimonials() {
         <div className="mt-10 flex items-center justify-center gap-3">
           <button
             type="button"
-            aria-label="Previous testimonial"
-            onClick={() => setOffset((value) => (value - 1 + count) % count)}
-            className="flex size-12 items-center justify-center rounded-xl border border-black-v1/15 bg-white text-black-v1/70 transition-colors hover:border-black-v1/30 hover:text-black-v1"
+            aria-label="Previous success story"
+            className="flex size-12 items-center justify-center rounded-xl border border-black-v1/15 bg-white text-black-v1/70 transition-colors hover:text-white hover:bg-primary/90 hover:border-primary/80"
           >
-            <ChevronLeft />
+            <IoChevronBack size={22} />
           </button>
           <button
             type="button"
-            aria-label="Next testimonial"
-            onClick={() => setOffset((value) => (value + 1) % count)}
-            className="flex size-12 items-center justify-center rounded-xl bg-primary text-white transition-colors hover:bg-primary/90"
+            aria-label="Next success story"
+            className="flex size-12 items-center justify-center rounded-xl border border-black-v1/15 bg-white text-black-v1/70 transition-colors hover:text-white hover:bg-primary/90 hover:border-primary/80"
           >
-            <ChevronRight />
+            <IoChevronForward size={22} />
           </button>
         </div>
       </div>

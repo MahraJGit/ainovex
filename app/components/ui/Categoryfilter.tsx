@@ -1,6 +1,6 @@
 "use client";
 
-import { categories } from "../../../lib/post";
+import { categories } from "../../lib/post";
 
 interface Props {
   active: string;
