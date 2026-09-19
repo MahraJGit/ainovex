@@ -3,7 +3,6 @@ import SectionGrid from "../../ui/SectionGrid";
 export default function BlogHero({ total }: { total: number }) {
   return (
     <section className="relative overflow-hidden bg-black">
-      {/* Blue glow, same language as the other heroes */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-[520px]"
@@ -13,7 +12,8 @@ export default function BlogHero({ total }: { total: number }) {
         }}
       />
       <SectionGrid placement="center-dark" />
-<div className="header-padding" />
+      <div className="header-padding" />
+
       <div className="section-container relative z-10 pb-16 pt-40 text-center lg:pt-[230px]">
         <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-medium text-white backdrop-blur-md">
           <span className="h-1.5 w-1.5 rounded-full bg-[#38BDF8]" />

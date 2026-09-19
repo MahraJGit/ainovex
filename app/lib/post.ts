@@ -3,11 +3,10 @@ export interface Post {
   category: string;
   title: string;
   excerpt: string;
-  date: string;        // ISO date
-  readTime: number;    // minutes
+  date: string;
+  readTime: number;
   image: string;
   author: { name: string; role: string; avatar: string };
-  featured?: boolean;
 }
 
 export const categories = [
@@ -28,9 +27,8 @@ export const posts: Post[] = [
       "Every team wants an AI feature on the roadmap. The hard part is not the model, it is designing the moments where it is wrong and the user still stays with you.",
     date: "2026-09-15",
     readTime: 8,
-    image: "/icons/blog/ai.svg",
+    image: "/images/blog/blog-1.jpg",
     author: { name: "Ainovex Team", role: "Engineering", avatar: "/images/blog/authors/team.png" },
-    featured: true,
   },
   {
     slug: "cutting-cloud-spend-without-cutting-corners",
@@ -40,7 +38,7 @@ export const posts: Post[] = [
       "We reduced one client's monthly bill by 41 percent without touching a single feature. Here is the audit we run, step by step.",
     date: "2026-09-11",
     readTime: 6,
-    image: "/icons/blog/ai.svg",
+    image: "/images/blog/blog-1.jpg",
     author: { name: "Ainovex Team", role: "Cloud", avatar: "/images/blog/authors/team.png" },
   },
   {
@@ -51,7 +49,7 @@ export const posts: Post[] = [
       "Most systems die in the gap between Figma and production. The fix is boring, and it starts with naming things once.",
     date: "2026-09-09",
     readTime: 7,
-    image: "/icons/blog/ai.svg",
+    image: "/images/blog/blog-1.jpg",
     author: { name: "Ainovex Team", role: "Design", avatar: "/images/blog/authors/team.png" },
   },
   {
@@ -62,7 +60,7 @@ export const posts: Post[] = [
       "What got faster, what got harder, and the three patterns we now reach for on every new build.",
     date: "2026-09-02",
     readTime: 10,
-    image: "/icons/blog/ai.svg",
+    image: "/images/blog/blog-1.jpg",
     author: { name: "Ainovex Team", role: "Engineering", avatar: "/images/blog/authors/team.png" },
   },
   {
@@ -73,7 +71,7 @@ export const posts: Post[] = [
       "Reviews are where standards are taught, not enforced. Small changes to how we comment changed how fast we ship.",
     date: "2026-08-26",
     readTime: 5,
-    image: "/icons/blog/ai.svg",
+    image: "/images/blog/blog-1.jpg",
     author: { name: "Ainovex Team", role: "Engineering", avatar: "/images/blog/authors/team.png" },
   },
   {
@@ -84,7 +82,7 @@ export const posts: Post[] = [
       "Invoices, onboarding, reconciliation. The unglamorous workflows where automation pays for itself in weeks.",
     date: "2026-08-19",
     readTime: 6,
-    image: "/icons/blog/ai.svg",
+    image: "/images/blog/blog-1.jpg",
     author: { name: "Ainovex Team", role: "Automation", avatar: "/images/blog/authors/team.png" },
   },
 ];

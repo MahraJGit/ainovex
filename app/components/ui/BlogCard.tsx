@@ -1,64 +1,72 @@
 import Image from "next/image";
 import Link from "next/link";
+import { formatDate } from "@/app/lib/libFormat";
 
 export type BlogCardProps = {
+  slug: string;
   image: string;
   title: string;
-  readTime: string;
+  excerpt: string;
+  readTime: number;
   date: string;
-  href?: string;
-  icon?: string;
+  category: string;
 };
 
 export default function BlogCard({
+  slug,
   image,
   title,
+  excerpt,
   readTime,
   date,
-  href = "#",
-  icon = "/icons/blogs/ai.svg",
+  category,
 }: BlogCardProps) {
   return (
-    <article className="overflow-hidden rounded-t-2xl rounded-b-xl border border-white/8 bg-[#0C1222]">
-      <div className="relative">
+    <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border-4 border-white bg-[#05080F] transition-colors duration-300 hover:border-primary">
+
+      {/* Image */}
+      <Link
+        href={`/blog/${slug}`}
+        className="relative block aspect-[16/11] overflow-hidden"
+      >
         <Image
           src={image}
           alt={title}
-          width={420}
-          height={240}
-          className="h-50 w-full object-cover"
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
         />
-        <div className="absolute bottom-0 left-5 z-10 translate-y-1/2">
-          <Image
-            src={icon}
-            alt=""
-            width={64}
-            height={64}
-            className="size-16"
-            aria-hidden
-          />
-        </div>
-      </div>
+        <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-white">
+          {category}
+        </span>
+      </Link>
 
-      <div className="flex flex-col gap-5 px-5 pb-5 pt-10">
-        <h3 className="text-lg font-semibold leading-[130%] text-white">
-          {title}
+      {/* Content */}
+      <div className="flex flex-1 flex-col gap-4 p-6 transition-transform duration-500 ease-out group-hover:-translate-y-2">
+
+        {/* Title */}
+        <h3 className="text-[21px] font-bold leading-[1.25] text-white transition-colors duration-300 group-hover:text-primary">
+          <Link href={`/blog/${slug}`}>
+            {title}
+          </Link>
         </h3>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-lg border border-[#DEDEDE] px-2 py-1 text-xs font-medium text-white/60">
-            {readTime}
-          </span>
-          <span className="rounded-lg border border-[#DEDEDE] px-3 py-1 text-xs font-medium text-white/60">
-            {date}
-          </span>
+        {/* Excerpt */}
+        <p className="flex-1 text-[15px] leading-[1.6] text-white/80">{excerpt}</p>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between gap-4 border-t border-primary pt-5">
           <Link
-            href={href}
-            className="ml-auto inline-flex items-center justify-center rounded-[100px] bg-primary px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-primary/90"
+            href={`/blog/${slug}`}
+            className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition-colors duration-300 group-hover:text-primary"
           >
-            Read More
+            Read More <span aria-hidden>&rarr;</span>
           </Link>
+          <time dateTime={date} className="text-[12px] font-medium text-white/70">
+            {formatDate(date)}
+          </time>
         </div>
+
       </div>
     </article>
   );
