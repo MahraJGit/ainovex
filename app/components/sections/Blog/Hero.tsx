@@ -15,10 +15,6 @@ export default function BlogHero({ total }: { total: number }) {
       <div className="header-padding" />
 
       <div className="section-container relative z-10 pb-16 pt-40 text-center lg:pt-[230px]">
-        <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-medium text-white backdrop-blur-md">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#38BDF8]" />
-          {total} articles and counting
-        </span>
 
         <h1 className="mx-auto mt-8 max-w-[860px] text-[40px] font-medium leading-[1.1] text-white lg:text-[56px]">
           Notes From The <span className="font-bold text-[#38BDF8]">Build</span>
