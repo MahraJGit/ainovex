@@ -52,13 +52,14 @@ export default function ServicesHero() {
       <HeroGrid cell={130}/>
 
       {/* Text block, vertically centered in the space between navbar and network graphic */}
-      <div className="relative z-10 flex w-full flex-col items-center justify-center px-4 pb-8 pt-70 text-center">
-        <h1 className="mx-auto max-w-[820px] text-[36px] font-normal leading-[1.15] text-white sm:text-[46px] lg:text-[56px]">
+      <div className="header-padding" />
+      <div className="relative z-10 flex w-full flex-col items-center justify-center px-4 py-10 lg:px-8 lg:py-16 text-center">
+        <h1 className="mx-auto max-w-[820px] font-normal leading-[1.15] text-white sm:text-[46px] lg:text-[56px]">
           <span className="font-bold text-[#3FA9F5]">Turning</span> Bold Ideas
           into Measurable <span className="font-bold">Impact</span>
         </h1>
 
-        <p className="mx-auto mt-7 max-w-[580px] text-base font-normal leading-[1.4] text-white text-lg">
+        <p className="max-w-[580px] hero-desc">
           Your idea is the spark, but our execution is the fire that makes
           your business truly unstoppable.
         </p>

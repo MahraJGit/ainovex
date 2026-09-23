@@ -15,8 +15,9 @@ export default function DigitalGrowth() {
 
       <div className="section-container relative z-10 py-[104px]! lg:py-[120px]!">
         <div className="grid grid-cols-1 items-center lg:grid-cols-[1.2fr_1fr]">
-          {/* Left */}
-          <div>
+
+          {/* Left — centered below lg */}
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             <h2 className="text-[36px] font-bold leading-[1.25] tracking-[-2.25px] text-white lg:text-[48px]">
               The <span className="text-[#38BDF8]">Partner</span> Behind Your
               <br className="hidden sm:block" /> Digital Growth
@@ -28,8 +29,8 @@ export default function DigitalGrowth() {
             </p>
           </div>
 
-          {/* Right: feature pills */}
-          <div className="flex w-full flex-col gap-7 lg:items-center">
+          {/* Right: feature pills — centered below lg, mt for spacing on small screens */}
+          <div className="mt-10 flex w-full flex-col items-center gap-7 lg:mt-0">
             {items.map((item) => {
               const isRight = item.align === "right";
 
@@ -40,16 +41,13 @@ export default function DigitalGrowth() {
                     isRight ? "flex-row-reverse" : "flex-row"
                   }`}
                   style={{
-                    // Dark behind the icon, fading into #38BDF8 on the far side
                     background: `linear-gradient(${isRight ? "to left" : "to right"}, #05080F 0%, #05080F 20%, #38BDF8 92%)`,
                     boxShadow: "0 0 24px rgba(0,0,0,0.55)",
                   }}
                 >
-                  {/* White icon tile */}
                   <div className="flex h-[80px] w-[80px] shrink-0 items-center justify-center">
                     <Image src={item.icon} alt="" width={80} height={80} aria-hidden />
                   </div>
-
                   <span
                     className={`flex-1 text-[18px] font-medium text-white ${
                       isRight ? "text-right" : "text-left"
@@ -61,6 +59,7 @@ export default function DigitalGrowth() {
               );
             })}
           </div>
+
         </div>
       </div>
     </section>

@@ -67,19 +67,19 @@ export default function Industries() {
   return (
     <section id="industries" className="relative overflow-hidden bg-[#05080F]">
       <SectionGrid placement="left" width="60%" />
-      <div className="section-container relative z-10 py-[104px]! lg:py-[120px]!">
-        <div className="mx-auto flex flex-col items-center text-center">
+      <div className="section-container relative z-10 py-16 md:py-[104px]! lg:py-[120px]!">
+        <div className="mx-auto flex flex-col items-center text-center px-4 md:px-0">
           <Tag label="Industries We Serve" />
-          <h2 className="my-6 text-white max-w-3xl">
+          <h2 className="my-4 md:my-6 text-white max-w-3xl text-2xl md:text-3xl lg:text-4xl">
             <span className="text-primary">Building Success</span> Across Diverse Markets
           </h2>
-          <p className="text-base font-medium leading-[100%] text-white/80">
+          <p className="text-sm md:text-base font-medium leading-relaxed md:leading-[100%] text-white/80 max-w-[90%] md:max-w-none">
             We deliver industry focused digital solutions designed to address unique challenges, audiences, and growth opportunities.
           </p>
         </div>
 
         <div
-          className="flex flex-col mt-16 gap-y-8"
+          className="flex flex-col mt-8 md:mt-16 gap-y-4 md:gap-y-8"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleSectionLeave}
         >
@@ -93,7 +93,7 @@ export default function Industries() {
           ))}
         </div>
 
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center mt-8 md:mt-16">
           <Button variant="solid">View All</Button>
         </div>
       </div>

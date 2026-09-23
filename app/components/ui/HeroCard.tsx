@@ -8,39 +8,30 @@ export type HeroCardProps = {
   size?: "md" | "sm";
 };
 
-// Splits "98%", "150+", "24/7" into the big number and the small suffix
 function parseMetric(metric: string) {
   const match = metric.match(/^([\d.,]+)(.*)$/);
   if (!match) return { value: metric, suffix: null };
   return { value: match[1], suffix: match[2] || null };
 }
 
-// Fill: WHITE radial gradient at low opacity, lit from the top left corner.
-// Because it's only white with transparency, it tints whatever is behind it:
-// grey on the black About hero, light blue on the blue landing hero.
 const cardFill: CSSProperties = {
   background:
     "radial-gradient(circle farthest-corner at 0% 0%, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.23) 40%, rgba(255,255,255,0.10) 75%, rgba(255,255,255,0.04) 100%) padding-box",
   borderWidth: "1px",
   borderStyle: "solid",
-  borderTopColor: "rgba(255,255,255,0.40)",
-  borderLeftColor: "rgba(255,255,255,0.40)",
-  borderRightColor: "rgba(255,255,255,0.40)",
-  borderBottomColor: "rgba(255,255,255,0.40)",
+  borderColor: "rgba(255,255,255,0.40)",
 };
 
-
 const sizes = {
-  // Landing page
   md: {
-    card: "min-h-[210px] min-w-[200px] rounded-[30px] pt-6 pl-5 pr-6 pb-9",
-    icon: 54,
-    text: "pl-1 gap-4",
-    value: "text-[46px]",
-    suffix: "text-[24px]",
-    label: "text-base",
+    // fluid — no fixed min-w, height scales with breakpoints
+    card: "w-full rounded-[20px] p-4 min-h-[140px] sm:rounded-[30px] sm:pt-6 sm:pl-5 sm:pr-6 sm:pb-9 sm:min-h-[210px]",
+    icon: 36,
+    text: "pl-0 gap-2 sm:pl-1 sm:gap-4",
+    value: "text-[28px] sm:text-[36px] lg:text-[46px]",
+    suffix: "text-[14px] sm:text-[18px] lg:text-[24px]",
+    label: "text-[11px] sm:text-sm lg:text-base",
   },
-  // About Us hero, Figma values: 137 x 142, radius 20.72
   sm: {
     card: "h-[142px] w-[137px] rounded-[20.72px] pt-4 px-3 pb-[24px]",
     icon: 36,
@@ -57,13 +48,17 @@ export default function HeroCard({ icon, metric, label, size = "md" }: HeroCardP
 
   return (
     <article
-      className={`relative flex flex-col  backdrop-blur-md ${s.card}`}
+      className={`relative flex flex-col backdrop-blur-md ${s.card}`}
       style={cardFill}
     >
-      {/* Gradient border ring */}
-      
-
-      <Image src={icon} alt="" width={s.icon} height={s.icon} aria-hidden />
+      <Image
+        src={icon}
+        alt=""
+        width={s.icon}
+        height={s.icon}
+        aria-hidden
+        className={size === "md" ? "w-8 h-8 sm:w-[54px] sm:h-[54px]" : ""}
+      />
 
       <div className={`mt-auto flex flex-col ${s.text}`}>
         <span className={`font-normal leading-none text-white ${s.value}`}>

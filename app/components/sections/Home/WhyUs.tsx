@@ -64,7 +64,7 @@ export default function WhyUs() {
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 justify-items-center gap-y-4 gap-x-8 md:grid-cols-[max-content_max-content] md:justify-center">
+        <div className="mt-14 grid grid-cols-1 justify-items-center gap-y-4 gap-x-6 md:grid-cols-2 md:max-w-[700px] md:mx-auto lg:max-w-none lg:gap-x-8 lg:grid-cols-[max-content_max-content] lg:justify-center">
           {features.map((feature) => (
             <FeatureItem key={feature.title} {...feature} />
           ))}

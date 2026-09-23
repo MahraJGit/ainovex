@@ -11,22 +11,19 @@
   --font-montserrat: "Montserrat", sans-serif;
 }
 
-
 @layer base {
   body {
     @apply font-montserrat;
   }
 
-  h1{
-    @apply text-[48px] md:text-[58px] lg:text-[64px] font-medium leading-[100%] tracking-[-3%] text-white;
+  h1 {
+    @apply text-[32px] sm:text-[48px] md:text-[58px] lg:text-[64px] font-medium leading-[100%] tracking-[-3%] text-white;
   }
-  h2{
-    @apply text-[48px] font-bold leading-[100%] tracking-[-2.25%];
+
+  h2 {
+    @apply text-[28px] md:text-[36px] lg:text-[48px] font-bold leading-[100%] tracking-[-2.25%];
   }
 }
-
-
-
 
 .cursor {
   display: inline-block;
@@ -40,25 +37,27 @@
   }
 }
 
-.hero-desc{
-  @apply text-[18px] font-medium leading-[100%] text-white my-8 max-w-[600px] text-center;
+.hero-desc {
+  @apply text-[14px] md:text-[16px] lg:text-[18px] font-medium leading-[135%] text-white my-6 lg:my-8 max-w-[600px] text-center;
 }
 
-.section-container{
+.section-container {
   @apply max-w-7xl mx-auto px-4 lg:px-8 py-8 lg:py-16;
 }
-.section-container-fluid{
+
+.section-container-fluid {
   @apply w-full mx-auto px-4 lg:px-8 py-8 lg:py-16;
 }
 
 .header-padding {
-  @apply pt-24 md:pt-28 lg:pt-32;
+  @apply pt-32;
 }
 
 @keyframes marquee {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }
@@ -82,24 +81,4 @@
   syntax: "<percentage>";
   inherits: false;
   initial-value: 0%;
-}
-
-/* Reserves the bold width up front, so hovering never shifts the other links */
-.nav-link {
-  position: relative;
-  display: inline-block;
-}
-
-.nav-link::after {
-  content: attr(data-text);
-  display: block;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  font-weight: 700;
-  pointer-events: none;
-}
-
-.nav-link:hover {
-  font-weight: 700;
 }

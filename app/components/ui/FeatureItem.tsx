@@ -9,12 +9,12 @@ interface FeatureItemProps {
 export default function FeatureItem({ icon, title, description }: FeatureItemProps) {
   return (
     <article className="flex w-full max-w-[420px] gap-5 pb-9">
-      <div className="size-[80px] shrink-0">
-        <Image src={icon} alt="" width={80} height={80} className="size-[80px]" aria-hidden />
+      <div className="size-[60px] md:size-[80px] shrink-0">
+        <Image src={icon} alt="" width={80} height={80} className="size-[60px] md:size-[80px]" aria-hidden />
       </div>
       <div className="flex flex-col">
-        <h3 className="text-[21px] font-medium text-[#161C2D]">{title}</h3>
-        <p className="mt-2 text-md font-normal leading-snug text-text-black-v1/87 max-w-[280px]">
+        <h3 className="text-[18px] md:text-[21px] font-medium text-[#161C2D]">{title}</h3>
+        <p className="mt-2 text-sm md:text-md font-normal leading-snug text-text-black-v1/87">
           {description}
         </p>
       </div>

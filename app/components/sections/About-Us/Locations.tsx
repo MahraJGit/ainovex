@@ -96,7 +96,7 @@ export default function Locations() {
           <span className="text-primary">Ainovex</span> Locations
         </h2>
 
-        <div className="grid grid-cols-1 gap-[32.5px] md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-[32.5px] md:grid-cols-2 lg:grid-cols-3">
           {locations.map((location) => (
             <LocationCard key={location.title} {...location} />
           ))}

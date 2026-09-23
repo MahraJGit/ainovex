@@ -9,6 +9,7 @@ export type TestimonialCardProps = {
   rating?: number;
   active?: boolean;
   tilt?: "cw" | "ccw";
+  className?: string;
 };
 
 const CARD_SHAPE =
@@ -18,14 +19,7 @@ function Stars({ count }: { count: number }) {
   return (
     <div className="flex items-center gap-0.5" aria-hidden>
       {Array.from({ length: count }).map((_, index) => (
-        <svg
-          key={index}
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="#F5C518"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg key={index} width="14" height="14" viewBox="0 0 24 24" fill="#F5C518">
           <path d="M12 2.5l2.47 6.53 6.91.42-5.4 4.27 1.86 6.68L12 16.9l-5.84 3.5 1.86-6.68-5.4-4.27 6.91-.42L12 2.5z" />
         </svg>
       ))}
@@ -41,9 +35,17 @@ export default function TestimonialCard({
   rating = 5,
   active = false,
   tilt = "ccw",
+  className,
 }: TestimonialCardProps) {
   return (
-    <div className="relative w-[345px] shrink-0 pt-[40px]">
+    <div
+      className={cn(
+        "relative w-[345px] shrink-0 pt-[40px]",
+        "md:scale-[0.75] lg:scale-[0.88] xl:scale-100",
+        "md:origin-top lg:origin-top",
+        className
+      )}
+    >
       <div
         aria-hidden
         className={cn(
@@ -71,27 +73,15 @@ export default function TestimonialCard({
       </svg>
 
       <div className="absolute -top-[10px] left-1/2 z-[2] size-[80px] -translate-x-1/2 overflow-hidden rounded-full">
-        <Image
-          src={avatar}
-          alt={name}
-          width={80}
-          height={80}
-          className="size-full object-cover"
-        />
+        <Image src={avatar} alt={name} width={80} height={80} className="size-full object-cover" />
       </div>
 
       <div className="relative z-[2] flex h-[405px] flex-col px-6 pb-6 pt-[70px]">
         <div className="mb-4 flex items-center gap-2">
-          <span className="text-sm font-semibold text-black-v1">
-            {rating.toFixed(1)}
-          </span>
+          <span className="text-sm font-semibold text-black-v1">{rating.toFixed(1)}</span>
           <Stars count={Math.round(rating)} />
         </div>
-
-        <p className="text-sm font-medium leading-[160%] text-black-v1/80">
-          {quote}
-        </p>
-
+        <p className="text-sm font-medium leading-[160%] text-black-v1/80">{quote}</p>
         <div className="mt-auto">
           <p className="text-base font-semibold text-black-v1">{name}</p>
           <p className="mt-1 text-sm font-medium text-black-v1/55">{role}</p>

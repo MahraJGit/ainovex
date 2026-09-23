@@ -19,12 +19,10 @@ export default function Header() {
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
 
-    // Close the menu on route change
     useEffect(() => {
         setOpen(false);
     }, [pathname]);
 
-    // Close it again if the screen grows past the breakpoint
     useEffect(() => {
         const mq = window.matchMedia("(min-width: 990px)");
         const onChange = (e: MediaQueryListEvent) => e.matches && setOpen(false);
@@ -49,25 +47,20 @@ export default function Header() {
                         />
                     </Link>
 
-                    {/* Desktop navigation: centered from 990 to 1024, right aligned above that */}
+                    {/* Desktop navigation */}
                     <nav className="hidden flex-1 items-center justify-center gap-4 px-4 min-[990px]:flex min-[1025px]:justify-end min-[1180px]:gap-6 min-[1180px]:px-8 min-[1280px]:gap-8 min-[1280px]:px-12">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
-
                             return (
                                 <Link
                                     key={link.label}
                                     href={link.href}
-                                    className={`group/nav relative flex h-[82px] items-center whitespace-nowrap text-[14px] text-white ${
-                                        isActive ? "font-bold" : "font-normal"
-                                    }`}
+                                    className={`group/nav relative flex h-[82px] items-center whitespace-nowrap text-[14px] text-white ${isActive ? "font-bold" : "font-normal"
+                                        }`}
                                 >
-                                    {/* Normal label, fades out under the bubble */}
                                     <span className="transition-opacity duration-200 group-hover/nav:opacity-0">
                                         {link.label}
                                     </span>
-
-                                    {/* Magnifier bubble: absolute, so neighbours never move */}
                                     <span
                                         aria-hidden
                                         className="pointer-events-none absolute left-1/2 top-1/2 flex h-[58px] -translate-x-1/2 -translate-y-1/2 scale-75 items-center justify-center rounded-full border border-white/40 bg-white/15 px-5 opacity-0 shadow-[0_6px_20px_rgba(0,0,0,0.18)] backdrop-blur-[6px] transition-all duration-300 ease-out group-hover/nav:scale-100 group-hover/nav:opacity-100"
@@ -81,9 +74,9 @@ export default function Header() {
                         })}
                     </nav>
 
-                    {/* CTA stays in place at every size */}
                     <div className="flex shrink-0 items-center gap-3">
-                        <div className="[&_*]:whitespace-nowrap">
+                        {/* CTA — hidden on mobile, visible from 990px */}
+                        <div className="[&_*]:whitespace-nowrap hidden min-[640px]:block">
                             <Button variant="solid">Schedule a meeting</Button>
                         </div>
 
@@ -98,45 +91,39 @@ export default function Header() {
                         >
                             <span className="relative block h-4 w-5">
                                 <span
-                                    className={`absolute left-0 block h-[2px] w-5 rounded bg-white transition-transform duration-300 ${
-                                        open ? "top-[7px] rotate-45" : "top-0"
-                                    }`}
+                                    className={`absolute left-0 block h-[2px] w-5 rounded bg-white transition-transform duration-300 ${open ? "top-[7px] rotate-45" : "top-0"
+                                        }`}
                                 />
                                 <span
-                                    className={`absolute left-0 top-[7px] block h-[2px] w-5 rounded bg-white transition-opacity duration-200 ${
-                                        open ? "opacity-0" : "opacity-100"
-                                    }`}
+                                    className={`absolute left-0 top-[7px] block h-[2px] w-5 rounded bg-white transition-opacity duration-200 ${open ? "opacity-0" : "opacity-100"
+                                        }`}
                                 />
                                 <span
-                                    className={`absolute left-0 block h-[2px] w-5 rounded bg-white transition-transform duration-300 ${
-                                        open ? "top-[7px] -rotate-45" : "top-[14px]"
-                                    }`}
+                                    className={`absolute left-0 block h-[2px] w-5 rounded bg-white transition-transform duration-300 ${open ? "top-[7px] -rotate-45" : "top-[14px]"
+                                        }`}
                                 />
                             </span>
                         </button>
                     </div>
                 </div>
 
-                {/* Mobile menu: sibling of the bar, NOT inside it, so its own blur works */}
+                {/* Mobile menu */}
                 <nav
                     id="mobile-nav"
-                    className={`absolute left-0 right-0 top-[94px] origin-top rounded-[24px] border border-white/20 bg-gradient-to-l from-white/10 to-white/30 p-3 shadow-[0_8px_51.7px_0_rgba(0,0,0,0.10)] backdrop-blur-md transition-all duration-200 min-[990px]:hidden ${
-                        open
-                            ? "pointer-events-auto translate-y-0 opacity-100"
-                            : "pointer-events-none -translate-y-2 opacity-0"
-                    }`}
+                    className={`absolute left-0 right-0 top-[94px] origin-top rounded-[24px] border border-white/20 bg-gradient-to-l from-white/10 to-white/30 p-3 shadow-[0_8px_51.7px_0_rgba(0,0,0,0.10)] backdrop-blur-md transition-all duration-200 min-[990px]:hidden ${open
+                        ? "pointer-events-auto translate-y-0 opacity-100"
+                        : "pointer-events-none -translate-y-2 opacity-0"
+                        }`}
                 >
                     <ul className="flex flex-col">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
-
                             return (
                                 <li key={link.label}>
                                     <Link
                                         href={link.href}
-                                        className={`block rounded-2xl px-4 py-3 text-base text-white transition-colors hover:bg-white/15 ${
-                                            isActive ? "font-bold" : "font-normal"
-                                        }`}
+                                        className={`block rounded-2xl px-4 py-3 text-base text-white transition-colors hover:bg-white/15 ${isActive ? "font-bold" : "font-normal"
+                                            }`}
                                     >
                                         {link.label}
                                     </Link>
@@ -144,6 +131,10 @@ export default function Header() {
                             );
                         })}
                     </ul>
+                    {/* CTA inside mobile menu */}
+                    <div className="min-[640px]:hidden px-2 pt-2 pb-1 mt-1 border-t border-white/20">
+                        <Button variant="solid" className="w-full">Schedule a meeting</Button>
+                    </div>
                 </nav>
             </div>
         </header>
