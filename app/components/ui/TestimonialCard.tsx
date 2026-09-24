@@ -40,9 +40,10 @@ export default function TestimonialCard({
   return (
     <div
       className={cn(
-        "relative w-[345px] shrink-0 pt-[40px]",
-        "md:scale-[0.75] lg:scale-[0.88] xl:scale-100",
-        "md:origin-top lg:origin-top",
+        "relative pt-[40px] w-[345px] shrink-0",
+        "scale-[0.85] origin-top",       // mobile: scale down to fit
+        "md:scale-[0.82] md:origin-top", // tablet: 2 cards
+        "xl:scale-[0.88] 2xl:scale-100", // desktop+
         className
       )}
     >
@@ -51,7 +52,7 @@ export default function TestimonialCard({
         className={cn(
           "absolute inset-x-1 bottom-0 top-[35px] -z-0 rounded-[16px]",
           active ? "bg-primary" : "bg-[#E8E8E8]",
-          tilt === "cw" ? "rotate-[12deg]" : "rotate-[12deg]"
+          "rotate-[12deg]"
         )}
       />
 

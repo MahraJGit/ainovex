@@ -59,7 +59,7 @@ export default function ContactForm() {
           onSubmit={handleSubmit}
           className="w-full max-w-[872px] rounded-[19px] border border-white bg-white/10 p-[50px] backdrop-blur-[2px]"
         >
-          <h2 className="text-[32px] font-bold leading-tight text-white">Send Us a Message</h2>
+          <h2 className="text-[32px] font-bold leading-tight text-white whitespace-nowrap">Send Us a Message</h2>
           <p className="mt-3 max-w-[790px] text-[16px] font-normal leading-[1.5] text-white">
             Have a question about our services or a project you'd like to discuss? Fill out the form
             below, and we'll get back to you shortly.

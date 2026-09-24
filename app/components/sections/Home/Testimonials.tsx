@@ -32,11 +32,10 @@ const testimonials = [
 
 const tilts = ["cw", "ccw", "ccw"] as const;
 
-// Per slot: which breakpoints should this slot be visible at
 const slotVisibility = [
-  "",              // slot 0: visible on all (md+ handled by TestimonialCard's !active logic)
-  "",              // slot 1: active card, always visible
-  "lg:block",      // slot 2: only on lg+
+  "hidden md:block",  // slot 0: hidden on mobile, shown on md+
+  "block",            // slot 1: always shown (active card)
+  "hidden xl:block",  // slot 2: hidden until xl (1280px+)
 ] as const;
 
 export default function Testimonials() {
@@ -65,7 +64,7 @@ export default function Testimonials() {
         </div>
 
         {/* Cards */}
-        <div className="mt-20 flex flex-col items-center justify-center gap-8 py-6 md:flex-row md:items-start md:justify-between md:gap-0 overflow-hidden">
+        <div className="mt-16 flex justify-center gap-0 py-6 overflow-hidden md:justify-evenly">
           {visible.map((item, index) => (
             <TestimonialCard
               key={`${item.name}-${offset}`}
@@ -78,7 +77,7 @@ export default function Testimonials() {
         </div>
 
         {/* Nav buttons */}
-        <div className="mt-10 flex items-center justify-center gap-3">
+        <div className="mt-6 flex items-center justify-center gap-3">
           <button
             type="button"
             onClick={() => setOffset((o) => (o - 1 + count) % count)}

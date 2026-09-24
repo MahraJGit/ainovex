@@ -33,8 +33,8 @@ export default function ClientSuccessStories() {
           <h2 className="mt-6 text-text-black-v1">
             Where Our Words{" "}
             <span className="text-primary">Speaks Louder</span>
-            <br />
-            Than Words
+            <br className="hidden md:block"/>
+            {" "}Than Words
           </h2>
           <p className="mt-4 text-base max-w-[563px] font-normal leading-snug text-ink">
             Real campaigns, real impact, and real growth stories from clients who

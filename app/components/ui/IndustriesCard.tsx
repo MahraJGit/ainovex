@@ -32,36 +32,40 @@ export default function IndustriesCard({ number, title, href, isActive = false }
   return (
     <div
       className="relative w-full bg-white rounded-2xl py-6 px-6 md:py-8 md:px-10
-        flex flex-col items-center lg:flex-row lg:justify-between lg:items-center lg:h-[300px]"
+        flex flex-col items-center lg:flex-row lg:items-center lg:justify-between lg:h-[300px]"
       style={{
         outline: isActive ? "1px solid transparent" : "1px solid #e5e7eb",
         outlineOffset: "-1px",
         transition: "outline-color 0.8s ease-in-out",
       }}
     >
-      {/* Number — centered on mobile/tablet */}
+      {/* Number — shrink-0 so it never squishes, fixed width on desktop */}
       <h3
-        className="font-black leading-[100%] select-none
-          text-[80px] md:text-[120px] lg:text-[150px] xl:text-[195px]"
+        className="font-black leading-[100%] select-none shrink-0
+          text-[80px] md:text-[120px] lg:text-[150px] xl:text-[195px]
+          lg:w-[220px] xl:w-[280px]"
         style={numberStyle}
       >
         {number}
       </h3>
 
-      {/* Title + mobile arrow inline */}
-      <div className="flex items-center justify-between w-full lg:block lg:w-auto">
-        <h4 className="font-black leading-[100%] text-black
-          text-[20px] md:text-[32px] lg:text-[38px] xl:text-[50px]">
+      {/* Mobile/tablet: title centered + arrow below, Desktop: title left + arrow far right */}
+      <div className="flex flex-col items-center gap-4 w-full lg:flex-row lg:flex-1 lg:min-w-0 lg:items-center lg:justify-between lg:px-4">
+        <h4
+          className="font-black leading-[100%] text-black min-w-0
+      text-[20px] md:text-[32px] lg:text-[34px] xl:text-[50px] tracking-[-2%]
+      text-center lg:text-left"
+        >
           {title}
         </h4>
 
-        {/* Arrow right after title — mobile/tablet only */}
-        <div className="lg:hidden shrink-0 ml-4 bg-primary rounded-full p-2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+        {/* Arrow — mobile/tablet only */}
+        <div className="lg:hidden shrink-0 bg-primary rounded-full p-2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
           <Image src="/icons/right-arrow.svg" alt="Arrow Right" width={24} height={24} />
         </div>
       </div>
 
-      {/* Arrow desktop — far right */}
+      {/* Arrow — desktop only */}
       <div className="hidden lg:flex bg-primary rounded-full p-2 w-16 h-16 items-center justify-center shrink-0">
         <Image src="/icons/right-arrow.svg" alt="Arrow Right" width={44} height={44} />
       </div>
