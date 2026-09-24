@@ -54,10 +54,10 @@ function LocationCard({ title, email, city, phone, image }: (typeof locations)[0
       <div
         className="absolute inset-y-0 right-0 w-[100%] overflow-hidden rounded-r-[24px]"
         style={{
-  WebkitMaskImage: SMOOTH_FADE,
-  maskImage: SMOOTH_FADE,
+          WebkitMaskImage: SMOOTH_FADE,
+          maskImage: SMOOTH_FADE,
 
-}}
+        }}
       >
         <Image
           src={image}
@@ -96,9 +96,11 @@ export default function Locations() {
           <span className="text-primary">Ainovex</span> Locations
         </h2>
 
-        <div className="grid grid-cols-1 gap-[32.5px] md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-[32.5px] justify-items-center md:grid-cols-2 lg:grid-cols-3">
           {locations.map((location) => (
-            <LocationCard key={location.title} {...location} />
+            <div key={location.title} className="w-full max-w-[400px] lg:max-w-none">
+              <LocationCard {...location} />
+            </div>
           ))}
         </div>
       </div>

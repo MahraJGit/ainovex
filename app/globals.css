@@ -21,7 +21,7 @@
   }
 
   h2 {
-    @apply text-[28px] md:text-[36px] lg:text-[48px] font-bold leading-[100%] tracking-[-2.25%];
+    @apply text-[26px] md:text-[36px] lg:text-[48px] font-bold leading-[100%] tracking-[-2.25%];
   }
 }
 

@@ -18,9 +18,8 @@ export default function DigitalGrowth() {
 
           {/* Left — centered below lg */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            <h2 className="text-[36px] font-bold leading-[1.25] tracking-[-2.25px] text-white lg:text-[48px]">
-              The <span className="text-[#38BDF8]">Partner</span> Behind Your
-              <br className="hidden sm:block" /> Digital Growth
+            <h2 className="font-bold text-white">
+              The <span className="text-[#38BDF8]">Partner</span> Behind Your Digital Growth
             </h2>
             <p className="mt-8 max-w-[490px] text-[16px] font-normal leading-[1.35] text-white">
               We don't just build products. We build businesses. Every solution

@@ -56,7 +56,7 @@ export default function WhyAinovex() {
       <SectionGrid placement="left" />
       <div className="section-container relative z-10 py-[104px]! lg:py-[120px]!">
 
-        <h2 className="text-center text-white mb-16 tracking-[-2.25px]">
+        <h2 className="text-center text-white mb-16">
           Why <span className="text-primary">Ainovex</span>?
         </h2>
 

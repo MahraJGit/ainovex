@@ -30,15 +30,14 @@ export default function ClientSuccessStories() {
         {/* Centered heading */}
         <div className="mx-auto flex flex-col items-center text-center gap-4 max-w-[852px] mb-16">
           <Tag label="Client Success Stories" />
-          <h2 className="mt-6 text-text-black-v1 tracking-[-2.25px] leading-15">
+          <h2 className="mt-6 text-text-black-v1">
             Where Our Words{" "}
             <span className="text-primary">Speaks Louder</span>
             <br />
             Than Words
           </h2>
-          <p className="mt-4 text-base font-normal leading-snug text-ink">
+          <p className="mt-4 text-base max-w-[563px] font-normal leading-snug text-ink">
             Real campaigns, real impact, and real growth stories from clients who
-            <br />
             chose Ainovex and never regretted it.
           </p>
         </div>

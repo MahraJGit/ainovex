@@ -70,7 +70,7 @@ export default function ServicesHero() {
       </div>
 
       {/* Network graphic pinned flush to the bottom of the section, lines run off the bottom edge */}
-      <div className="relative z-10 w-full">
+      <div className="relative z-10 w-full mt-20 md:mt-0">
         <NetworkGraphic />
       </div>
     </section>
