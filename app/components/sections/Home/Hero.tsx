@@ -35,7 +35,7 @@ export default function Hero() {
           loop
           playsInline
           poster="/home-hero-bg.png"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover block"
         />
       </div>
 
