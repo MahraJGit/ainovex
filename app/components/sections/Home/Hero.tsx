@@ -34,7 +34,7 @@ export default function Hero() {
           muted
           loop
           playsInline
-          poster="/home-hero=bg.png"
+          poster="/home-hero-bg.png"
           className="h-full w-full object-cover"
         />
       </div>
