@@ -11,6 +11,8 @@ const services = [
     { icon: "/icons/about/ai-robot.svg", title: "AI & Automation", href: "#" },
     { icon: "/icons/about/custom-software.svg", title: "Custom Software Development", href: "#" },
     { icon: "/icons/about/it.svg", title: "IT Consulting", href: "#" },
+    { icon: "/icons/about/it.svg", title: "QA & Testing", href: "#" },
+    { icon: "/icons/about/it.svg", title: "Enterprise Solutions", href: "#" }
 ];
 
 function ServiceCard({ icon, title, href }: { icon: string; title: string; href: string }) {
@@ -51,10 +53,6 @@ export default function ExpertServices() {
                             <ServiceCard key={service.title} {...service} />
                         ))}
                     </div>
-                </div>
-
-                <div className="mt-12 flex justify-center">
-                    <Button variant="solid">View All Services</Button>
                 </div>
             </div>
         </section>

@@ -40,7 +40,7 @@ export default function Hero() {
 
       <div className="header-padding" />
 
-      <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-7xl flex-col gap-8 md:justify-between px-4 py-10 lg:px-8 lg:py-16">
+      <div className="relative z-10 mx-auto flex  max-w-7xl flex-col gap-8 md:justify-between px-4 py-10 lg:px-8 lg:py-16">
 
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-center">
