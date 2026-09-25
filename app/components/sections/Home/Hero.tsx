@@ -26,7 +26,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative min-h-[100dvh] overflow-hidden">
+    <section id="hero" className="relative min-h-[100vh] overflow-hidden">
       <div className="absolute inset-0">
         <video
           src="/hero.webm"
