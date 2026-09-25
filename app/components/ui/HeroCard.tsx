@@ -35,7 +35,7 @@ const sizes = {
   sm: {
     card: "h-[142px] w-[137px] rounded-[20.72px] pt-4 px-3 pb-[24px]",
     icon: 36,
-    text: "pl-[10px] gap-[14px]",
+    text: "pl-[5px] gap-[14px]",
     value: "text-[30px]",
     suffix: "text-[16px]",
     label: "text-[10px]",

@@ -10,7 +10,7 @@ export default function TurnSkillsCard({
   description,
 }: TurnSkillsCardProps) {
   return (
-    <article className="rounded-3xl bg-white border p-4 max-w-[324px] h-full relative overflow-hidden">
+    <article className="rounded-3xl bg-white border p-4 lg:max-w-[324px] h-full relative overflow-hidden">
           <div className="absolute -top-0.5 left-0 h-2 w-full bg-[#38BDF8]" />
 
       {/* Icon circle */}

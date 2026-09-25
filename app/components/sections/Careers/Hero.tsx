@@ -37,7 +37,7 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex justify-center lg:justify-start">
-            <Button variant="solid">View Open Positions</Button>
+            <Button href="#current-openings" variant="solid">View Open Positions</Button>
           </div>
         </div>
       </div>

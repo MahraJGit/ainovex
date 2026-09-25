@@ -34,18 +34,18 @@ export default function HiringProcess() {
           </p>
         </div>
 
-        {/* Mobile: simple numbered list */}
-        <div className="flex flex-col gap-6 lg:hidden">
+        {/* Mobile + tablet: card → line → card → line */}
+        <div className="flex flex-col items-center lg:hidden">
           {steps.map((step, index) => (
-            <div key={step.step} className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
-                {index + 1}
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-primary/80 uppercase tracking-wide">{step.step}</p>
-                <h3 className="mt-0.5 text-[16px] font-bold text-white">{step.title}</h3>
-                <p className="mt-1 text-sm font-normal leading-snug text-white/60">{step.description}</p>
-              </div>
+            <div key={step.step} className="flex flex-col items-center w-full">
+              {index !== 0 && (
+                <HiringConnector side="straight" id={`mobile-${index}`} />
+              )}
+              <HiringStepCard
+                step={step.step}
+                title={step.title}
+                description={step.description}
+              />
             </div>
           ))}
         </div>

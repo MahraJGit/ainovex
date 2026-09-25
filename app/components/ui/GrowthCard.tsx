@@ -14,7 +14,7 @@ export default function GrowthCard({
   description,
 }: GrowthCardProps) {
   return (
-    <article className="flex h-[285px] w-full flex-col overflow-visible rounded-2xl bg-white p-[7px]">
+    <article className="flex h-[300px] w-full flex-col overflow-visible rounded-2xl bg-white p-[7px]">
       {/* Top image area */}
       <div className="relative h-[107px] w-full shrink-0 overflow-hidden rounded-2xl">
         <Image

@@ -31,24 +31,35 @@ export default function CareerGrowth() {
         </div>
 
         {/* Cards */}
-        <div className="mx-auto mt-16 flex max-w-[1072px] flex-col items-center gap-[26px]">
-          {/* Row 1 — 1 col mobile, 2 col sm, 3 col lg */}
-          <div className="grid w-full grid-cols-1 gap-[26px] sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
-            {row1.map((card) => (
-              <div key={card.title} className="w-full max-w-[340px]">
+        <div className="mx-auto mt-16 max-w-[1072px]">
+
+          {/* Mobile + sm: single flat 2-col grid, all 5 cards, last one centered */}
+          <div className="grid grid-cols-1 gap-[26px] sm:grid-cols-2 lg:hidden justify-items-center">
+            {cards.map((card) => (
+              <div key={card.title} className="w-full">
                 <GrowthCard {...card} />
               </div>
             ))}
           </div>
 
-          {/* Row 2 — 1 col mobile, 2 col sm, centered */}
-          <div className="grid w-full grid-cols-1 gap-[26px] sm:grid-cols-2 justify-items-center lg:flex lg:justify-center lg:gap-[51px]">
-            {row2.map((card) => (
-              <div key={card.title} className="w-full max-w-[340px]">
-                <GrowthCard {...card} />
-              </div>
-            ))}
+          {/* lg+: two rows, 3 + 2 */}
+          <div className="hidden lg:flex lg:flex-col lg:items-center lg:gap-[26px]">
+            <div className="grid w-full grid-cols-3 gap-[26px] justify-items-center">
+              {row1.map((card) => (
+                <div key={card.title} className="w-full max-w-[340px]">
+                  <GrowthCard {...card} />
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-center gap-[51px]">
+              {row2.map((card) => (
+                <div key={card.title} className="w-full max-w-[340px]">
+                  <GrowthCard {...card} />
+                </div>
+              ))}
+            </div>
           </div>
+
         </div>
       </div>
     </section>

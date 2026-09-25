@@ -22,24 +22,24 @@ interface PolicyContentProps {
 export default function PolicyContent({ intro, sections }: PolicyContentProps) {
   return (
     <section className="relative bg-white">
-      <SectionGrid placement="center" className="mt-5"/>
+      <SectionGrid placement="center" className="mt-5" />
 
       <div className="section-container relative z-10 py-[104px]! lg:py-[120px]!">
 
-        <p className="text-[20px] font-normal leading-snug text-[#878787]">
+        <p className="text-[15px] sm:text-[17px] lg:text-[20px] font-normal leading-snug text-[#878787]">
           {intro}
         </p>
 
-        <div className="mt-8 flex flex-col gap-8">
+        <div className="mt-8 flex flex-col gap-6 sm:gap-8">
           {sections.map((section) => {
             const inner = (
               <>
-                <h3 className="text-[32px] font-semibold leading-tight text-black">
+                <h3 className="text-[20px] sm:text-[24px] lg:text-[32px] font-semibold leading-tight text-black">
                   {section.title}
                 </h3>
 
                 {section.content && (
-                  <p className="mt-3 max-w-[1150px] text-[18px] font-normal leading-snug text-[#707070]">
+                  <p className="mt-3 max-w-[1150px] text-[14px] sm:text-[16px] lg:text-[18px] font-normal leading-snug text-[#707070]">
                     {section.content}
                   </p>
                 )}
@@ -48,9 +48,11 @@ export default function PolicyContent({ intro, sections }: PolicyContentProps) {
                   <div className="mt-3 flex flex-col gap-2">
                     {section.items.map((item) => (
                       <div key={item.label}>
-                        <p className="text-[18px] font-semibold text-black">{item.label}</p>
-                        <ul className="ml-12 list-disc">
-                          <li className="text-[18px] font-normal leading-snug text-[#707070]">
+                        <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-semibold text-black">
+                          {item.label}
+                        </p>
+                        <ul className="ml-6 sm:ml-10 lg:ml-12 list-disc">
+                          <li className="text-[14px] sm:text-[16px] lg:text-[18px] font-normal leading-snug text-[#707070]">
                             {item.detail}
                           </li>
                         </ul>
@@ -60,9 +62,12 @@ export default function PolicyContent({ intro, sections }: PolicyContentProps) {
                 )}
 
                 {section.bullets && (
-                  <ul className="mt-3 ml-8 list-disc flex flex-col gap-1">
+                  <ul className="mt-3 ml-5 sm:ml-6 lg:ml-8 list-disc flex flex-col gap-1">
                     {section.bullets.map((bullet) => (
-                      <li key={bullet} className="text-[18px] font-medium leading-snug text-ink">
+                      <li
+                        key={bullet}
+                        className="text-[14px] sm:text-[16px] lg:text-[18px] font-medium leading-snug text-ink"
+                      >
                         {bullet}
                       </li>
                     ))}
@@ -70,7 +75,7 @@ export default function PolicyContent({ intro, sections }: PolicyContentProps) {
                 )}
 
                 {section.additionalContent && (
-                  <p className="mt-3 max-w-[1150px] text-[18px] font-normal leading-snug text-[#707070]">
+                  <p className="mt-3 max-w-[1150px] text-[14px] sm:text-[16px] lg:text-[18px] font-normal leading-snug text-[#707070]">
                     {section.additionalContent}
                   </p>
                 )}
@@ -80,11 +85,11 @@ export default function PolicyContent({ intro, sections }: PolicyContentProps) {
             return section.highlighted ? (
               <div
                 key={section.title}
-                className="relative rounded-[16px] overflow-hidden bg-[#F2F2F2] py-6 pl-9 pr-8"
+                className="relative rounded-[16px] overflow-hidden bg-[#F2F2F2] py-5 pl-7 pr-6 sm:py-6 sm:pl-9 sm:pr-8"
               >
                 <span
                   aria-hidden
-                  className="absolute inset-y-0 left-0 w-[9px] bg-[#38BDF8]"
+                  className="absolute inset-y-0 left-0 w-[6px] sm:w-[9px] bg-[#38BDF8]"
                 />
                 {inner}
               </div>

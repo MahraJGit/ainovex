@@ -5,10 +5,9 @@ export default function ServicesHero() {
   return (
     <section
       id="services-hero"
-      className="relative flex min-h-[100dvh] flex-col overflow-hidden bg-black"
+      className="relative flex min-h-[100svh] flex-col overflow-hidden bg-black"
     >
-      {/* Glow: blurred blob shape traced from the Figma vector (532 x 673, rotated ~13deg).
-          Most of the shape sits above the section, so only its lower half shows, blurred. */}
+      {/* Glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute top-[-336px] z-0 h-[690px] w-[790px]"
@@ -48,12 +47,12 @@ export default function ServicesHero() {
         </svg>
       </div>
 
-      {/* Grid on top of the glow: neutral lines that pick up the blue where the light is */}
-      <HeroGrid cell={130}/>
+      {/* Grid */}
+      <HeroGrid cell={130} />
 
-      {/* Text block, vertically centered in the space between navbar and network graphic */}
+      {/* Content — flex-1 so it takes all space above the network graphic, centering text */}
       <div className="header-padding" />
-      <div className="relative z-10 flex w-full flex-col items-center justify-center px-4 py-10 lg:px-8 lg:py-16 text-center">
+      <div className="relative z-10 flex flex-1 w-full flex-col items-center justify-center px-4 py-10 lg:px-8 lg:py-16 text-center">
         <h1 className="mx-auto max-w-[820px] font-normal leading-[1.15] text-white sm:text-[46px] lg:text-[56px]">
           <span className="font-bold text-[#3FA9F5]">Turning</span> Bold Ideas
           into Measurable <span className="font-bold">Impact</span>
@@ -69,8 +68,8 @@ export default function ServicesHero() {
         </Button>
       </div>
 
-      {/* Network graphic pinned flush to the bottom of the section, lines run off the bottom edge */}
-      <div className="relative z-10 w-full mt-20 md:mt-0">
+      {/* Network graphic — always pinned flush to bottom, no margin */}
+      <div className="relative z-10 w-full">
         <NetworkGraphic />
       </div>
     </section>
@@ -78,7 +77,6 @@ export default function ServicesHero() {
 }
 
 function HeroGrid({ cell = 130 }: { cell?: number }) {
-  // Visible across the middle, fading toward the far edges and out before the network graphic
   const mask =
     "radial-gradient(ellipse 70% 75% at 50% 15%, black 0%, rgba(0,0,0,0.85) 45%, transparent 85%)";
 
@@ -103,7 +101,6 @@ function HeroGrid({ cell = 130 }: { cell?: number }) {
 type Pt = { x: number; y: number };
 
 function NetworkGraphic() {
-  // Nodes traced from the Figma frame, mapped to a 1600 x 274 viewBox
   const n: Record<string, Pt> = {
     k: { x: 2, y: 265 },
     a: { x: 187, y: 126 },
@@ -118,11 +115,10 @@ function NetworkGraphic() {
     j: { x: 1539, y: 126 },
   };
 
-  const B = 280; // below the viewBox so the legs run off the bottom edge
+  const B = 280;
   const p = (x: number, y: number): Pt => ({ x, y });
 
   const edges: Array<[Pt, Pt]> = [
-    // ridge and cross links
     [p(-5, 109), n.a],
     [n.a, n.b],
     [n.b, n.c],
@@ -137,8 +133,6 @@ function NetworkGraphic() {
     [n.h, n.i],
     [n.h, n.j],
     [n.j, n.i],
-
-    // legs down to the bottom edge
     [p(-5, 140), p(92, B)],
     [n.a, n.k],
     [n.a, p(170, B)],
@@ -164,7 +158,6 @@ function NetworkGraphic() {
     [n.i, p(1580, B)],
   ];
 
-  // Fade the whole graphic slightly toward the bottom, like the Figma
   const fade = "linear-gradient(to bottom, black 0%, black 55%, rgba(0,0,0,0.45) 100%)";
 
   return (
@@ -176,7 +169,6 @@ function NetworkGraphic() {
       style={{ maskImage: fade, WebkitMaskImage: fade }}
     >
       <defs>
-        {/* Position based color: lighter gray at the top, darker toward the bottom */}
         <linearGradient
           id="netShade"
           gradientUnits="userSpaceOnUse"

@@ -32,6 +32,13 @@ const reasons = [
       "Effort doesn't go unnoticed here. We celebrate the big wins and the quiet, consistent work that keeps everything moving forward.",
     col: 2,
   },
+  {
+    icon: "/icons/careers/projects.svg",
+    title: "Long Term Career Development",
+    description:
+      "We're not hiring for a role, we're investing in a career. Expect new challenges, new skills, and a clear path forward as you grow with us.",
+    col: 1,
+  },
 ];
 
 function ReasonCard({ icon, title, description }: { icon: string; title: string; description: string }) {
@@ -68,19 +75,19 @@ export default function WhyUs() {
           </div>
 
           {/* Right: staggered 2-col on sm+, single col on mobile */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-1">
-            <div className="flex flex-col gap-4 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-4 items-end lg:items-center">
               {col1.map((r) => <ReasonCard key={r.title} {...r} />)}
             </div>
-            <div className="flex flex-col gap-4 items-center sm:mt-[46px]">
+            <div className="flex flex-col gap-4 lg:items-center sm:mt-[46px]">
               {col2.map((r) => <ReasonCard key={r.title} {...r} />)}
             </div>
           </div>
         </div>
 
-        <div className="mt-8 flex justify-center">
+        {/* <div className="mt-8 flex justify-center">
           <Button variant="primary">View all</Button>
-        </div>
+        </div> */}
       </div>
     </section>
   );

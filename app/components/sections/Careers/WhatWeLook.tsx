@@ -13,9 +13,25 @@ const traits = [
 
 export default function WhatWeLookFor() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [lineRight, setLineRight] = useState("calc(420px + 4rem)");
+
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cursorPos = useRef<{ x: number; y: number } | null>(null);
   const rafId = useRef<number | null>(null);
+
+  useEffect(() => {
+    const updateRight = () => {
+      const w = window.innerWidth;
+      if (w >= 1440) setLineRight("calc(420px + 4rem)");
+      else if (w >= 1280) setLineRight("calc(350px + 4rem)");
+      else if (w >= 1024) setLineRight("calc(280px + 4rem)");
+      else setLineRight("calc(200px + 4rem)");
+    };
+
+    updateRight();
+    window.addEventListener("resize", updateRight);
+    return () => window.removeEventListener("resize", updateRight);
+  }, []);
 
   const updateActiveFromCursor = useCallback(() => {
     if (!cursorPos.current) { setActiveIndex(null); return; }
@@ -36,7 +52,10 @@ export default function WhatWeLookFor() {
       rafId.current = requestAnimationFrame(updateActiveFromCursor);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => { window.removeEventListener("scroll", handleScroll); if (rafId.current) cancelAnimationFrame(rafId.current); };
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+    };
   }, [updateActiveFromCursor]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -75,30 +94,65 @@ export default function WhatWeLookFor() {
           onMouseMove={handleMouseMove}
           onMouseLeave={handleSectionLeave}
         >
+          {/* Static grey vertical line */}
           <div className="absolute left-1/2 top-0 h-full w-[2px] -translate-x-1/2 bg-[#D8D8D8]" />
+
           <div className="flex flex-col">
             {traits.map((trait, index) => {
               const isActive = activeIndex === index;
+
               return (
                 <div
                   key={trait.number}
                   ref={(el) => { rowRefs.current[index] = el; }}
                   className="relative grid min-h-[240px] grid-cols-[1fr_auto_1fr] items-center gap-8 rounded-xl px-8"
-                  style={{ backgroundColor: isActive ? "#F7F7F7" : "transparent", transition: "background-color 0.6s ease" }}
+                  style={{
+                    backgroundColor: isActive ? "#F7F7F7" : "transparent",
+                    transition: "background-color 0.6s ease",
+                  }}
                 >
-                  <div className="absolute left-1/2 top-0 h-full w-[2px] -translate-x-1/2 origin-top bg-gradient-to-b from-[#38BDF8] to-[#2989FF]"
-                    style={{ transform: `scaleY(${isActive ? 1 : 0})`, transition: "transform 0.65s ease-in-out" }} />
-                  <div className="absolute left-30 right-[460px] top-1/2 h-px -translate-y-1/2"
-                    style={{ background: isActive ? "linear-gradient(to right, #38BDF8, #2989FF)" : "rgba(216,216,216,0.4)", transition: "background 0.6s ease" }} />
+                  {/* Active gradient vertical line overlay */}
+                  <div
+                    className="absolute left-1/2 top-0 h-full w-[2px] -translate-x-1/2 origin-top bg-gradient-to-b from-[#38BDF8] to-[#2989FF]"
+                    style={{
+                      transform: `scaleY(${isActive ? 1 : 0})`,
+                      transition: "transform 0.65s ease-in-out",
+                    }}
+                  />
+
+                  {/* Horizontal line */}
+                  <div
+                    className="absolute top-1/2 h-px -translate-y-1/2"
+                    style={{
+                      left: "calc(64px + 4rem)",
+                      right: lineRight,
+                      background: isActive
+                        ? "linear-gradient(to right, #38BDF8, #2989FF)"
+                        : "rgba(216,216,216,0.4)",
+                      transition: "background 0.6s ease",
+                    }}
+                  />
+
+                  {/* Left: Icon */}
                   <div className="relative z-10 flex justify-start">
                     <div className="flex h-16 w-16 shrink-0 items-center justify-center bg-white">
                       <Image src={trait.icon} alt="" width={64} height={64} aria-hidden />
                     </div>
                   </div>
-                  <div className="relative z-10 flex h-[34px] w-[52px] items-center justify-center rounded-full text-md"
-                    style={{ background: isActive ? "linear-gradient(to bottom, #38BDF8, #2989FF)" : "#D8D8D8", color: isActive ? "white" : "inherit", transition: "background 0.4s ease, color 0.4s ease" }}>
+
+                  {/* Center: Number badge */}
+                  <div
+                    className="relative z-10 flex h-[34px] w-[52px] shrink-0 items-center justify-center rounded-full text-md"
+                    style={{
+                      background: isActive ? "linear-gradient(to bottom, #38BDF8, #2989FF)" : "#D8D8D8",
+                      color: isActive ? "white" : "inherit",
+                      transition: "background 0.4s ease, color 0.4s ease",
+                    }}
+                  >
                     {trait.number}
                   </div>
+
+                  {/* Right: Text */}
                   <div className="relative z-10 ml-30">
                     <h3 className="text-[18px] font-bold">{trait.title}</h3>
                     <p className="mt-2 max-w-[393px] text-md font-normal leading-tight">{trait.description}</p>
@@ -113,9 +167,9 @@ export default function WhatWeLookFor() {
         <div className="flex flex-col gap-6 md:hidden">
           {traits.map((trait) => (
             <div key={trait.number} className="flex gap-4 rounded-xl bg-[#F7F7F7] p-5">
-              <Image src={trait.icon} alt="" width={40} height={40} aria-hidden className="shrink-0" />
+              <Image src={trait.icon} alt="" width={60} height={60} aria-hidden className="shrink-0" />
               <div>
-                <span className="text-xs font-bold text-primary">{trait.number}</span>
+                <span className="text-sm font-bold text-primary">{trait.number}</span>
                 <h3 className="text-[16px] font-bold mt-0.5">{trait.title}</h3>
                 <p className="mt-1 text-sm font-normal leading-snug text-black/70">{trait.description}</p>
               </div>

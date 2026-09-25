@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import SectionGrid from "../../ui/SectionGrid";
 import Button from "../../ui/Button";
 import JobCard from "../../ui/JobCard";
@@ -10,9 +12,18 @@ const jobs = [
   { title: "Odoo Developer", description: "This role suits someone who likes building and customizing business software. You'll set up, configure, and improve Odoo modules to help our clients run their operations more smoothly." },
   { title: "Civil Engineer", description: "We're looking for someone with a strong eye for planning and structure. You'll support project design, site assessments, and technical documentation for our engineering-related work." },
   { title: "Electrical Engineer", description: "This role is for someone who understands electrical systems and enjoys solving technical problems. You'll help design, review, and support electrical components across our projects." },
+  { title: "SEO Specialist", description: "If you love improving how websites rank and perform, this role is for you. You'll research keywords, optimize content, and help our clients get found by the right audience online." },
+  { title: "Content Writer", description: "This role suits someone who enjoys turning ideas into clear, engaging words. You'll write blogs, website content, and marketing copy that connects with our audience and reflects our brand." },
+  { title: "QA", description: "We need someone with a sharp eye for detail and a passion for quality. You'll test our websites, apps, and software to catch issues early and make sure every product works as it should." },
 ];
 
+const INITIAL_COUNT = 5;
+
 export default function CurrentOpenings() {
+  const [expanded, setExpanded] = useState(false);
+
+  const visibleJobs = expanded ? jobs : jobs.slice(0, INITIAL_COUNT);
+
   return (
     <section id="current-openings" className="relative overflow-hidden bg-white">
       <SectionGrid placement="left-light" />
@@ -35,14 +46,19 @@ export default function CurrentOpenings() {
 
         {/* Job list */}
         <div className="flex flex-col gap-4">
-          {jobs.map((job) => (
+          {visibleJobs.map((job) => (
             <JobCard key={job.title} {...job} />
           ))}
         </div>
 
         {/* CTA */}
         <div className="mt-12 flex justify-center">
-          <Button variant="primary">View All Openings</Button>
+          <Button
+            variant="primary"
+            onClick={() => setExpanded((prev) => !prev)}
+          >
+            {expanded ? "Show Less" : "View All Openings"}
+          </Button>
         </div>
       </div>
     </section>

@@ -27,38 +27,53 @@ const cards = [
 export default function MissionVision() {
   return (
     <section className="relative w-full overflow-hidden bg-white">
-  <div className="grid w-full grid-cols-1 md:grid-cols-3">
-    {cards.map((card) => (
-      <div key={card.tag} className="relative flex min-h-[307px] flex-col bg-white pb-10 pl-[34px] pr-8 pt-10">
-        {/* Blue bar: straight on the left, rounded on the inner right side */}
-        <span
-          aria-hidden
-          className="absolute inset-y-0 left-0 w-[10px] rounded-r-[10px] bg-[#38BDF8]"
-        />
+      <div className="grid w-full grid-cols-1 md:grid-cols-3">
+        {cards.map((card, index) => {
+          const isFirst = index === 0;
 
-        <span className="text-[16px] font-medium uppercase leading-none text-black">
-          {card.tag}
-        </span>
+          return (
+            <div
+              key={card.tag}
+              className="relative flex min-h-[307px] flex-col bg-white pb-10 pl-[34px] pr-8 pt-10"
+            >
+              {/* Left bar — md+ always, mobile only for first card: never */}
+              <span
+                aria-hidden
+                className="absolute inset-y-0 left-0 w-[10px] rounded-r-[10px] bg-[#38BDF8] hidden md:block"
+              />
 
-        <Image
-          src={card.icon}
-          alt={card.tag}
-          width={56}
-          height={56}
-          aria-hidden
-          className="mt-5 h-14 w-14"
-        />
+              {/* Top bar — mobile only, 2nd and 3rd cards only */}
+              {!isFirst && (
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-[10px] rounded-b-[10px] bg-[#38BDF8] md:hidden"
+                />
+              )}
 
-        <h3 className="mt-4 text-[24px] font-semibold leading-tight text-black">
-          {card.title}
-        </h3>
+              <span className="text-[16px] font-medium uppercase leading-none text-black">
+                {card.tag}
+              </span>
 
-        <p className="mt-4 max-w-[393px] text-[14px] font-medium leading-tight text-text-black-v1/87">
-          {card.description}
-        </p>
+              <Image
+                src={card.icon}
+                alt={card.tag}
+                width={56}
+                height={56}
+                aria-hidden
+                className="mt-5 h-14 w-14"
+              />
+
+              <h3 className="mt-4 text-[24px] font-semibold leading-tight text-black">
+                {card.title}
+              </h3>
+
+              <p className="mt-4 max-w-[393px] text-[14px] font-medium leading-tight text-text-black-v1/87">
+                {card.description}
+              </p>
+            </div>
+          );
+        })}
       </div>
-    ))}
-  </div>
-</section>
+    </section>
   );
 }
