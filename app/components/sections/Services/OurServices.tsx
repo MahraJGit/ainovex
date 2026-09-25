@@ -1,6 +1,6 @@
 import SectionGrid from "../../ui/SectionGrid";
-import Button from "../../ui/Button";
 import ServiceCard from "../../ui/ServiceCard";
+import Tag from "../../ui/Tag";
 import { services } from "../../../lib/services";
 
 export default function OurServices() {
@@ -8,9 +8,9 @@ export default function OurServices() {
     <section id="our-services" className="relative overflow-hidden bg-[#05080F]">
       <SectionGrid placement="left" />
 
-      <div className="section-container relative z-10 pt-[104px]! lg:py-[120px]!">
+      <div className="section-container relative z-10 !pt-[104px] lg:!pt-[120px] pb-20">
         <div className="mb-12 flex flex-col items-center text-center">
-          <h2 className="text-white tracking-[-2.25px]">
+          <h2 className="mt-6 max-w-[770px] text-white">
             Our <span className="text-primary">Services</span>
           </h2>
         </div>
@@ -19,10 +19,6 @@ export default function OurServices() {
           {services.map((service) => (
             <ServiceCard key={service.title} {...service} />
           ))}
-        </div>
-
-        <div className="mt-12 flex justify-center">
-          <Button variant="solid">View All Services</Button>
         </div>
       </div>
     </section>

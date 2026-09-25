@@ -132,7 +132,7 @@ export default function Header() {
                         })}
                     </ul>
                     {/* CTA inside mobile menu */}
-                    <div className="min-[640px]:hidden px-2 pt-2 pb-1 mt-1 border-t border-white/20">
+                    <div className="min-[640px]:hidden px-2 pt-2 pb-1 mt-1">
                         <Button variant="solid" className="w-full">Schedule a meeting</Button>
                     </div>
                 </nav>

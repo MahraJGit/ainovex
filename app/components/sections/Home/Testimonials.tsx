@@ -8,23 +8,37 @@ import TestimonialCard from "../../ui/TestimonialCard";
 
 const testimonials = [
   {
-    quote: "Ainovex helped us rebuild our digital presence from the ground up. Their team understood our market, moved quickly, and delivered a platform that actually converts.",
+    quote: "Our iOS and Android app launched without a single major bug. User retention jumped 40% in the first month. Ainovex truly understands mobile.",
     name: "Sarah Mitchell",
-    role: "Marketing Director, Nova Retail",
+    role: "Founder, Nova Retail",
     avatar: "/images/testimonials/sarah.jpg",
     rating: 5,
   },
   {
-    quote: "Working with Ainovex felt like adding a dedicated growth partner. Strategy, execution, and reporting were all clear — and the results showed up in the first quarter.",
+    quote: "Ainovex built our corporate website from scratch. Page speed improved drastically, bounce rate dropped, and we started ranking on Google within weeks. Their team delivered exactly what they promised, on time and within budget.",
     name: "James Carter",
     role: "CEO, BrightPath Logistics",
     avatar: "/images/testimonials/james.jpg",
     rating: 5,
   },
   {
-    quote: "They took a complex set of services and turned them into a clean, high-performing website. Communication was excellent and every milestone landed on time.",
-    name: "Daniel Brooks",
-    role: "Founder, NorthPeak Media",
+    quote: "We were burning money on ads with zero ROI. Ainovex restructured our entire campaign strategy. Lead quality improved significantly, and our cost per acquisition dropped by almost half.",
+    name: "Daniel Rowe",
+    role: "Marketing Director, NorthPeak Media",
+    avatar: "/images/testimonials/daniel.jpg",
+    rating: 5,
+  },
+  {
+    quote: "Our organic traffic tripled in six months. Ainovex's SEO strategy put us on page one for keywords we'd struggled with for years.",
+    name: "Amanda Reyes",
+    role: "Operations Manager",
+    avatar: "/images/testimonials/daniel.jpg",
+    rating: 5,
+  },
+  {
+    quote: "Our online store conversions increased by 35% after the checkout redesign. The team understood our customers better than we did, and it showed in every detail.",
+    name: "Olivia Bennett",
+    role: "Ecommerce Owner",
     avatar: "/images/testimonials/daniel.jpg",
     rating: 5,
   },

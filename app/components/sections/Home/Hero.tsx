@@ -40,7 +40,7 @@ export default function Hero() {
 
       <div className="header-padding" />
 
-      <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-7xl flex-col justify-between px-4 py-10 lg:px-8 lg:py-16">
+      <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-7xl flex-col gap-16 md:justify-between px-4 py-10 lg:px-8 lg:py-16">
 
         <div className="flex flex-1 flex-col items-center justify-center">
           <h1 className="text-center">
@@ -62,14 +62,14 @@ export default function Hero() {
             technology.
           </p>
 
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             <Button variant="solid">Get Started</Button>
             <Button variant="outline">Explore Our Services</Button>
           </div>
         </div>
 
         {/* 2×2 on mobile+tablet, 4-in-a-row on lg+ */}
-        <div className="grid grid-cols-2 gap-3 pt-10 lg:grid-cols-4 lg:gap-4 lg:pt-12">
+        <div className="grid grid-cols-2 gap-3 md:pt-10 lg:grid-cols-4 lg:gap-4 lg:pt-12">
           {heroStats.map((stat) => (
             <HeroCard
               key={stat.label}

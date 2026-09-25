@@ -20,7 +20,7 @@ export const buttonVariants = {
 export type ButtonVariant = keyof typeof buttonVariants;
 
 const baseStyles =
-  "inline-flex items-center justify-center rounded-full px-8 py-3 text-base font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:pointer-events-none disabled:opacity-50 sm:px-8 sm:py-3 sm:text-base";
 
 type CommonProps = {
   variant?: ButtonVariant;
