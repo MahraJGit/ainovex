@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Button from "@/app/components/ui/Button";
+import NavLink from "@/app/components/ui/NavLink";
 
 const navLinks = [
     { label: "Home", href: "/" },
@@ -52,24 +53,14 @@ export default function Header() {
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
                             return (
-                                <Link
+                                <NavLink
                                     key={link.label}
                                     href={link.href}
-                                    className={`group/nav relative flex h-[82px] items-center whitespace-nowrap text-[14px] text-white ${isActive ? "font-bold" : "font-normal"
+                                    className={`flex h-[82px] items-center whitespace-nowrap text-[14px] text-white ${isActive ? "font-bold" : "font-normal"
                                         }`}
                                 >
-                                    <span className="transition-opacity duration-200 group-hover/nav:opacity-0">
-                                        {link.label}
-                                    </span>
-                                    <span
-                                        aria-hidden
-                                        className="pointer-events-none absolute left-1/2 top-1/2 flex h-[58px] -translate-x-1/2 -translate-y-1/2 scale-75 items-center justify-center rounded-full border border-white/40 bg-white/15 px-5 opacity-0 shadow-[0_6px_20px_rgba(0,0,0,0.18)] backdrop-blur-[6px] transition-all duration-300 ease-out group-hover/nav:scale-100 group-hover/nav:opacity-100"
-                                    >
-                                        <span className="block scale-[1.35] whitespace-nowrap font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]">
-                                            {link.label}
-                                        </span>
-                                    </span>
-                                </Link>
+                                    {link.label}
+                                </NavLink>
                             );
                         })}
                     </nav>
