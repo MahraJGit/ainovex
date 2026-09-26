@@ -27,7 +27,7 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-[100svh] overflow-hidden">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 h-[100vh] w-full">
         <video
           src="/hero.webm"
           autoPlay
@@ -36,6 +36,7 @@ export default function Hero() {
           playsInline
           poster="/home-hero-bg.png"
           className="h-full w-full object-cover block"
+          
         />
       </div>
 
