@@ -30,7 +30,7 @@ const cards = [
 
 export default function ConnectWithUs() {
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section id="connect-with-team" className="relative overflow-hidden bg-white">
       <SectionGrid placement="center" />
 
       <div className="section-container relative z-10 py-[104px]! lg:py-[120px]!">

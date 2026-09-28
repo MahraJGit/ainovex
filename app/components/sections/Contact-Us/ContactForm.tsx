@@ -50,7 +50,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="relative min-h-[760px] overflow-hidden">
+    <section id="contact-form" className="relative min-h-[760px] overflow-hidden">
 
       <img src="/images/banner.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden />
       <div className="relative z-10 flex min-h-[760px] items-center justify-center px-4 py-20">

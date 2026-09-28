@@ -27,7 +27,7 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-[100svh] overflow-hidden">
-      <div className="absolute inset-0 h-[100vh] w-full">
+      <div className="absolute inset-0 w-full">
         <video
           src="/hero.webm"
           autoPlay
@@ -65,8 +65,8 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-            <Button variant="solid">Get Started</Button>
-            <Button variant="outline">Explore Our Services</Button>
+            <Button href="/contact-us#connect-with-team" variant="solid">Get Started</Button>
+            <Button href="/services#our-services" variant="outline">Explore Our Services</Button>
           </div>
         </div>
 

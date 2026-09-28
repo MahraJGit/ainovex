@@ -83,7 +83,7 @@ export default function BlogListing({ posts }: { posts: Post[] }) {
                         aria-label="Previous blog page"
                         onClick={() => { setPage((p) => Math.max(1, p - 1)); scrollToTop(); }}
                         disabled={page === 1}
-                        className="flex size-12 items-center justify-center rounded-xl border border-black-v1/15 bg-white text-black-v1/70 transition-colors hover:text-white hover:bg-[#05080F] hover:border-[#05080F] disabled:pointer-events-none disabled:opacity-30"
+                        className="flex size-12 items-center justify-center rounded-xl border border-black-v1/15 bg-white text-black-v1/70 transition-colors hover:text-white hover:bg-primary hover:border-primary disabled:pointer-events-none disabled:opacity-30"
                     >
                         <IoChevronBack size={22} />
                     </button>
@@ -94,7 +94,7 @@ export default function BlogListing({ posts }: { posts: Post[] }) {
                             onClick={() => { setPage(p); scrollToTop(); }}
                             className={`flex h-12 w-12 items-center justify-center rounded-xl text-sm font-bold transition-colors ${p === page
                                 ? "bg-primary text-white border border-primary"
-                                : "border border-black-v1/15 bg-white text-black-v1/70 hover:text-white hover:bg-[#05080F]"
+                                : "border border-black-v1/15 bg-white text-black-v1/70 hover:text-white hover:bg-primary"
                                 }`}
                         >
                             {p}
@@ -106,7 +106,7 @@ export default function BlogListing({ posts }: { posts: Post[] }) {
                         aria-label="Next blog page"
                         onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); scrollToTop(); }}
                         disabled={page === totalPages}
-                        className="flex size-12 items-center justify-center rounded-xl border border-black-v1/15 bg-white text-black-v1/70 transition-colors hover:text-white hover:bg-[#05080F] hover:border-[#05080F] disabled:pointer-events-none disabled:opacity-30"
+                        className="flex size-12 items-center justify-center rounded-xl border border-black-v1/15 bg-white text-black-v1/70 transition-colors hover:text-white hover:bg-primary hover:border-primary disabled:pointer-events-none disabled:opacity-30"
                     >
                         <IoChevronForward size={22} />
                     </button>

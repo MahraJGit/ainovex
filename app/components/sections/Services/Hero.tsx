@@ -63,7 +63,7 @@ export default function ServicesHero() {
           your business truly unstoppable.
         </p>
 
-        <Button variant="solid" className="mt-8">
+        <Button href="/contact-us#contact-form" variant="solid" className="mt-8">
           Get Free Consultation
         </Button>
       </div>

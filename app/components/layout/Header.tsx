@@ -68,7 +68,7 @@ export default function Header() {
                     <div className="flex shrink-0 items-center gap-3">
                         {/* CTA — hidden on mobile, visible from 990px */}
                         <div className="[&_*]:whitespace-nowrap hidden min-[640px]:block">
-                            <Button variant="solid">Schedule a meeting</Button>
+                            <Button href="/contact-us#contact-form" variant="solid">Schedule a meeting</Button>
                         </div>
 
                         {/* Hamburger, only below 990px */}
@@ -124,7 +124,7 @@ export default function Header() {
                     </ul>
                     {/* CTA inside mobile menu */}
                     <div className="min-[640px]:hidden px-2 pt-2 pb-1 mt-1">
-                        <Button variant="solid" className="w-full">Schedule a meeting</Button>
+                        <Button href="/contact-us#contact-form" variant="solid" className="w-full">Schedule a meeting</Button>
                     </div>
                 </nav>
             </div>

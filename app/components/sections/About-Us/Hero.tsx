@@ -32,18 +32,18 @@ export default function AboutHero() {
       </div>
       <div className="header-padding"/>
       {/* Content */}
-      <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 xl:px-0 pb-16 pt-8 sm:pt-12 lg:pt-[260px] flex flex-col items-center text-center lg:items-start lg:text-left"
+      <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 xl:px-0 pb-16 pt-8 sm:pt-12 flex flex-col items-center text-center lg:items-start lg:text-left"
       >
 
         <h1 className="max-w-[800px] text-white">
           <span className="font-bold text-[#38BDF8]">Creating</span> Digital Experiences
           <br className="hidden sm:block" /> That{" "}
           <span className="font-bold text-[#38BDF8]">Deliver Results</span>
-          <br className="hidden sm:block" />{" "}
-          <span className="font-bold text-[#38BDF8]">and Success</span>
+          <br className="hidden sm:block" />{" "}and
+          <span className="font-bold text-[#38BDF8]"> Success</span>
         </h1>
 
-        <p className="mt-6 max-w-[600px] font-medium text-white/80 hero-desc">
+        <p className="mt-6 max-w-[600px] font-medium text-white/80 hero-desc lg:text-left!">
           We at Ainovex Technologies build smart digital solutions that
           transform ideas into impactful experiences, driving measurable
           growth for businesses worldwide.
