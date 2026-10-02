@@ -1,35 +1,48 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Post } from "../../../lib/post";
 import { formatDate } from "../../../lib/libFormat";
 
+function isRemoteOrLocalImage(src: string) {
+  if (!src) return false;
+  if (src.startsWith("/")) return true;
+  try {
+    const url = new URL(src);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export default function FeaturedPost({ post }: { post: Post }) {
+  const hasImage = isRemoteOrLocalImage(post.image);
+
   return (
     <div>
-      {/* Heading */}
-      <h2 className="text-ink mb-8">
+      <h2 className="mb-8 text-[28px] font-bold text-black-v1 sm:text-[36px] lg:text-[48px]">
         Latest <span className="text-primary">Blog</span>
       </h2>
 
-      {/* Card */}
       <Link
         href={`/blog/${post.slug}`}
         className="group grid overflow-hidden rounded-[24px] bg-[#05080F] transition-all duration-300 lg:grid-cols-2"
         style={{ boxShadow: "0 4px 18px rgba(0, 0, 0, 0.7)" }}
       >
-        {/* Image */}
-        <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:h-full lg:min-h-[340px]">
-          <Image
-            src={post.image}
-            alt={post.title}
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-            priority
-          />
+        <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-[#0B1220] via-[#12324A] to-primary/40 lg:aspect-auto lg:h-full lg:min-h-[340px]">
+          {hasImage ? (
+            <Image
+              src={post.image}
+              alt={post.title}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              priority
+            />
+          ) : null}
         </div>
 
-        {/* Content */}
         <div className="flex flex-col justify-center gap-5 p-8 transition-transform duration-500 ease-out group-hover:-translate-y-2 lg:p-12">
           <div className="flex flex-wrap items-center gap-3">
             <span className="rounded-full bg-primary px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-white">

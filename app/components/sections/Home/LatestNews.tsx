@@ -1,11 +1,12 @@
 import Button from "../../ui/Button";
 import BlogCard from "../../ui/BlogCard";
-import { posts } from "@/app/lib/post";
+import { getPublishedBlogs } from "@/app/lib/blogQueries";
 
-export default function LatestNews() {
-  const latest = [...posts]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 3);
+export default async function LatestNews() {
+  const posts = await getPublishedBlogs();
+  const latest = posts.slice(0, 3);
+
+  if (latest.length === 0) return null;
 
   return (
     <section id="latest-news" className="relative overflow-hidden bg-[#05080F]">
@@ -19,10 +20,10 @@ export default function LatestNews() {
             <BlogCard
               key={post.slug}
               slug={post.slug}
-              image={post.image}
+              image={post.featured_image || "/images/blog/blog-1.jpg"}
               title={post.title}
               excerpt={post.excerpt}
-              date={post.date}
+              date={post.published_at || post.created_at}
               category={post.category}
             />
           ))}

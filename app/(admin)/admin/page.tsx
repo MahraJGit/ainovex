@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FiLayers, FiPlus } from "react-icons/fi";
+import { FiEdit3, FiLayers, FiPlus } from "react-icons/fi";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard | Ainovex",
@@ -20,6 +20,22 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
+        <Link
+          href="/admin/blogs"
+          className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-primary/40 hover:bg-primary/5"
+        >
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary">
+            <FiEdit3 size={22} />
+          </div>
+          <h2 className="text-[18px] font-semibold text-white">Blogs</h2>
+          <p className="mt-1 text-[14px] text-white/55">
+            Publish SEO-optimized articles with FAQs, tags, and rich content.
+          </p>
+          <span className="mt-4 inline-flex items-center gap-1 text-[13px] font-medium text-primary opacity-0 transition group-hover:opacity-100">
+            Open <FiPlus size={14} />
+          </span>
+        </Link>
+
         <Link
           href="/admin/services"
           className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-primary/40 hover:bg-primary/5"

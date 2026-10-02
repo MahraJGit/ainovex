@@ -1,16 +1,23 @@
 "use client";
 
-import { categories } from "../../lib/post";
-
 interface Props {
+  categories: string[];
   active: string;
   onChange: (category: string) => void;
 }
 
-export default function CategoryFilter({ active, onChange }: Props) {
+export default function CategoryFilter({
+  categories,
+  active,
+  onChange,
+}: Props) {
+  const items = categories.includes("All")
+    ? categories
+    : ["All", ...categories];
+
   return (
     <div className="flex flex-wrap gap-2.5">
-      {categories.map((cat) => {
+      {items.map((cat) => {
         const isActive = cat === active;
         return (
           <button

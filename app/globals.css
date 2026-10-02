@@ -16,6 +16,16 @@
     @apply font-montserrat;
   }
 
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
   h1 {
     @apply text-[32px] sm:text-[48px] md:text-[58px] lg:text-[64px] font-medium leading-[100%] tracking-[-3%] text-white;
   }
@@ -103,4 +113,140 @@
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+.blog-content {
+  @apply text-[17px] leading-[1.8] text-black-v1/85;
+}
+
+.blog-content > * + * {
+  margin-top: 1.15rem;
+}
+
+.blog-content h1 {
+  @apply mt-2 scroll-mt-28 text-[28px] font-bold leading-tight tracking-[-0.02em] text-black-v1 sm:text-[34px];
+}
+
+.blog-content h2 {
+  @apply mt-10 scroll-mt-28 text-[24px] font-bold leading-tight tracking-[-0.02em] text-black-v1 sm:text-[28px];
+}
+
+.blog-content h3 {
+  @apply mt-7 scroll-mt-28 text-[19px] font-semibold leading-snug text-black-v1 sm:text-[21px];
+}
+
+.blog-content p {
+  @apply text-[17px] leading-[1.8] text-black-v1/80;
+}
+
+.blog-content ul {
+  @apply my-4 list-disc space-y-2.5 pl-6 text-black-v1/80;
+}
+
+.blog-content ol {
+  @apply my-4 list-decimal space-y-2.5 pl-6 text-black-v1/80;
+}
+
+.blog-content li::marker {
+  color: #38bdf8;
+}
+
+.blog-content a {
+  @apply font-medium text-primary underline underline-offset-2;
+}
+
+.blog-content blockquote {
+  @apply border-l-4 border-primary/50 bg-[#F8FAFC] py-3 pl-5 pr-4 italic text-black-v1/75;
+}
+
+.blog-content pre {
+  @apply overflow-x-auto rounded-xl bg-[#05080F] p-4 text-[13px] leading-relaxed text-white;
+}
+
+.blog-content code {
+  @apply rounded bg-black/5 px-1.5 py-0.5 text-[0.9em];
+}
+
+.blog-content pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
+.blog-content img {
+  @apply my-6 h-auto w-full rounded-2xl;
+}
+
+.blog-content table {
+  @apply w-full overflow-hidden rounded-xl border border-black-v1/10 text-left text-[14px];
+}
+
+.blog-content th,
+.blog-content td {
+  @apply border border-black-v1/10 px-3 py-2;
+}
+
+.blog-content th {
+  @apply bg-[#F8FAFC] font-semibold;
+}
+
+/* Admin TipTap editor (dark theme) */
+.ProseMirror {
+  min-height: 360px;
+  outline: none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before,
+.ProseMirror .is-empty::before {
+  color: rgba(255, 255, 255, 0.35);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.admin-editor h1 {
+  @apply mb-3 mt-6 text-[28px] font-bold leading-tight tracking-[-0.02em] text-white;
+}
+
+.admin-editor h2 {
+  @apply mb-2.5 mt-5 text-[22px] font-bold leading-snug text-white;
+}
+
+.admin-editor h3 {
+  @apply mb-2 mt-4 text-[18px] font-semibold leading-snug text-white;
+}
+
+.admin-editor p {
+  @apply my-2 text-[15px] leading-relaxed text-white/85;
+}
+
+.admin-editor ul {
+  @apply my-3 list-disc space-y-1.5 pl-6 text-white/85;
+}
+
+.admin-editor ol {
+  @apply my-3 list-decimal space-y-1.5 pl-6 text-white/85;
+}
+
+.admin-editor blockquote {
+  @apply my-4 border-l-4 border-primary/50 bg-white/[0.03] py-2 pl-4 italic text-white/70;
+}
+
+.admin-editor a {
+  @apply text-primary underline underline-offset-2;
+}
+
+.admin-editor pre {
+  @apply my-4 overflow-x-auto rounded-xl bg-black/40 p-4 text-[13px] text-primary/90;
+}
+
+.admin-editor code {
+  @apply rounded bg-white/10 px-1.5 py-0.5 text-[0.9em] text-primary;
+}
+
+.admin-editor pre code {
+  @apply bg-transparent p-0;
+}
+
+.admin-editor img {
+  @apply my-4 h-auto max-w-full rounded-xl;
 }

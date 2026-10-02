@@ -1,42 +1,83 @@
-const AUTH_KEY = "ainovex_admin_auth";
+"use client";
 
-export type AdminSession = {
+import type { User } from "@supabase/supabase-js";
+import { getSupabaseBrowserClient } from "@/app/lib/supabase/client";
+
+export type AdminProfile = {
+  id: string;
+  name: string;
   email: string;
-  loggedInAt: string;
+  role: "admin" | "editor";
 };
 
-/** Demo credentials — frontend only, replace with real auth later */
-export const DEMO_ADMIN = {
-  email: "admin@ainovex.com",
-  password: "admin123",
-} as const;
+export type AdminSession = {
+  user: User;
+  profile: AdminProfile;
+};
 
-export function getAdminSession(): AdminSession | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = sessionStorage.getItem(AUTH_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as AdminSession;
-  } catch {
-    return null;
+export async function signInAdmin(email: string, password: string) {
+  const supabase = getSupabaseBrowserClient();
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.trim().toLowerCase(),
+    password,
+  });
+
+  if (error) {
+    return { session: null as AdminSession | null, error: error.message };
   }
-}
 
-export function setAdminSession(email: string) {
-  const session: AdminSession = {
-    email,
-    loggedInAt: new Date().toISOString(),
+  if (!data.user) {
+    return { session: null, error: "Unable to sign in." };
+  }
+
+  const profile = await fetchAdminProfile(data.user.id);
+  if (!profile) {
+    await supabase.auth.signOut();
+    return {
+      session: null,
+      error: "No admin profile found for this account.",
+    };
+  }
+
+  if (profile.role !== "admin" && profile.role !== "editor") {
+    await supabase.auth.signOut();
+    return { session: null, error: "You do not have admin access." };
+  }
+
+  return {
+    session: { user: data.user, profile } satisfies AdminSession,
+    error: null as string | null,
   };
-  sessionStorage.setItem(AUTH_KEY, JSON.stringify(session));
 }
 
-export function clearAdminSession() {
-  sessionStorage.removeItem(AUTH_KEY);
+export async function signOutAdmin() {
+  const supabase = getSupabaseBrowserClient();
+  await supabase.auth.signOut();
 }
 
-export function verifyDemoCredentials(email: string, password: string) {
-  return (
-    email.trim().toLowerCase() === DEMO_ADMIN.email &&
-    password === DEMO_ADMIN.password
-  );
+export async function fetchAdminProfile(
+  userId: string
+): Promise<AdminProfile | null> {
+  const supabase = getSupabaseBrowserClient();
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("id, name, email, role")
+    .eq("id", userId)
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return data as AdminProfile;
+}
+
+export async function getAdminSession(): Promise<AdminSession | null> {
+  const supabase = getSupabaseBrowserClient();
+  const { data } = await supabase.auth.getSession();
+  const user = data.session?.user;
+  if (!user) return null;
+
+  const profile = await fetchAdminProfile(user.id);
+  if (!profile) return null;
+  if (profile.role !== "admin" && profile.role !== "editor") return null;
+
+  return { user, profile };
 }

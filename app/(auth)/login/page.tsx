@@ -4,12 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  DEMO_ADMIN,
-  getAdminSession,
-  setAdminSession,
-  verifyDemoCredentials,
-} from "@/app/lib/adminAuth";
+import { getAdminSession, signInAdmin } from "@/app/lib/adminAuth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,28 +15,29 @@ export default function LoginPage() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    if (getAdminSession()) {
-      router.replace("/admin");
-      return;
-    }
-    setChecking(false);
+    void (async () => {
+      const session = await getAdminSession();
+      if (session) {
+        router.replace("/admin");
+        return;
+      }
+      setChecking(false);
+    })();
   }, [router]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
-    // Simulate brief delay for frontend-only auth
-    window.setTimeout(() => {
-      if (!verifyDemoCredentials(email, password)) {
-        setError("Invalid email or password. Try the demo credentials below.");
-        setLoading(false);
-        return;
-      }
-      setAdminSession(email.trim().toLowerCase());
-      router.push("/admin");
-    }, 400);
+    const { error: signInError } = await signInAdmin(email, password);
+    if (signInError) {
+      setError(signInError);
+      setLoading(false);
+      return;
+    }
+
+    router.push("/admin");
   };
 
   if (checking) {
@@ -78,7 +74,7 @@ export default function LoginPage() {
             Admin Login
           </h1>
           <p className="mt-2 text-[15px] text-white/70">
-            Sign in to manage your site content.
+            Sign in with your Ainovex admin account.
           </p>
         </div>
 
@@ -101,7 +97,7 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@ainovex.com"
+                placeholder="you@ainovex.com"
                 className="h-[48px] w-full rounded-xl border border-white/10 bg-black-v1/40 px-4 text-[15px] text-white outline-none transition placeholder:text-white/40 focus:border-primary/60"
               />
             </div>
@@ -125,11 +121,11 @@ export default function LoginPage() {
               />
             </div>
 
-            {error && (
+            {error ? (
               <p role="alert" className="text-[13px] text-red-300">
                 {error}
               </p>
-            )}
+            ) : null}
 
             <button
               type="submit"
@@ -138,13 +134,6 @@ export default function LoginPage() {
             >
               {loading ? "Signing in…" : "Sign in"}
             </button>
-          </div>
-
-          <div className="mt-6 rounded-xl border border-white/10 bg-black-v0/40 px-4 py-3 text-[12px] text-white/55">
-            <p className="font-medium text-white/70">Demo credentials</p>
-            <p className="mt-1">
-              {DEMO_ADMIN.email} / {DEMO_ADMIN.password}
-            </p>
           </div>
         </form>
 

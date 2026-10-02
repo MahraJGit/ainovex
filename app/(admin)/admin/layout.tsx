@@ -5,15 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  clearAdminSession,
   getAdminSession,
+  signOutAdmin,
   type AdminSession,
 } from "@/app/lib/adminAuth";
 import { cn } from "@/app/lib/utils";
-import { FiGrid, FiLayers, FiLogOut, FiMenu, FiX } from "react-icons/fi";
+import { FiEdit3, FiGrid, FiLayers, FiLogOut, FiMenu, FiX } from "react-icons/fi";
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: FiGrid },
+  { label: "Blogs", href: "/admin/blogs", icon: FiEdit3 },
   { label: "Services", href: "/admin/services", icon: FiLayers },
 ];
 
@@ -29,21 +30,23 @@ export default function AdminLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    const s = getAdminSession();
-    if (!s) {
-      router.replace("/login");
-      return;
-    }
-    setSession(s);
-    setReady(true);
+    void (async () => {
+      const s = await getAdminSession();
+      if (!s) {
+        router.replace("/login");
+        return;
+      }
+      setSession(s);
+      setReady(true);
+    })();
   }, [router]);
 
   useEffect(() => {
     setSidebarOpen(false);
   }, [pathname]);
 
-  const handleLogout = () => {
-    clearAdminSession();
+  const handleLogout = async () => {
+    await signOutAdmin();
     router.push("/login");
   };
 
@@ -57,17 +60,15 @@ export default function AdminLayout({
 
   return (
     <div className="flex min-h-screen bg-[#0B1220] text-white">
-      {/* Mobile overlay */}
-      {sidebarOpen && (
+      {sidebarOpen ? (
         <button
           type="button"
           aria-label="Close menu"
           className="fixed inset-0 z-40 bg-black/60 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
-      )}
+      ) : null}
 
-      {/* Sidebar */}
       <aside
         className={cn(
           "fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col border-r border-white/10 bg-[#0F172A] transition-transform duration-200 lg:static lg:translate-x-0",
@@ -86,7 +87,7 @@ export default function AdminLayout({
           </Link>
           <button
             type="button"
-            className="rounded-lg p-2 text-white/70 hover:bg-white/5 lg:hidden"
+            className="cursor-pointer rounded-lg p-2 text-white/70 hover:bg-white/5 lg:hidden"
             onClick={() => setSidebarOpen(false)}
             aria-label="Close sidebar"
           >
@@ -121,11 +122,16 @@ export default function AdminLayout({
         </nav>
 
         <div className="border-t border-white/10 p-4">
-          <p className="truncate text-[12px] text-white/45">{session?.email}</p>
+          <p className="truncate text-[12px] text-white/45">
+            {session?.profile.email}
+          </p>
+          <p className="mt-0.5 text-[11px] uppercase tracking-wide text-white/30">
+            {session?.profile.role}
+          </p>
           <button
             type="button"
-            onClick={handleLogout}
-            className="mt-3 flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-[14px] font-medium text-white/70 transition hover:bg-white/5 hover:text-white"
+            onClick={() => void handleLogout()}
+            className="mt-3 flex w-full cursor-pointer items-center gap-2 rounded-xl px-3 py-2.5 text-[14px] font-medium text-white/70 transition hover:bg-white/5 hover:text-white"
           >
             <FiLogOut size={18} />
             Sign out
@@ -133,12 +139,11 @@ export default function AdminLayout({
         </div>
       </aside>
 
-      {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-16 items-center justify-between border-b border-white/10 bg-[#0F172A]/80 px-4 backdrop-blur lg:px-8">
           <button
             type="button"
-            className="rounded-lg p-2 text-white/70 hover:bg-white/5 lg:hidden"
+            className="cursor-pointer rounded-lg p-2 text-white/70 hover:bg-white/5 lg:hidden"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open sidebar"
           >
