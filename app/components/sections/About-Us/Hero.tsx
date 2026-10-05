@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Button from "../../ui/Button";
 import HeroCard from "../../ui/HeroCard";
