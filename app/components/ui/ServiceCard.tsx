@@ -6,6 +6,7 @@ export type ServiceCardProps = {
   title: string;
   description: string;
   href?: string;
+  slug?: string;
 };
 
 export default function ServiceCard({

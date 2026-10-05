@@ -51,7 +51,11 @@ export default function Header() {
                     {/* Desktop navigation */}
                     <nav className="hidden flex-1 items-center justify-center gap-4 px-4 min-[990px]:flex min-[1025px]:justify-end min-[1180px]:gap-6 min-[1180px]:px-8 min-[1280px]:gap-8 min-[1280px]:px-12">
                         {navLinks.map((link) => {
-                            const isActive = pathname === link.href;
+                            const isActive =
+                                link.href === "/"
+                                    ? pathname === "/"
+                                    : pathname === link.href ||
+                                      pathname.startsWith(`${link.href}/`);
                             return (
                                 <NavLink
                                     key={link.label}
@@ -108,7 +112,11 @@ export default function Header() {
                 >
                     <ul className="flex flex-col">
                         {navLinks.map((link) => {
-                            const isActive = pathname === link.href;
+                            const isActive =
+                                link.href === "/"
+                                    ? pathname === "/"
+                                    : pathname === link.href ||
+                                      pathname.startsWith(`${link.href}/`);
                             return (
                                 <li key={link.label}>
                                     <Link

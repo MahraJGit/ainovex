@@ -2,10 +2,11 @@ import SectionGrid from "../../ui/SectionGrid";
 import Button from "../../ui/Button";
 import ServiceCard from "../../ui/ServiceCard";
 import Tag from "../../ui/Tag";
-import { services } from "../../../lib/services";
+import { getServiceCardProps } from "../../../lib/services";
+import { getPublishedServices } from "../../../lib/serviceQueries";
 
-export default function Services() {
-  const displayed = services.slice(0, 6);
+export default async function Services() {
+  const displayed = (await getPublishedServices()).slice(0, 6);
 
   return (
     <section id="services" className="relative overflow-hidden bg-[#05080F]">
@@ -26,7 +27,10 @@ export default function Services() {
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {displayed.map((service) => (
-            <ServiceCard key={service.title} {...service} />
+            <ServiceCard
+              key={service.slug}
+              {...getServiceCardProps(service)}
+            />
           ))}
         </div>
 

@@ -1,30 +1,53 @@
-export type AdminService = {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-};
-
-export const ICON_OPTIONS = [
+export const SERVICE_ICON_OPTIONS = [
   { label: "Web Development", value: "/icons/services/webdev.svg" },
   { label: "Mobile Development", value: "/icons/services/mobdev.svg" },
   { label: "UI/UX Design", value: "/icons/services/uiux.svg" },
   { label: "Ecommerce", value: "/icons/services/ecommerce.svg" },
   { label: "AI Development", value: "/icons/services/aidev.svg" },
   { label: "Cloud & DevOps", value: "/icons/services/cloud.svg" },
+  { label: "Cyber Security", value: "/icons/about/cyber.svg" },
+  { label: "Custom Software", value: "/icons/about/custom-software.svg" },
+  { label: "IT Consulting", value: "/icons/about/it.svg" },
+  { label: "AI Robot", value: "/icons/about/ai-robot.svg" },
+  { label: "AI Dev", value: "/icons/about/ai-dev.svg" },
+  { label: "Strategy", value: "/icons/about/strategy.svg" },
+  { label: "Growth", value: "/icons/about/growth.svg" },
+  { label: "Support", value: "/icons/about/support.svg" },
+  { label: "Lifetime Support", value: "/icons/about/lifetime-support.svg" },
+  { label: "Delivery", value: "/icons/about/delivery.svg" },
+  { label: "Fast Delivery", value: "/icons/about/fast-delivery.svg" },
+  { label: "Time Delivery", value: "/icons/about/time-delivery.svg" },
+  { label: "Clear Process", value: "/icons/about/clear-process.svg" },
+  { label: "Approach", value: "/icons/about/approach.svg" },
+  { label: "Results", value: "/icons/about/results.svg" },
+  { label: "Real Results", value: "/icons/about/real-results.svg" },
+  { label: "Success", value: "/icons/about/success.svg" },
+  { label: "Satisfaction", value: "/icons/about/satisfaction.svg" },
+  { label: "Proven Experts", value: "/icons/about/proven-experts.svg" },
+  { label: "Project Ownership", value: "/icons/about/project-ownership.svg" },
+  { label: "Custom Built", value: "/icons/about/custom-built.svg" },
+  { label: "Zero Costs", value: "/icons/about/zero-costs.svg" },
+  { label: "Direct Collab", value: "/icons/about/direct-collab.svg" },
+  { label: "Side Support", value: "/icons/about/side-support.svg" },
+  { label: "Mission", value: "/icons/about/mission.svg" },
+  { label: "Vision", value: "/icons/about/vision.svg" },
+  { label: "Cloud (About)", value: "/icons/about/cloud.svg" },
+  { label: "Why Us — Proven", value: "/icons/why-us/proven.svg" },
+  { label: "Why Us — Result", value: "/icons/why-us/result.svg" },
+  { label: "Why Us — Flexible", value: "/icons/why-us/flexible.svg" },
+  { label: "Why Us — Dedicated", value: "/icons/why-us/dedicated.svg" },
+  { label: "Why Us — Transparent", value: "/icons/why-us/transparent.svg" },
+  { label: "Why Us — Future", value: "/icons/why-us/future.svg" },
+  { label: "Hero — Solutions", value: "/icons/hero/solutions.svg" },
+  { label: "Hero — Industries", value: "/icons/hero/industries.svg" },
+  { label: "Hero — Offices", value: "/icons/hero/offices.svg" },
+  { label: "Hero — Countries", value: "/icons/hero/countries.svg" },
+  { label: "Careers — Growth", value: "/icons/careers/growth.svg" },
+  { label: "Careers — Projects", value: "/icons/careers/projects.svg" },
+  { label: "Careers — Environment", value: "/icons/careers/environment.svg" },
+  { label: "Careers — Recognition", value: "/icons/careers/recognition.svg" },
+  { label: "Blog — AI", value: "/icons/blogs/ai.svg" },
 ] as const;
 
-export function createServiceId() {
-  return `svc_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-}
-
-export function seedAdminServices(
-  items: { title: string; description: string; icon: string }[]
-): AdminService[] {
-  return items.map((item, index) => ({
-    id: `svc_seed_${index + 1}`,
-    title: item.title,
-    description: item.description,
-    icon: item.icon,
-  }));
-}
+/** @deprecated Use SERVICE_ICON_OPTIONS */
+export const ICON_OPTIONS = SERVICE_ICON_OPTIONS;
