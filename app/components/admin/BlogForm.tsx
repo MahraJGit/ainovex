@@ -13,6 +13,7 @@ import {
   type BlogStatus,
 } from "@/app/lib/blogs";
 import { getSupabaseBrowserClient } from "@/app/lib/supabase/client";
+import { revalidateBlogPages } from "@/app/lib/blogActions";
 import RichTextEditor from "@/app/components/admin/RichTextEditor";
 import AdminSelect from "@/app/components/admin/AdminSelect";
 import {
@@ -34,6 +35,8 @@ const emptyForm: FormState = {
   featured_image: "",
   featured_image_alt: "",
   author: "Ainovex Team",
+  author_image: "",
+  author_bio: "",
   category: BLOG_CATEGORIES[0],
   tags: [],
   status: "draft",
@@ -61,6 +64,63 @@ function parseTags(value: string) {
     .split(",")
     .map((t) => t.trim())
     .filter(Boolean);
+}
+
+function getTodayPublishedAt() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return new Date(`${year}-${month}-${day}T00:00:00.000Z`).toISOString();
+}
+
+function stableJson(value: unknown): string {
+  if (Array.isArray(value)) {
+    return `[${value.map(stableJson).join(",")}]`;
+  }
+  if (value && typeof value === "object") {
+    const entries = Object.entries(value).sort(([a], [b]) =>
+      a.localeCompare(b)
+    );
+    return `{${entries
+      .map(([key, item]) => `${JSON.stringify(key)}:${stableJson(item)}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value) ?? "undefined";
+}
+
+function blogInputWasSaved(row: Record<string, unknown>, input: BlogInput) {
+  const fields: (keyof BlogInput)[] = [
+    "slug",
+    "title",
+    "excerpt",
+    "content",
+    "featured_image",
+    "featured_image_alt",
+    "author",
+    "author_image",
+    "author_bio",
+    "category",
+    "tags",
+    "status",
+    "published_at",
+    "meta_title",
+    "meta_description",
+    "focus_keyword",
+    "faqs",
+  ];
+
+  return fields.every((field) => {
+    if (field === "published_at") {
+      const savedDate = row.published_at;
+      return input.published_at === null
+        ? savedDate === null
+        : typeof savedDate === "string" &&
+            Date.parse(savedDate) === Date.parse(input.published_at);
+    }
+
+    return stableJson(row[field]) === stableJson(input[field]);
+  });
 }
 
 function isValidImageSrc(value: string) {
@@ -104,7 +164,11 @@ type BlogFormProps = {
 
 export default function BlogForm({ mode, blogId }: BlogFormProps) {
   const router = useRouter();
-  const [form, setForm] = useState<FormState>(emptyForm);
+  const [form, setForm] = useState<FormState>(() =>
+    mode === "create"
+      ? { ...emptyForm, published_at: getTodayPublishedAt() }
+      : emptyForm
+  );
   const [tagsInput, setTagsInput] = useState("");
   const [formError, setFormError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -140,6 +204,8 @@ export default function BlogForm({ mode, blogId }: BlogFormProps) {
         featured_image: blog.featured_image,
         featured_image_alt: blog.featured_image_alt,
         author: blog.author,
+        author_image: blog.author_image ?? "",
+        author_bio: blog.author_bio ?? "",
         category: blog.category,
         tags: blog.tags ?? [],
         status: blog.status,
@@ -238,6 +304,31 @@ export default function BlogForm({ mode, blogId }: BlogFormProps) {
         answer: f.answer.trim(),
       }))
       .filter((f) => f.question && f.answer);
+    const tags = parseTags(tagsInput);
+
+    if (form.status === "published") {
+      const missingFields = [
+        !form.excerpt.trim() && "excerpt",
+        !isValidImageSrc(form.featured_image) && "valid main image URL",
+        !form.featured_image_alt.trim() && "main image alt text",
+        !form.meta_title.trim() && "meta title",
+        !form.meta_description.trim() && "meta description",
+        !form.focus_keyword.trim() && "focus keyword",
+        !form.author.trim() && "author name",
+        !isValidImageSrc(form.author_image) && "valid author image URL",
+        !form.author_bio.trim() && "author bio",
+        !form.category.trim() && "category",
+        tags.length === 0 && "at least one tag",
+        !form.published_at && "published date",
+        cleanFaqs.length === 0 && "at least one complete FAQ",
+        cleanFaqs.length !== form.faqs.length && "complete answers for every FAQ",
+      ].filter((field): field is string => Boolean(field));
+
+      if (missingFields.length > 0) {
+        setFormError(`Complete these fields before publishing: ${missingFields.join(", ")}.`);
+        return;
+      }
+    }
 
     const payload: BlogInput = {
       ...form,
@@ -246,49 +337,80 @@ export default function BlogForm({ mode, blogId }: BlogFormProps) {
       excerpt: form.excerpt.trim(),
       content: form.content,
       featured_image: form.featured_image.trim(),
-      featured_image_alt: form.featured_image_alt.trim() || title,
-      author: form.author.trim() || "Ainovex Team",
+      featured_image_alt: form.featured_image_alt.trim(),
+      author: form.author.trim(),
+      author_image: form.author_image.trim(),
+      author_bio: form.author_bio.trim(),
       category: form.category.trim() || "General",
-      tags: parseTags(tagsInput),
+      tags,
       meta_title: form.meta_title.trim() || title,
-      meta_description:
-        form.meta_description.trim() || form.excerpt.trim().slice(0, 160),
+      meta_description: form.meta_description.trim(),
       focus_keyword: form.focus_keyword.trim(),
       faqs: cleanFaqs,
-      published_at:
-        form.status === "published"
-          ? form.published_at || new Date().toISOString()
-          : form.published_at,
+      published_at: form.published_at,
     };
 
     setSaving(true);
     const supabase = getSupabaseBrowserClient();
+    let saveError: string | null = null;
 
     if (mode === "edit" && blogId) {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("blogs")
         .update(payload)
-        .eq("id", blogId);
-      setSaving(false);
+        .eq("id", blogId)
+        .select("*")
+        .maybeSingle();
       if (error) {
-        setFormError(error.message);
-        return;
+        saveError = error.message;
+      } else if (!data) {
+        saveError = "The blog was not updated. It may have been deleted or you may not have permission to edit it.";
+      } else if (!blogInputWasSaved(data, payload)) {
+        saveError = "The blog update returned data that does not match the values submitted.";
       }
     } else {
       const {
         data: { user },
+        error: userError,
       } = await supabase.auth.getUser();
-      const { error } = await supabase.from("blogs").insert({
-        ...payload,
-        created_by: user?.id ?? null,
-      });
-      setSaving(false);
-      if (error) {
-        setFormError(error.message);
-        return;
+
+      if (userError) {
+        saveError = userError.message;
+      } else {
+        const { data, error } = await supabase
+          .from("blogs")
+          .insert({
+            ...payload,
+            created_by: user?.id ?? null,
+          })
+          .select("*")
+          .single();
+        if (error) {
+          saveError = error.message;
+        } else if (!data) {
+          saveError = "The blog was not saved. Supabase did not return the created record.";
+        } else if (!blogInputWasSaved(data, payload)) {
+          saveError = "The saved blog returned data that does not match the values submitted.";
+        }
       }
     }
 
+    setSaving(false);
+    if (saveError) {
+      setFormError(saveError);
+      return;
+    }
+
+    try {
+      await revalidateBlogPages();
+    } catch (error) {
+      setFormError(
+        `The blog was saved, but the frontend could not be refreshed: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
+      return;
+    }
     setSavedFlash(true);
     window.setTimeout(() => {
       router.push("/admin/blogs");
@@ -321,7 +443,7 @@ export default function BlogForm({ mode, blogId }: BlogFormProps) {
             {mode === "edit" ? "Edit blog" : "New blog"}
           </h1>
           <p className="mt-2 text-[15px] text-white/55">
-            Write SEO-ready content with tags, FAQs, and rich formatting.
+            Drafts can be incomplete; complete all required fields before publishing.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -423,11 +545,17 @@ export default function BlogForm({ mode, blogId }: BlogFormProps) {
               />
             </div>
             <div>
-              <label className={labelClass}>Author</label>
+              <label className={labelClass}>Published date</label>
               <input
-                value={form.author}
+                type="date"
+                value={form.published_at?.slice(0, 10) ?? ""}
                 onChange={(e) =>
-                  setForm((prev) => ({ ...prev, author: e.target.value }))
+                  setForm((prev) => ({
+                    ...prev,
+                    published_at: e.target.value
+                      ? new Date(`${e.target.value}T00:00:00.000Z`).toISOString()
+                      : null,
+                  }))
                 }
                 className={fieldClass}
               />
@@ -449,6 +577,78 @@ export default function BlogForm({ mode, blogId }: BlogFormProps) {
         </Section>
 
         <Section
+          title="Author"
+          description="Add the author's name, photo, and a short description of what they do."
+        >
+          <div>
+            <label className={labelClass}>Author name</label>
+            <input
+              value={form.author}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, author: e.target.value }))
+              }
+              placeholder="Author name"
+              className={fieldClass}
+            />
+          </div>
+          <div>
+            <label className={labelClass}>Author image</label>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <input
+                value={form.author_image}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, author_image: e.target.value }))
+                }
+                placeholder="Paste image URL or upload"
+                className={fieldClass}
+              />
+              <label className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-4 text-[13px] font-medium text-white/80 transition hover:border-primary/40 hover:text-primary">
+                <FiImage size={16} />
+                {uploading ? "Uploading…" : "Upload"}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const url = await uploadImage(file);
+                    if (url) {
+                      setForm((prev) => ({ ...prev, author_image: url }));
+                    }
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+            </div>
+            {isValidImageSrc(form.author_image) ? (
+              <div className="relative mt-3 h-28 w-28 overflow-hidden rounded-full border border-white/10">
+                <Image
+                  src={form.author_image}
+                  alt={form.author || "Author"}
+                  fill
+                  unoptimized={form.author_image.startsWith("data:")}
+                  className="object-cover"
+                  sizes="112px"
+                />
+              </div>
+            ) : null}
+          </div>
+          <div>
+            <label className={labelClass}>What the author does</label>
+            <textarea
+              rows={3}
+              value={form.author_bio}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, author_bio: e.target.value }))
+              }
+              placeholder="Briefly describe the author's role, expertise, or work."
+              className={areaClass}
+            />
+          </div>
+        </Section>
+
+        <Section
           title="Content"
           description="Use headings for a clean table of contents on the article page."
         >
@@ -462,10 +662,10 @@ export default function BlogForm({ mode, blogId }: BlogFormProps) {
 
         <Section
           title="Media & tags"
-          description="Featured image and discoverability tags."
+          description="Add the main article image, its alt text, and discoverability tags."
         >
           <div>
-            <label className={labelClass}>Featured image</label>
+            <label className={labelClass}>Main image</label>
             <div className="flex flex-col gap-3 sm:flex-row">
               <input
                 value={form.featured_image}
@@ -653,7 +853,7 @@ export default function BlogForm({ mode, blogId }: BlogFormProps) {
 
         <Section
           title="FAQs"
-          description="Optional Q&A shown on the article and included in FAQ schema."
+          description="Add complete Q&A pairs to show on the article and include in FAQ schema. Required to publish."
         >
           <div className="flex items-center justify-between gap-3">
             <p className="text-[13px] text-white/45">

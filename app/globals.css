@@ -185,7 +185,57 @@
 }
 
 .blog-content th {
-  @apply bg-[#F8FAFC] font-semibold;
+  @apply bg-sky-50 font-semibold;
+}
+
+.blog-content .tableWrapper,
+.admin-editor .tableWrapper {
+  @apply my-5 overflow-x-auto;
+}
+
+.blog-content table,
+.admin-editor table {
+  @apply w-full border-collapse text-left text-[14px];
+}
+
+.admin-editor table {
+  @apply text-slate-800;
+}
+
+.blog-content th,
+.blog-content td,
+.admin-editor th,
+.admin-editor td {
+  @apply min-w-28 border border-black-v1/10 px-4 py-3 align-top;
+}
+
+.blog-content th {
+  @apply bg-sky-50 font-semibold;
+}
+
+.admin-editor th {
+  @apply bg-white/[0.08] font-semibold;
+}
+
+.admin-editor th,
+.admin-editor td {
+  @apply border-white/15;
+}
+
+.admin-editor th {
+  @apply bg-white/[0.08] text-white;
+}
+
+.admin-editor td {
+  @apply text-white/85;
+}
+
+.admin-editor .blog-content {
+  @apply text-black-v1/85;
+}
+
+.admin-editor .blog-content p {
+  @apply text-black-v1/80;
 }
 
 /* Admin TipTap editor (dark theme) */
@@ -249,4 +299,67 @@
 
 .admin-editor img {
   @apply my-4 h-auto max-w-full rounded-xl;
+}
+
+.admin-editor hr {
+  @apply my-6 border-white/15;
+}
+
+.admin-editor .blog-custom-html-block .blog-content {
+  color: #242424;
+}
+
+.admin-editor .blog-custom-html-block .blog-content p {
+  color: #242424;
+}
+
+.admin-editor .blog-custom-html-block .blog-content table {
+  color: #242424;
+}
+
+.admin-editor .blog-custom-html-block .blog-content th {
+  text-align: left;
+}
+
+.admin-editor .blog-custom-html-block .blog-content td {
+  color: #242424;
+}
+
+.blog-content table {
+  width: 100%;
+  border: 1px solid #cbd5e1 !important;
+  border-collapse: separate !important;
+  border-spacing: 0;
+  border-radius: 14px;
+  background: #fff;
+  color: #242424;
+  outline: 1px solid #cbd5e1;
+  overflow: hidden;
+}
+
+.blog-content th,
+.blog-content td {
+  min-width: 112px;
+  padding: 14px 18px;
+  border: 0 !important;
+  border-right: 1px solid #dbe4ea !important;
+  border-bottom: 1px solid #dbe4ea !important;
+  color: #242424;
+  text-align: left;
+  vertical-align: top;
+}
+
+.blog-content th {
+  background: #e0f2fe !important;
+  color: #0c4a6e;
+  font-weight: 600;
+}
+
+.blog-content tr > :last-child {
+  border-right: 0 !important;
+}
+
+.blog-content tbody tr:last-child > th,
+.blog-content tbody tr:last-child > td {
+  border-bottom: 0 !important;
 }

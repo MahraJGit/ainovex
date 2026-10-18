@@ -6,7 +6,7 @@ import {
 } from "@/app/lib/blogs";
 
 const LIST_COLUMNS =
-  "id, slug, title, excerpt, featured_image, featured_image_alt, author, category, tags, status, published_at, created_at, meta_title, meta_description, focus_keyword";
+  "id, slug, title, excerpt, featured_image, featured_image_alt, author, author_image, author_bio, category, tags, status, published_at, created_at, meta_title, meta_description, focus_keyword";
 
 export async function getPublishedBlogs(): Promise<BlogListItem[]> {
   const supabase = getSupabaseServerClient();

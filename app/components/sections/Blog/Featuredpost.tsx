@@ -34,7 +34,7 @@ export default function FeaturedPost({ post }: { post: Post }) {
           {hasImage ? (
             <Image
               src={post.image}
-              alt={post.title}
+              alt={post.imageAlt || post.title}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
@@ -53,6 +53,19 @@ export default function FeaturedPost({ post }: { post: Post }) {
             </span>
           </div>
 
+          {post.tags?.length ? (
+            <ul className="flex flex-wrap gap-2" aria-label="Article tags">
+              {post.tags.map((tag) => (
+                <li
+                  key={tag}
+                  className="rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/75"
+                >
+                  #{tag}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
           <h2 className="text-[28px] font-bold leading-[1.2] text-white transition-colors duration-300 group-hover:text-primary lg:text-[36px]">
             {post.title}
           </h2>
@@ -60,6 +73,21 @@ export default function FeaturedPost({ post }: { post: Post }) {
           <p className="max-w-[520px] text-[15px] leading-[1.65] text-white/80">
             {post.excerpt}
           </p>
+
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="relative size-8 shrink-0 overflow-hidden rounded-full bg-white/10">
+              <Image
+                src={post.author.avatar}
+                alt={post.author.name}
+                fill
+                sizes="32px"
+                className="object-cover"
+              />
+            </div>
+            <span className="truncate text-[12px] font-medium text-white/70">
+              {post.author.name}
+            </span>
+          </div>
 
           <div className="mt-2 flex items-center justify-between gap-4 border-t border-white/10 pt-5">
             <span className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition-colors duration-300 group-hover:text-primary">
@@ -71,9 +99,12 @@ export default function FeaturedPost({ post }: { post: Post }) {
                 &rarr;
               </span>
             </span>
-            <span className="text-[12px] font-medium text-white/70">
+            <time
+              dateTime={post.date}
+              className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 text-[11px] font-medium text-white/75"
+            >
               {formatDate(post.date)}
-            </span>
+            </time>
           </div>
         </div>
       </Link>

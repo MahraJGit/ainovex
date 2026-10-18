@@ -17,10 +17,16 @@ export default function BlogGrid({ posts }: { posts: Post[] }) {
           key={post.slug}
           slug={post.slug}
           image={post.image}
+          imageAlt={post.imageAlt}
           title={post.title}
           excerpt={post.excerpt}
           date={post.date}
           category={post.category}
+          tags={post.tags}
+          author={{
+            name: post.author.name,
+            image: post.author.avatar,
+          }}
           variant="light"
         />
       ))}

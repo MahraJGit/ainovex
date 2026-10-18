@@ -21,10 +21,16 @@ export default async function LatestNews() {
               key={post.slug}
               slug={post.slug}
               image={post.featured_image || "/images/blog/blog-1.jpg"}
+              imageAlt={post.featured_image_alt || post.title}
               title={post.title}
               excerpt={post.excerpt}
               date={post.published_at || post.created_at}
               category={post.category}
+              tags={post.tags}
+              author={{
+                name: post.author,
+                image: post.author_image,
+              }}
             />
           ))}
         </div>

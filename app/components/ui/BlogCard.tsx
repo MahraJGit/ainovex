@@ -7,11 +7,14 @@ import { formatDate } from "@/app/lib/libFormat";
 export type BlogCardProps = {
   slug: string;
   image: string;
+  imageAlt?: string;
   title: string;
   excerpt: string;
   date: string;
   category: string;
   variant?: "dark" | "light";
+  tags?: string[];
+  author?: { name: string; image?: string };
 };
 
 function isUsableImage(src: string) {
@@ -28,11 +31,14 @@ function isUsableImage(src: string) {
 export default function BlogCard({
   slug,
   image,
+  imageAlt,
   title,
   excerpt,
   date,
   category,
   variant = "dark",
+  tags = [],
+  author,
 }: BlogCardProps) {
   const shadowStyle =
     variant === "light"
@@ -52,7 +58,7 @@ export default function BlogCard({
         {hasImage ? (
           <Image
             src={image}
-            alt={title}
+            alt={imageAlt || title}
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
@@ -72,6 +78,45 @@ export default function BlogCard({
           {excerpt}
         </p>
 
+        {tags.length > 0 ? (
+          <ul className="flex flex-wrap gap-2" aria-label="Article tags">
+            {tags.map((tag) => (
+              <li
+                key={tag}
+                className="rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/75"
+              >
+                #{tag}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        {author ? (
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/10 text-[10px] font-semibold text-white">
+              {author.image ? (
+                <Image
+                  src={author.image}
+                  alt={author.name}
+                  fill
+                  sizes="32px"
+                  className="object-cover"
+                />
+              ) : (
+                author.name
+                  .split(/\s+/)
+                  .map((part) => part[0])
+                  .join("")
+                  .slice(0, 2)
+                  .toUpperCase()
+              )}
+            </div>
+            <span className="truncate text-[12px] font-medium text-white/70">
+              {author.name}
+            </span>
+          </div>
+        ) : null}
+
         <div className="flex items-center justify-between gap-4 border-t border-white/10 pt-5">
           <Link
             href={`/blog/${slug}`}
@@ -79,7 +124,10 @@ export default function BlogCard({
           >
             Read More <span aria-hidden>&rarr;</span>
           </Link>
-          <time dateTime={date} className="text-[12px] font-medium text-white/70">
+          <time
+            dateTime={date}
+            className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 text-[11px] font-medium text-white/75"
+          >
             {formatDate(date)}
           </time>
         </div>

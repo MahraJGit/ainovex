@@ -1,0 +1,3 @@
+ALTER TABLE public.blogs
+  ADD COLUMN IF NOT EXISTS author_image text NOT NULL DEFAULT '',
+  ADD COLUMN IF NOT EXISTS author_bio text NOT NULL DEFAULT '';

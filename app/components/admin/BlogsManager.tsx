@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Blog, BlogStatus } from "@/app/lib/blogs";
 import { getSupabaseBrowserClient } from "@/app/lib/supabase/client";
+import { formatDate } from "@/app/lib/libFormat";
 import { FiEdit2, FiExternalLink, FiPlus, FiSearch, FiTrash2 } from "react-icons/fi";
 
 function isValidImageSrc(value: string) {
@@ -134,6 +135,7 @@ export default function BlogsManager() {
                 <th className="px-4 py-3 font-medium">Article</th>
                 <th className="px-4 py-3 font-medium">Category</th>
                 <th className="px-4 py-3 font-medium">Status</th>
+                <th className="px-4 py-3 font-medium">Published</th>
                 <th className="px-4 py-3 font-medium">Updated</th>
                 <th className="px-4 py-3 font-medium text-right">Actions</th>
               </tr>
@@ -142,7 +144,7 @@ export default function BlogsManager() {
               {filtered.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="px-4 py-10 text-center text-white/50"
                   >
                     No blogs yet.{" "}
@@ -194,6 +196,9 @@ export default function BlogsManager() {
                       >
                         {blog.status}
                       </span>
+                    </td>
+                    <td className="px-4 py-4 text-white/55">
+                      {blog.published_at ? formatDate(blog.published_at) : "—"}
                     </td>
                     <td className="px-4 py-4 text-white/55">
                       {new Date(blog.updated_at).toLocaleDateString()}

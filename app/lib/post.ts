@@ -5,7 +5,9 @@ export interface Post {
   excerpt: string;
   date: string;
   image: string;
+  imageAlt?: string;
   author: { name: string; role: string; avatar: string };
+  tags?: string[];
 }
 
 export const categories = [

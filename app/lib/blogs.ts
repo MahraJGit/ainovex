@@ -14,6 +14,8 @@ export type Blog = {
   featured_image: string;
   featured_image_alt: string;
   author: string;
+  author_image: string;
+  author_bio: string;
   category: string;
   tags: string[];
   status: BlogStatus;
@@ -36,6 +38,8 @@ export type BlogListItem = Pick<
   | "featured_image"
   | "featured_image_alt"
   | "author"
+  | "author_image"
+  | "author_bio"
   | "category"
   | "tags"
   | "status"
@@ -54,6 +58,8 @@ export type BlogInput = {
   featured_image: string;
   featured_image_alt: string;
   author: string;
+  author_image: string;
+  author_bio: string;
   category: string;
   tags: string[];
   status: BlogStatus;
@@ -166,6 +172,21 @@ export function injectHeadingIds(html: string): string {
         return `<h${level}${String(attrs).replace(/\sid=["'][^"']*["']/i, ` id="${unique}"`)}>${inner}</h${level}>`;
       }
       return `<h${level}${attrs} id="${unique}">${inner}</h${level}>`;
+    }
+  );
+}
+
+export function renderCustomHtmlBlocks(html: string): string {
+  return html.replace(
+    /<div\b(?=[^>]*\bdata-blog-custom-html=(?:"([^"]*)"|'([^']*)'))[^>]*>\s*<p>Custom HTML block<\/p>\s*<\/div>/gi,
+    (block, doubleQuoted: string | undefined, singleQuoted: string | undefined) => {
+      const encodedHtml = doubleQuoted ?? singleQuoted ?? "";
+      try {
+        return decodeURIComponent(encodedHtml);
+      } catch {
+        console.error("renderCustomHtmlBlocks: Invalid encoded custom HTML block.");
+        return block;
+      }
     }
   );
 }

@@ -27,10 +27,12 @@ function toCardPost(blog: BlogListItem) {
     excerpt: blog.excerpt || "Read the full article on the Ainovex blog.",
     date: blog.published_at || blog.created_at,
     image,
+    imageAlt: blog.featured_image_alt || blog.title,
+    tags: blog.tags,
     author: {
       name: blog.author || "Ainovex Team",
-      role: "Ainovex",
-      avatar: "/logo.svg",
+      role: blog.author_bio || "Ainovex",
+      avatar: blog.author_image || "/logo.svg",
     },
   };
 }

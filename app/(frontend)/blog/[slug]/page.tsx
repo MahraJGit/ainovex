@@ -4,12 +4,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import BlogFaqs from "@/app/components/sections/Blog/BlogFaqs";
 import TableOfContents from "@/app/components/sections/Blog/TableOfContents";
-import ReadingProgress from "@/app/components/sections/Blog/ReadingProgress";
 import BlogCard from "@/app/components/ui/BlogCard";
 import {
   extractToc,
   injectHeadingIds,
   readingTimeMinutes,
+  renderCustomHtmlBlocks,
 } from "@/app/lib/blogs";
 import {
   getPublishedBlogBySlug,
@@ -80,7 +80,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
   const blog = await getPublishedBlogBySlug(slug);
   if (!blog) notFound();
 
-  const contentHtml = injectHeadingIds(blog.content);
+  const contentHtml = injectHeadingIds(renderCustomHtmlBlocks(blog.content));
   const toc = extractToc(contentHtml);
   const related = await getRelatedBlogs(blog.slug, blog.category, 3);
   const minutes = readingTimeMinutes(blog.content);
@@ -104,6 +104,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
     author: {
       "@type": "Person",
       name: blog.author,
+      description: blog.author_bio || undefined,
+      image: blog.author_image || undefined,
     },
     publisher: {
       "@type": "Organization",
@@ -136,7 +138,6 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
   return (
     <article className="bg-white" data-blog-article>
-      <ReadingProgress />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
@@ -166,15 +167,18 @@ export default async function BlogDetailPage({ params }: PageProps) {
               <Link href="/blog" className="transition hover:text-primary">
                 Blog
               </Link>
-              <span>/</span>
-              <span className="truncate text-white/70">{blog.category}</span>
             </nav>
 
             <div className="mb-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-white/65">
               <span className="rounded-full bg-primary px-3 py-1.5 text-white">
                 {blog.category}
               </span>
-              <time dateTime={published}>{formatDate(published)}</time>
+              <time
+                dateTime={published}
+                className="rounded-full border border-white/20 bg-white/[0.08] px-3 py-1.5 text-white/80"
+              >
+                {formatDate(published)}
+              </time>
               <span className="text-white/25">•</span>
               <span>{minutes} min read</span>
             </div>
@@ -233,8 +237,18 @@ export default async function BlogDetailPage({ params }: PageProps) {
         ) : null}
 
         <div className="mt-8 flex items-center gap-4 rounded-2xl border border-black-v1/10 bg-[#F8FAFC] p-5">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#05080F] text-[14px] font-bold text-white">
-            {authorInitials}
+          <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#05080F] text-[14px] font-bold text-white">
+            {blog.author_image ? (
+              <Image
+                src={blog.author_image}
+                alt={blog.author}
+                fill
+                className="object-cover"
+                sizes="56px"
+              />
+            ) : (
+              authorInitials
+            )}
           </div>
           <div>
             <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-black-v1/40">
@@ -243,6 +257,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
             <p className="mt-0.5 text-[16px] font-semibold text-black-v1">
               {blog.author}
             </p>
+            {blog.author_bio ? (
+              <p className="mt-1 max-w-3xl text-[14px] leading-relaxed text-black-v1/65">
+                {blog.author_bio}
+              </p>
+            ) : null}
           </div>
         </div>
 
@@ -271,10 +290,16 @@ export default async function BlogDetailPage({ params }: PageProps) {
                   key={item.id}
                   slug={item.slug}
                   image={item.featured_image || "/icons/blogs/ai.svg"}
+                  imageAlt={item.featured_image_alt || item.title}
                   title={item.title}
                   excerpt={item.excerpt}
                   date={item.published_at || item.created_at}
                   category={item.category}
+                  tags={item.tags}
+                  author={{
+                    name: item.author,
+                    image: item.author_image,
+                  }}
                   variant="light"
                 />
               ))}
