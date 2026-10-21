@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Faq from "../common/Faq";
 import CTABanner from "../common/CTAbanner";
 import ServiceCard from "../../ui/ServiceCard";
@@ -21,6 +22,12 @@ export default function ServiceDetailContent({
 }: ServiceDetailContentProps) {
   const hasSidebar =
     service.deliverables.length > 0 || service.technologies.length > 0;
+  const whyChooseUs = service.why_choose_us;
+  const hasValidCtaHref = whyChooseUs
+    ? (whyChooseUs.cta_href.startsWith("/") &&
+        !whyChooseUs.cta_href.startsWith("//")) ||
+      /^https?:\/\//i.test(whyChooseUs.cta_href)
+    : false;
 
   return (
     <>
@@ -97,6 +104,108 @@ export default function ServiceDetailContent({
           </div>
         </div>
       </section>
+
+      {service.process_steps.length > 0 ? (
+        <section className="relative overflow-hidden bg-white">
+          <SectionGrid placement="left-light" />
+          <div className="section-container relative z-10 py-16 lg:py-24">
+            <Tag
+              label="Our delivery process"
+              variant="outline"
+              className="[&_span]:text-black-v1"
+            />
+            <h2 className="mt-5 text-black-v1">
+              {service.process_heading || "Our Delivery Process"}
+            </h2>
+            <div className="mt-10 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+              {service.process_steps.map((step, index) => (
+                <article key={`${step.title}-${index}`} className="relative">
+                  {index < service.process_steps.length - 1 ? (
+                    <span
+                      aria-hidden="true"
+                      className="absolute right-0 top-3 hidden text-2xl text-primary lg:block"
+                    >
+                      →
+                    </span>
+                  ) : null}
+                  <span className="flex size-14 items-center justify-center rounded-full bg-primary text-[16px] font-bold text-white">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-5 text-[18px] font-bold text-black-v1">
+                    {step.title}
+                  </h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-black-v1/65">
+                    {step.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {whyChooseUs &&
+      (whyChooseUs.items.length > 0 ||
+        whyChooseUs.heading ||
+        whyChooseUs.description) ? (
+        <section className="relative overflow-hidden bg-[#05080F]">
+          <SectionGrid placement="left" />
+          <div className="section-container relative z-10 py-16 lg:py-24">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.8fr] lg:items-center">
+              <div>
+                {whyChooseUs.eyebrow ? (
+                  <Tag label={whyChooseUs.eyebrow} variant="outline" />
+                ) : null}
+                <h2 className="mt-5 text-white">
+                  {whyChooseUs.heading || "Why choose us"}
+                </h2>
+                {whyChooseUs.description ? (
+                  <p className="mt-4 max-w-md text-[15px] leading-relaxed text-white/65">
+                    {whyChooseUs.description}
+                  </p>
+                ) : null}
+                {whyChooseUs.cta_text && hasValidCtaHref ? (
+                  <Link
+                    href={whyChooseUs.cta_href}
+                    className="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold text-white transition hover:text-primary"
+                  >
+                    {whyChooseUs.cta_text} <span aria-hidden="true">→</span>
+                  </Link>
+                ) : null}
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                {whyChooseUs.items.map((item, index) => (
+                  <article
+                    key={`${item.title}-${index}`}
+                    className="rounded-xl border border-white/10 bg-gradient-to-br from-[#0C2039] to-[#071224] p-5"
+                  >
+                    {item.icon ? (
+                      <Image
+                        src={item.icon}
+                        alt=""
+                        width={32}
+                        height={32}
+                        unoptimized
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                    <p className="mt-3 text-[11px] font-bold text-primary">
+                      {String(index + 1).padStart(2, "0")}
+                    </p>
+                    <h3 className="mt-1 text-[16px] font-semibold text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-[13px] leading-relaxed text-white/60">
+                      {item.description}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {service.faqs.length > 0 ? <Faq faqs={service.faqs} /> : null}
 

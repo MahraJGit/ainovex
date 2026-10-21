@@ -8,6 +8,24 @@ export type ServiceFaq = {
   answer: string;
 };
 
+export type ServicePoint = {
+  title: string;
+  description: string;
+};
+
+export type ServiceReason = ServicePoint & {
+  icon: string;
+};
+
+export type ServiceWhyChooseUs = {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  cta_text: string;
+  cta_href: string;
+  items: ServiceReason[];
+};
+
 export type Service = {
   id: string;
   slug: string;
@@ -17,8 +35,11 @@ export type Service = {
   icon: string;
   hero_headline: string;
   hero_description: string;
+  process_heading: string;
   deliverables: string[];
   technologies: string[];
+  process_steps: ServicePoint[];
+  why_choose_us: ServiceWhyChooseUs | null;
   status: ServiceStatus;
   sort_order: number;
   meta_title: string;
@@ -54,8 +75,11 @@ export type ServiceInput = {
   icon: string;
   hero_headline: string;
   hero_description: string;
+  process_heading: string;
   deliverables: string[];
   technologies: string[];
+  process_steps: ServicePoint[];
+  why_choose_us: ServiceWhyChooseUs | null;
   status: ServiceStatus;
   sort_order: number;
   meta_title: string;
@@ -80,27 +104,7 @@ export function buildServiceContentHtml(seed: SeedService) {
     .map((p) => `<p>${escapeHtml(p)}</p>`)
     .join("");
 
-  const benefits = seed.benefits
-    .map(
-      (item) =>
-        `<li><strong>${escapeHtml(item.title)}</strong> — ${escapeHtml(item.description)}</li>`
-    )
-    .join("");
-
-  const process = seed.process
-    .map(
-      (item) =>
-        `<li><strong>${escapeHtml(item.title)}</strong> — ${escapeHtml(item.description)}</li>`
-    )
-    .join("");
-
-  return [
-    overview,
-    `<h2>Why teams choose Ainovex for ${escapeHtml(seed.title)}</h2>`,
-    `<ul>${benefits}</ul>`,
-    `<h2>How we deliver ${escapeHtml(seed.title)}</h2>`,
-    `<ol>${process}</ol>`,
-  ].join("");
+  return overview;
 }
 
 export function parseStringList(value: unknown): string[] {
@@ -122,6 +126,73 @@ export function parseFaqs(value: unknown): ServiceFaq[] {
     .filter((item): item is ServiceFaq => Boolean(item));
 }
 
+function removeLegacyGeneratedSections(
+  content: unknown,
+  title: unknown
+): string {
+  if (typeof content !== "string" || typeof title !== "string" || !title) {
+    return typeof content === "string" ? content : "";
+  }
+
+  const escapedTitle = escapeHtml(title);
+  const benefitsHeading = `<h2>Why teams choose Ainovex for ${escapedTitle}</h2>`;
+  const processHeading = `<h2>How we deliver ${escapedTitle}</h2>`;
+  const benefitsStart = content.indexOf(benefitsHeading);
+  if (benefitsStart === -1) return content;
+
+  const processStart = content.indexOf(processHeading, benefitsStart);
+  if (processStart === -1) return content;
+
+  const processEnd = content.indexOf("</ol>", processStart);
+  if (processEnd === -1) return content;
+
+  return `${content.slice(0, benefitsStart)}${content
+    .slice(processEnd + "</ol>".length)
+    .replace(/^(?:<p><\/p>)+/i, "")}`;
+}
+
+function parseServicePoints(value: unknown): ServicePoint[] | null {
+  if (!Array.isArray(value)) return null;
+  return value
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const point = item as Record<string, unknown>;
+      const title = String(point.title ?? "").trim();
+      const description = String(point.description ?? "").trim();
+      if (!title || !description) return null;
+      return { title, description };
+    })
+    .filter((item): item is ServicePoint => Boolean(item));
+}
+
+function parseServiceWhyChooseUs(value: unknown): ServiceWhyChooseUs | null {
+  if (!value || typeof value !== "object") return null;
+
+  const section = value as Record<string, unknown>;
+  const items = Array.isArray(section.items)
+    ? section.items
+        .map((item) => {
+          if (!item || typeof item !== "object") return null;
+          const reason = item as Record<string, unknown>;
+          const title = String(reason.title ?? "").trim();
+          const description = String(reason.description ?? "").trim();
+          const icon = String(reason.icon ?? "").trim();
+          if (!title || !description) return null;
+          return { title, description, icon };
+        })
+        .filter((item): item is ServiceReason => Boolean(item))
+    : [];
+
+  return {
+    eyebrow: String(section.eyebrow ?? "").trim(),
+    heading: String(section.heading ?? "").trim(),
+    description: String(section.description ?? "").trim(),
+    cta_text: String(section.cta_text ?? "").trim(),
+    cta_href: String(section.cta_href ?? "").trim(),
+    items,
+  };
+}
+
 export function normalizeService<T extends object>(
   row: T
 ): T & {
@@ -129,22 +200,56 @@ export function normalizeService<T extends object>(
   technologies: string[];
   keywords: string[];
   deliverables: string[];
+  process_heading: string;
+  process_steps: ServicePoint[];
+  why_choose_us: ServiceWhyChooseUs | null;
 } {
   const record = row as T & {
     faqs?: unknown;
     technologies?: unknown;
     keywords?: unknown;
     deliverables?: unknown;
+    process_steps?: unknown;
+    process_heading?: unknown;
+    why_choose_us?: unknown;
+    content?: unknown;
+    title?: unknown;
+    slug?: unknown;
   };
+  const seededService =
+    typeof record.slug === "string"
+      ? defaultServices.find((service) => service.slug === record.slug)
+      : undefined;
 
   return {
     ...row,
+    content: removeLegacyGeneratedSections(record.content, record.title),
     faqs: parseFaqs(record.faqs),
     technologies: parseStringList(record.technologies),
     keywords: parseStringList(record.keywords),
     deliverables: parseStringList(record.deliverables),
+    process_heading: String(
+      record.process_heading ??
+        seededService?.process_heading ??
+        "Our Delivery Process"
+    ),
+    process_steps:
+      parseServicePoints(record.process_steps) ??
+      seededService?.process_steps ??
+      [],
+    why_choose_us:
+      parseServiceWhyChooseUs(record.why_choose_us) ??
+      seededService?.why_choose_us ??
+      null,
   };
 }
+
+const whyChooseIcons = [
+  "/icons/why-us/proven.svg",
+  "/icons/why-us/result.svg",
+  "/icons/why-us/flexible.svg",
+  "/icons/why-us/future.svg",
+];
 
 export function seedToServiceInput(
   seed: SeedService,
@@ -158,8 +263,22 @@ export function seedToServiceInput(
     icon: seed.icon,
     hero_headline: seed.heroHeadline,
     hero_description: seed.heroDescription,
+    process_heading: "Our Delivery Process",
     deliverables: seed.deliverables,
     technologies: seed.technologies,
+    process_steps: seed.process,
+    why_choose_us: {
+      eyebrow: "Why choose us",
+      heading: `More Than Just ${seed.title}.`,
+      description:
+        "We pair thoughtful strategy with experienced delivery to build solutions that support your business goals and keep you moving forward.",
+      cta_text: "Get Started",
+      cta_href: "/contact-us#contact-form",
+      items: seed.benefits.map((item, itemIndex) => ({
+        ...item,
+        icon: whyChooseIcons[itemIndex % whyChooseIcons.length],
+      })),
+    },
     status: "published",
     sort_order: index,
     meta_title: seed.metaTitle,

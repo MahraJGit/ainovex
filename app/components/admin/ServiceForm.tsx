@@ -6,13 +6,18 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   slugify,
+  normalizeService,
   type Service,
   type ServiceFaq,
   type ServiceInput,
+  type ServicePoint,
+  type ServiceReason,
   type ServiceStatus,
+  type ServiceWhyChooseUs,
 } from "@/app/lib/services";
 import { SERVICE_ICON_OPTIONS } from "@/app/lib/adminServices";
 import { getSupabaseBrowserClient } from "@/app/lib/supabase/client";
+import { revalidateServicePages } from "@/app/lib/serviceActions";
 import RichTextEditor from "@/app/components/admin/RichTextEditor";
 import AdminSelect from "@/app/components/admin/AdminSelect";
 import {
@@ -26,6 +31,15 @@ import {
 
 type FormState = ServiceInput;
 
+const emptyWhyChooseUs: ServiceWhyChooseUs = {
+  eyebrow: "Why choose us",
+  heading: "More Than Just Development.",
+  description: "",
+  cta_text: "Get Started",
+  cta_href: "/contact-us#contact-form",
+  items: [],
+};
+
 const emptyForm: FormState = {
   slug: "",
   title: "",
@@ -34,8 +48,11 @@ const emptyForm: FormState = {
   icon: SERVICE_ICON_OPTIONS[0].value,
   hero_headline: "",
   hero_description: "",
+  process_heading: "Our Delivery Process",
   deliverables: [],
   technologies: [],
+  process_steps: [],
+  why_choose_us: emptyWhyChooseUs,
   status: "draft",
   sort_order: 0,
   meta_title: "",
@@ -52,6 +69,12 @@ const areaClass =
 const labelClass =
   "mb-2 block text-[12px] font-semibold uppercase tracking-[0.08em] text-white/50";
 const helpClass = "mt-1.5 text-[12px] text-white/35";
+const whyChooseIconOptions = [
+  { label: "No icon", value: "" },
+  ...SERVICE_ICON_OPTIONS.filter((icon) =>
+    icon.value.startsWith("/icons/why-us/")
+  ),
+];
 
 function listToString(items: string[]) {
   return items.join(", ");
@@ -135,7 +158,7 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
         return;
       }
 
-      const service = data as Service;
+      const service = normalizeService(data as Service);
       setForm({
         slug: service.slug,
         title: service.title,
@@ -144,10 +167,13 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
         icon: service.icon,
         hero_headline: service.hero_headline,
         hero_description: service.hero_description,
+        process_heading: service.process_heading || "Our Delivery Process",
         deliverables: Array.isArray(service.deliverables)
           ? service.deliverables
           : [],
         technologies: service.technologies ?? [],
+        process_steps: service.process_steps,
+        why_choose_us: service.why_choose_us ?? emptyWhyChooseUs,
         status: service.status,
         sort_order: service.sort_order ?? 0,
         meta_title: service.meta_title,
@@ -209,6 +235,83 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
     });
   };
 
+  const updateProcessStep = (
+    index: number,
+    key: keyof ServicePoint,
+    value: string
+  ) => {
+    setForm((prev) => {
+      const process_steps = [...prev.process_steps];
+      process_steps[index] = { ...process_steps[index], [key]: value };
+      return { ...prev, process_steps };
+    });
+  };
+
+  const updateWhyChooseUs = (
+    key: keyof Omit<ServiceWhyChooseUs, "items">,
+    value: string
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      why_choose_us: {
+        ...(prev.why_choose_us ?? emptyWhyChooseUs),
+        [key]: value,
+      },
+    }));
+  };
+
+  const updateWhyChooseUsItem = (
+    index: number,
+    key: keyof ServiceReason,
+    value: string
+  ) => {
+    setForm((prev) => {
+      const section = prev.why_choose_us ?? emptyWhyChooseUs;
+      const items = [...section.items];
+      items[index] = { ...items[index], [key]: value };
+      return { ...prev, why_choose_us: { ...section, items } };
+    });
+  };
+
+  const addProcessStep = () =>
+    setForm((prev) => ({
+      ...prev,
+      process_steps: [
+        ...prev.process_steps,
+        { title: "", description: "" },
+      ],
+    }));
+
+  const removeProcessStep = (index: number) =>
+    setForm((prev) => ({
+      ...prev,
+      process_steps: prev.process_steps.filter((_, i) => i !== index),
+    }));
+
+  const addWhyChooseUsItem = () =>
+    setForm((prev) => {
+      const section = prev.why_choose_us ?? emptyWhyChooseUs;
+      return {
+        ...prev,
+        why_choose_us: {
+          ...section,
+          items: [...section.items, { icon: "", title: "", description: "" }],
+        },
+      };
+    });
+
+  const removeWhyChooseUsItem = (index: number) =>
+    setForm((prev) => {
+      const section = prev.why_choose_us ?? emptyWhyChooseUs;
+      return {
+        ...prev,
+        why_choose_us: {
+          ...section,
+          items: section.items.filter((_, i) => i !== index),
+        },
+      };
+    });
+
   const addFaq = () => {
     setForm((prev) => ({
       ...prev,
@@ -267,6 +370,30 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
         answer: f.answer.trim(),
       }))
       .filter((f) => f.question && f.answer);
+    const processSteps = form.process_steps
+      .map((step) => ({
+        title: step.title.trim(),
+        description: step.description.trim(),
+      }))
+      .filter((step) => step.title && step.description);
+    const whyChooseUs = form.why_choose_us
+      ? {
+          ...form.why_choose_us,
+          eyebrow: form.why_choose_us.eyebrow.trim(),
+          heading: form.why_choose_us.heading.trim(),
+          description: form.why_choose_us.description.trim(),
+          cta_text: form.why_choose_us.cta_text.trim(),
+          cta_href: form.why_choose_us.cta_href.trim(),
+          items: form.why_choose_us.items
+            .map((item) => ({
+              ...item,
+              icon: item.icon.trim(),
+              title: item.title.trim(),
+              description: item.description.trim(),
+            }))
+            .filter((item) => item.title && item.description),
+        }
+      : null;
 
     const payload: ServiceInput = {
       ...form,
@@ -278,8 +405,11 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
       hero_headline: form.hero_headline.trim() || title,
       hero_description:
         form.hero_description.trim() || form.description.trim(),
+      process_heading: form.process_heading.trim() || "Our Delivery Process",
+      process_steps: processSteps,
       deliverables: parseList(deliverablesInput),
       technologies: parseList(technologiesInput),
+      why_choose_us: whyChooseUs,
       keywords: parseList(keywordsInput),
       meta_title: form.meta_title.trim() || title,
       meta_description:
@@ -293,23 +423,35 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
     const supabase = getSupabaseBrowserClient();
 
     if (mode === "edit" && serviceId) {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("services")
         .update(payload)
-        .eq("id", serviceId);
+        .eq("id", serviceId)
+        .select("id")
+        .maybeSingle();
       setSaving(false);
       if (error) {
         setFormError(error.message);
+        return;
+      }
+      if (!data) {
+        setFormError(
+          "The service was not updated. Check your admin permissions and try again."
+        );
         return;
       }
     } else {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      const { error } = await supabase.from("services").insert({
-        ...payload,
-        created_by: user?.id ?? null,
-      });
+      const { error } = await supabase
+        .from("services")
+        .insert({
+          ...payload,
+          created_by: user?.id ?? null,
+        })
+        .select("id")
+        .single();
       setSaving(false);
       if (error) {
         setFormError(error.message);
@@ -317,6 +459,7 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
       }
     }
 
+    await revalidateServicePages();
     setSavedFlash(true);
     window.setTimeout(() => {
       router.push("/admin/services");
@@ -605,7 +748,7 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
 
         <Section
           title="Detail content"
-          description="This rich content powers the service detail page body."
+          description="Write the service overview and supporting content. Manage process steps and benefit cards in their dedicated sections below."
         >
           <RichTextEditor
             value={form.content}
@@ -641,6 +784,216 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
             />
             <p className={helpClass}>Comma-separated list</p>
           </div>
+        </Section>
+
+        <Section
+          title="Delivery process"
+          description="Add the steps visitors will see in the service delivery timeline."
+        >
+          <div>
+            <label className={labelClass}>Section heading</label>
+            <input
+              value={form.process_heading}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  process_heading: e.target.value,
+                }))
+              }
+              placeholder="Our Delivery Process"
+              className={fieldClass}
+            />
+          </div>
+
+          <div className="space-y-3">
+            {form.process_steps.map((step, index) => (
+              <div
+                key={index}
+                className="rounded-xl border border-white/10 bg-white/[0.025] p-4"
+              >
+                <div className="mb-3 flex items-center justify-between">
+                  <p className="text-[13px] font-semibold text-white/75">
+                    Step {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => removeProcessStep(index)}
+                    className="inline-flex cursor-pointer items-center gap-1 rounded-lg px-2 py-1 text-[12px] text-white/45 hover:bg-red-500/10 hover:text-red-300"
+                  >
+                    <FiTrash2 size={13} /> Remove
+                  </button>
+                </div>
+                <div className="grid gap-3 lg:grid-cols-2">
+                  <input
+                    value={step.title}
+                    onChange={(e) =>
+                      updateProcessStep(index, "title", e.target.value)
+                    }
+                    placeholder="Step title"
+                    className={fieldClass}
+                  />
+                  <input
+                    value={step.description}
+                    onChange={(e) =>
+                      updateProcessStep(index, "description", e.target.value)
+                    }
+                    placeholder="Briefly describe this step"
+                    className={fieldClass}
+                  />
+                </div>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addProcessStep}
+              className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-xl border border-white/15 px-3.5 text-[13px] font-medium text-white/75 transition hover:border-primary/40 hover:text-primary"
+            >
+              <FiPlus size={15} /> Add process step
+            </button>
+          </div>
+        </Section>
+
+        <Section
+          title="Why choose us"
+          description="Customize the introduction, call to action, and benefit cards for this service."
+        >
+          {(() => {
+            const section = form.why_choose_us ?? emptyWhyChooseUs;
+            return (
+              <>
+                <div className="grid gap-5 lg:grid-cols-2">
+                  <div>
+                    <label className={labelClass}>Eyebrow</label>
+                    <input
+                      value={section.eyebrow}
+                      onChange={(e) =>
+                        updateWhyChooseUs("eyebrow", e.target.value)
+                      }
+                      placeholder="Why choose us"
+                      className={fieldClass}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Heading</label>
+                    <input
+                      value={section.heading}
+                      onChange={(e) =>
+                        updateWhyChooseUs("heading", e.target.value)
+                      }
+                      placeholder="More Than Just Development."
+                      className={fieldClass}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className={labelClass}>Description</label>
+                  <textarea
+                    rows={3}
+                    value={section.description}
+                    onChange={(e) =>
+                      updateWhyChooseUs("description", e.target.value)
+                    }
+                    placeholder="Explain what makes your approach different."
+                    className={areaClass}
+                  />
+                </div>
+                <div className="grid gap-5 lg:grid-cols-2">
+                  <div>
+                    <label className={labelClass}>Call-to-action label</label>
+                    <input
+                      value={section.cta_text}
+                      onChange={(e) =>
+                        updateWhyChooseUs("cta_text", e.target.value)
+                      }
+                      placeholder="Get Started"
+                      className={fieldClass}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Call-to-action link</label>
+                    <input
+                      value={section.cta_href}
+                      onChange={(e) =>
+                        updateWhyChooseUs("cta_href", e.target.value)
+                      }
+                      placeholder="/contact-us#contact-form"
+                      className={fieldClass}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-[13px] font-semibold text-white/75">
+                      Benefit cards
+                    </h3>
+                    <span className="text-[12px] text-white/40">
+                      {section.items.length} cards
+                    </span>
+                  </div>
+                  {section.items.map((item, index) => (
+                    <div
+                      key={index}
+                      className="rounded-xl border border-white/10 bg-white/[0.025] p-4"
+                    >
+                      <div className="mb-3 flex items-center justify-between">
+                        <p className="text-[13px] font-semibold text-white/75">
+                          Card {String(index + 1).padStart(2, "0")}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => removeWhyChooseUsItem(index)}
+                          className="inline-flex cursor-pointer items-center gap-1 rounded-lg px-2 py-1 text-[12px] text-white/45 hover:bg-red-500/10 hover:text-red-300"
+                        >
+                          <FiTrash2 size={13} /> Remove
+                        </button>
+                      </div>
+                      <div className="grid gap-3 lg:grid-cols-[0.7fr_1fr_1.5fr]">
+                        <AdminSelect
+                          value={item.icon}
+                          onChange={(value) =>
+                            updateWhyChooseUsItem(index, "icon", value)
+                          }
+                          options={whyChooseIconOptions}
+                        />
+                        <input
+                          value={item.title}
+                          onChange={(e) =>
+                            updateWhyChooseUsItem(
+                              index,
+                              "title",
+                              e.target.value
+                            )
+                          }
+                          placeholder="Benefit title"
+                          className={fieldClass}
+                        />
+                        <input
+                          value={item.description}
+                          onChange={(e) =>
+                            updateWhyChooseUsItem(
+                              index,
+                              "description",
+                              e.target.value
+                            )
+                          }
+                          placeholder="Short benefit description"
+                          className={fieldClass}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={addWhyChooseUsItem}
+                    className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-xl border border-white/15 px-3.5 text-[13px] font-medium text-white/75 transition hover:border-primary/40 hover:text-primary"
+                  >
+                    <FiPlus size={15} /> Add benefit card
+                  </button>
+                </div>
+              </>
+            );
+          })()}
         </Section>
 
         <Section

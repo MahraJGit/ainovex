@@ -8,6 +8,7 @@ import {
   type Service,
   type ServiceStatus,
 } from "@/app/lib/services";
+import { revalidateServicePages } from "@/app/lib/serviceActions";
 import { getSupabaseBrowserClient } from "@/app/lib/supabase/client";
 import {
   FiDownload,
@@ -82,11 +83,21 @@ export default function ServicesManager() {
     if (!ok) return;
 
     const supabase = getSupabaseBrowserClient();
-    const { error } = await supabase.from("services").delete().eq("id", id);
+    const { data, error } = await supabase
+      .from("services")
+      .delete()
+      .eq("id", id)
+      .select("id")
+      .maybeSingle();
     if (error) {
       alert(error.message);
       return;
     }
+    if (!data) {
+      alert("The service was not deleted. Check your admin permissions and try again.");
+      return;
+    }
+    await revalidateServicePages();
     await loadServices();
   };
 
@@ -113,6 +124,7 @@ export default function ServicesManager() {
       setMessage(error.message);
       return;
     }
+    await revalidateServicePages();
     setMessage(`Imported ${payload.length} default services.`);
     await loadServices();
   };
