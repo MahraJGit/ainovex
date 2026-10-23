@@ -80,10 +80,21 @@ function listToString(items: string[]) {
   return items.join(", ");
 }
 
+function listToLines(items: string[]) {
+  return items.join("\n");
+}
+
 function parseList(value: string) {
   return value
     .split(",")
     .map((t) => t.trim())
+    .filter(Boolean);
+}
+
+function parseLines(value: string) {
+  return value
+    .split(/\r?\n/)
+    .map((line) => line.trim())
     .filter(Boolean);
 }
 
@@ -185,7 +196,7 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
       setTechnologiesInput(listToString(service.technologies ?? []));
       setKeywordsInput(listToString(service.keywords ?? []));
       setDeliverablesInput(
-        listToString(
+        listToLines(
           Array.isArray(service.deliverables) ? service.deliverables : []
         )
       );
@@ -407,7 +418,7 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
         form.hero_description.trim() || form.description.trim(),
       process_heading: form.process_heading.trim() || "Our Delivery Process",
       process_steps: processSteps,
-      deliverables: parseList(deliverablesInput),
+      deliverables: parseLines(deliverablesInput),
       technologies: parseList(technologiesInput),
       why_choose_us: whyChooseUs,
       keywords: parseList(keywordsInput),
@@ -766,13 +777,13 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
           <div>
             <label className={labelClass}>Deliverables</label>
             <textarea
-              rows={3}
+              rows={5}
               value={deliverablesInput}
               onChange={(e) => setDeliverablesInput(e.target.value)}
-              placeholder="Custom responsive website, CMS setup, SEO foundations"
+              placeholder={"Custom responsive website\nCMS setup\nSEO foundations"}
               className={areaClass}
             />
-            <p className={helpClass}>Comma-separated list</p>
+            <p className={helpClass}>One deliverable per line</p>
           </div>
           <div>
             <label className={labelClass}>Technologies</label>
