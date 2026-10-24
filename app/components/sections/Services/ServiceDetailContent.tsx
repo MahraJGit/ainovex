@@ -45,9 +45,8 @@ export default function ServiceDetailContent({
                 variant="outline"
                 className="[&_span]:text-black-v1"
               />
-              <h2 className="mt-6 text-black-v1">
-                What you get with our{" "}
-                <span className="text-primary">{service.title}</span>
+              <h2 className="mt-6 text-primary">
+                {service.overview_heading}
               </h2>
               <div
                 className="blog-content mt-6"

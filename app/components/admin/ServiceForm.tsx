@@ -48,6 +48,7 @@ const emptyForm: FormState = {
   icon: SERVICE_ICON_OPTIONS[0].value,
   hero_headline: "",
   hero_description: "",
+  overview_heading: "",
   process_heading: "Our Delivery Process",
   deliverables: [],
   technologies: [],
@@ -178,6 +179,7 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
         icon: service.icon,
         hero_headline: service.hero_headline,
         hero_description: service.hero_description,
+        overview_heading: service.overview_heading,
         process_heading: service.process_heading || "Our Delivery Process",
         deliverables: Array.isArray(service.deliverables)
           ? service.deliverables
@@ -370,6 +372,10 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
       setFormError("Detail content is required.");
       return;
     }
+    if (!form.overview_heading.trim()) {
+      setFormError("Overview heading is required.");
+      return;
+    }
     if (!form.icon.trim()) {
       setFormError("Please choose or upload an icon.");
       return;
@@ -416,6 +422,7 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
       hero_headline: form.hero_headline.trim() || title,
       hero_description:
         form.hero_description.trim() || form.description.trim(),
+      overview_heading: form.overview_heading.trim(),
       process_heading: form.process_heading.trim() || "Our Delivery Process",
       process_steps: processSteps,
       deliverables: parseLines(deliverablesInput),
@@ -759,8 +766,26 @@ export default function ServiceForm({ mode, serviceId }: ServiceFormProps) {
 
         <Section
           title="Detail content"
-          description="Write the service overview and supporting content. Manage process steps and benefit cards in their dedicated sections below."
+          description="Set the overview heading and write the service content. Manage process steps and benefit cards in their dedicated sections below."
         >
+          <div>
+            <label className={labelClass}>Full overview heading</label>
+            <input
+              required
+              value={form.overview_heading}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  overview_heading: e.target.value,
+                }))
+              }
+              placeholder="Enter the complete heading"
+              className={fieldClass}
+            />
+            <p className={helpClass}>
+              Enter the full heading exactly as it should appear on the page.
+            </p>
+          </div>
           <RichTextEditor
             value={form.content}
             onChange={(content) => setForm((prev) => ({ ...prev, content }))}

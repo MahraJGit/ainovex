@@ -35,6 +35,7 @@ export type Service = {
   icon: string;
   hero_headline: string;
   hero_description: string;
+  overview_heading: string;
   process_heading: string;
   deliverables: string[];
   technologies: string[];
@@ -75,6 +76,7 @@ export type ServiceInput = {
   icon: string;
   hero_headline: string;
   hero_description: string;
+  overview_heading: string;
   process_heading: string;
   deliverables: string[];
   technologies: string[];
@@ -211,6 +213,7 @@ export function normalizeService<T extends object>(
     deliverables?: unknown;
     process_steps?: unknown;
     process_heading?: unknown;
+    overview_heading?: unknown;
     why_choose_us?: unknown;
     content?: unknown;
     title?: unknown;
@@ -228,6 +231,13 @@ export function normalizeService<T extends object>(
     technologies: parseStringList(record.technologies),
     keywords: parseStringList(record.keywords),
     deliverables: parseStringList(record.deliverables),
+    overview_heading: String(
+      record.overview_heading ??
+        seededService?.overview_heading ??
+        (typeof record.title === "string"
+          ? `What you get with our ${record.title}`
+          : "")
+    ).trim(),
     process_heading: String(
       record.process_heading ??
         seededService?.process_heading ??
@@ -263,6 +273,7 @@ export function seedToServiceInput(
     icon: seed.icon,
     hero_headline: seed.heroHeadline,
     hero_description: seed.heroDescription,
+    overview_heading: `What you get with our ${seed.title}`,
     process_heading: "Our Delivery Process",
     deliverables: seed.deliverables,
     technologies: seed.technologies,
